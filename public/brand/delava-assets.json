@@ -1,0 +1,26 @@
+{
+  "brand": "Delava / دلاوا",
+  "primaryColor": "#EE6D1B",
+  "darkLogoColor": "#0B0B0B",
+  "lightModeLogo": "delava-logo-orange.png",
+  "darkModeLogo": "delava-logo-white.png",
+  "iconsContain": "full دلاوا wordmark",
+  "assets": [
+    "delava-icon-dark.png",
+    "delava-icon-dark.webp",
+    "delava-icon-light.png",
+    "delava-icon-light.webp",
+    "delava-icon-orange.png",
+    "delava-icon-orange.webp",
+    "delava-logo-dark-on-light.png",
+    "delava-logo-dark.png",
+    "delava-logo-dark.webp",
+    "delava-logo-orange-on-dark.png",
+    "delava-logo-orange.png",
+    "delava-logo-orange.webp",
+    "delava-logo-white.png",
+    "delava-logo-white.webp",
+    "delava-social-dark.png",
+    "delava-social-light.png"
+  ]
+}
