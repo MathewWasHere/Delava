@@ -63,34 +63,38 @@ export function Navbar() {
       {/*
         HEADER COMPOSITION — physically fixed, not RTL-flipped.
 
-        [ logo ]        [ status ]        [ actions ]
-          LEFT           CENTER             RIGHT
+        [ logo ] ————— [ status ] ————— [ theme | cart | menu ]
+          LEFT           CENTRE                  RIGHT EDGE
 
-        `dir="ltr"` on the bar pins the three columns to those physical sides;
-        each cell restores `dir="rtl"` so Persian text inside still lays out
-        correctly. A 3-column grid with equal outer tracks keeps the status
-        optically centred no matter how wide the side clusters get — which a
-        flex row with `justify-between` cannot guarantee.
+        `dir="ltr"` on the bar pins the three zones to those physical sides;
+        each cell restores `dir="rtl"` so Persian text inside lays out correctly.
+
+        Equal `1fr` outer tracks keep the status optically centred, and each
+        cluster is pinned to its own physical edge by `justify-start` /
+        `justify-end` — so the actions sit flush right rather than floating.
+        The tracks also RESERVE space, which absolute centring does not: on a
+        320px phone the status would otherwise sit underneath the buttons.
       */}
       <div
         dir="ltr"
-        className="shell grid h-13 grid-cols-[1fr_auto_1fr] items-center gap-2 sm:h-16"
+        className="shell grid h-13 grid-cols-[1fr_auto_1fr] items-center gap-1.5 sm:h-16 sm:gap-2"
       >
         {/* LEFT — brand */}
-        <div className="flex items-center justify-start">
+        <div className="flex min-w-0 items-center justify-start">
           <Logo width={58} withSub={false} />
         </div>
 
-        {/* CENTER — store status */}
-        <div dir="rtl" className="flex items-center justify-center">
+        {/* CENTRE — store status */}
+        <div dir="rtl" className="flex min-w-0 items-center justify-center">
           <OpenStatus />
         </div>
 
-        {/* RIGHT — actions.
+        {/* RIGHT — action cluster, flush to the right edge.
             Physical order left->right: nav, theme, cart, hamburger.
-            The hamburger therefore sits at the far right edge. */}
-        <div dir="rtl" className="flex items-center justify-end gap-1.5 sm:gap-2">
-          <nav className="hidden items-center gap-0.5 lg:flex">
+            One consistent gap binds them into a single control group. */}
+        <div dir="ltr" className="flex min-w-0 items-center justify-end gap-1.5 sm:gap-2">
+
+          <nav dir="rtl" className="hidden items-center gap-0.5 lg:flex">
             {LINKS.map((l) => {
               const active = l.href === "/" ? pathname === "/" : pathname.startsWith(l.href);
               return (
@@ -112,6 +116,18 @@ export function Navbar() {
             })}
           </nav>
 
+          <ThemeToggle />
+
+          <Link
+            href="/cart"
+            prefetch={false}
+            aria-label={`سبد خرید، ${cartCount} کالا`}
+            className="tap-44 relative grid size-10 place-items-center rounded-lg border border-[var(--surface-border)] bg-[var(--white-a4)] text-mist-200 transition-colors hover:border-flame-600/40 hover:text-mist-100"
+          >
+            <Icon name="cart" className="size-[18px]" />
+            {cartCount > 0 && <CountBadge value={cartCount} pulseKey={cartPulse} />}
+          </Link>
+
           <button
             type="button"
             onClick={() => setMenuOpen(true)}
@@ -131,18 +147,6 @@ export function Navbar() {
               <path d="M4 7h16M4 12h16M4 17h16" />
             </svg>
           </button>
-
-          <Link
-            href="/cart"
-            prefetch={false}
-            aria-label={`سبد خرید، ${cartCount} کالا`}
-            className="tap-44 relative grid size-10 place-items-center rounded-lg border border-[var(--surface-border)] bg-[var(--white-a4)] text-mist-200 transition-colors hover:border-flame-600/40 hover:text-mist-100"
-          >
-            <Icon name="cart" className="size-[18px]" />
-            {cartCount > 0 && <CountBadge value={cartCount} pulseKey={cartPulse} />}
-          </Link>
-
-          <ThemeToggle />
         </div>
       </div>
 
@@ -235,7 +239,7 @@ export function Navbar() {
               <Link
                 href="/menu"
                 onClick={() => setMenuOpen(false)}
-                className="flex h-13 items-center justify-center rounded-xl bg-gradient-to-l from-flame-700 to-flame-500 text-[15px] font-bold text-white"
+                className="flex h-13 items-center justify-center rounded-xl bg-flame-600 text-[15px] font-bold text-white"
               >
                 سفارش آنلاین
               </Link>

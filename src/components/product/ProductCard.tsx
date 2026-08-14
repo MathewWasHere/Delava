@@ -37,7 +37,7 @@ export function ProductCard({ product, priority }: { product: Product; priority?
             sizes="96px"
           />
           {product.compareAtPrice && (
-            <span className="absolute right-1 top-1 rounded-md bg-flame-600 px-1.5 py-0.5 text-[13px] font-extrabold text-white">
+            <span className="absolute right-1 top-1 rounded-md bg-gold-500 px-1.5 py-0.5 text-[12.5px] font-bold text-black">
               ٪تخفیف
             </span>
           )}
@@ -91,7 +91,7 @@ export function ProductCard({ product, priority }: { product: Product; priority?
               className={cn(
                 "inline-flex size-11 shrink-0 items-center justify-center rounded-xl text-[14px] font-extrabold transition-all active:scale-95",
                 product.available
-                  ? "bg-gradient-to-l from-flame-700 to-flame-500 text-white"
+                  ? "bg-flame-600 text-white"
                   : "bg-[var(--white-a6)] text-mist-500",
               )}
             >
@@ -116,7 +116,7 @@ export function ProductCard({ product, priority }: { product: Product; priority?
             className="h-full w-full transition-transform duration-700 group-hover:scale-105"
             sizes="(max-width:1024px) 33vw, 300px"
           />
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/85 via-black/10 to-transparent" />
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-black/45" />
 
           <div className="absolute inset-x-3 top-3 flex items-start justify-between gap-2">
             <div className="flex flex-wrap gap-1.5">
@@ -170,7 +170,7 @@ export function ProductCard({ product, priority }: { product: Product; priority?
               className={cn(
                 "inline-flex h-11 items-center gap-1.5 rounded-xl px-4 text-[13px] font-bold transition-all active:scale-95",
                 product.available
-                  ? "bg-gradient-to-l from-flame-700 to-flame-500 text-white hover:brightness-110"
+                  ? "bg-flame-600 text-white hover:brightness-110"
                   : "cursor-not-allowed bg-[var(--white-a6)] text-mist-500",
               )}
             >

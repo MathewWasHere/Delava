@@ -33,7 +33,7 @@ export function BottomNav() {
               prefetch={false}
                 href={tab.href}
                 className={cn(
-                  "relative flex min-h-13 flex-col items-center justify-center gap-0.5 py-1.5 text-[11.5px] font-bold transition-colors",
+                  "relative flex min-h-13 flex-col items-center justify-center gap-0.5 py-1.5 text-[12.5px] font-bold transition-colors",
                   active ? "text-flame-600" : "text-mist-400",
                 )}
               >

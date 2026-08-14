@@ -67,9 +67,7 @@ function MenuInner() {
   return (
     <div className="pb-24 lg:pb-10">
       {/* Header — compact on mobile so food is visible immediately */}
-      <div className="relative border-b border-[var(--surface-border)] bg-gradient-to-b from-ink-900 to-ink-950">
-        <div className="absolute inset-0 bg-[radial-gradient(70%_100%_at_100%_0%,rgba(194,13,0,0.14),transparent_60%)]" />
-        <div className="shell relative py-4 sm:py-10">
+      <div className="relative border-b border-[var(--surface-border)] bg-ink-900">        <div className="shell relative py-4 sm:py-10">
           <div className="hidden sm:block">
             <span className="flex items-center gap-2 text-[13px] font-bold text-flame-500">
               <span className="h-px w-6 bg-flame-600" />
@@ -168,7 +166,7 @@ function MenuInner() {
             })}
 
             <div className="mt-6 rounded-2xl border border-flame-600/25 bg-flame-600/8 p-5">
-              <Icon name="gift" className="size-6 text-flame-500" />
+              <Icon name="gift" className="size-6 text-gold-600" />
               <div className="mt-3 text-[13px] font-extrabold text-mist-100">۱۰٪ تخفیف اولین سفارش</div>
               <p className="mt-1.5 text-[13px] leading-6 text-mist-400">
                 کد <span className="font-bold text-flame-600">DELAVA10</span> را هنگام پرداخت وارد کن.
@@ -228,7 +226,7 @@ function MenuInner() {
       {cartCount > 0 && (
         <Link
           href="/cart"
-          className="above-nav fixed inset-x-3 z-45 mb-2 flex animate-fade-up items-center justify-between gap-3 rounded-2xl bg-gradient-to-l from-flame-700 to-flame-500 px-5 py-4 text-white shadow-[0_18px_50px_-14px_rgba(194,13,0,0.85)] lg:hidden"
+          className="above-nav fixed inset-x-3 z-45 mb-2 flex animate-fade-up items-center justify-between gap-3 rounded-2xl bg-flame-600 px-5 py-4 text-white shadow-[0_18px_50px_-14px_rgba(194,13,0,0.85)] lg:hidden"
         >
           <span className="flex items-center gap-2 text-[13px] font-extrabold">
             <span className="num grid size-6 place-items-center rounded-full bg-black/20">{toFa(cartCount)}</span>

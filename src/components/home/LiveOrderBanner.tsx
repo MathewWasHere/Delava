@@ -57,23 +57,23 @@ export function LiveOrderBanner() {
 
   return (
     <section className="border-b border-[var(--surface-border)] bg-ink-900">
-      <div className="shell py-3 sm:py-4">
+      <div className="shell py-2 sm:py-4">
         <Link
           href={`/order?id=${order.id}`}
           prefetch={false}
-          className="group block rounded-2xl border border-flame-600/30 bg-gradient-to-l from-flame-600/12 via-ink-850 to-ink-850 p-3.5 transition-colors hover:border-flame-600/55 sm:p-4"
+          className="group block rounded-xl border border-flame-600/30 bg-ink-850 p-2.5 transition-colors hover:border-flame-600/55 sm:rounded-2xl sm:p-4"
         >
           {/* ---- Row 1: identity + status ---- */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2.5 sm:gap-3">
             <span
               className={cn(
-                "relative grid size-11 shrink-0 place-items-center rounded-full",
+                "relative grid size-9 shrink-0 place-items-center rounded-full sm:size-11",
                 outForDelivery || ready
                   ? "bg-emerald-500/15 text-emerald-500"
                   : "bg-flame-600/15 text-flame-500",
               )}
             >
-              <Icon name={outForDelivery ? "bike" : ready ? "check" : "clock"} className="size-5" />
+              <Icon name={outForDelivery ? "bike" : ready ? "check" : "clock"} className="size-4 sm:size-5" />
               <span className="absolute inset-0 animate-ping-slow rounded-full ring-2 ring-flame-500/30" />
             </span>
 
@@ -93,10 +93,10 @@ export function LiveOrderBanner() {
             <div className="shrink-0 text-left">
               {remaining > 0 ? (
                 <>
-                  <div className="num text-[19px] font-extrabold leading-none text-flame-500">
+                  <div className="num text-[17px] font-extrabold leading-none text-flame-500 sm:text-[19px]">
                     {toFa(remaining)}
                   </div>
-                  <div className="mt-1 text-[12.5px] text-mist-500">دقیقه</div>
+                  <div className="mt-0.5 text-[12.5px] leading-none text-mist-500 sm:mt-1">دقیقه</div>
                 </>
               ) : (
                 <span className="rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2.5 py-1 text-[12.5px] font-bold text-emerald-500">
@@ -107,15 +107,15 @@ export function LiveOrderBanner() {
           </div>
 
           {/* ---- Row 2: step rail (compact on phones, labelled from sm) ---- */}
-          <div className="mt-3.5">
+          <div className="mt-2 sm:mt-3.5">
             {/* Progress bar for the tightest widths */}
-            <div className="h-1.5 overflow-hidden rounded-full bg-[var(--white-a10)] sm:hidden">
+            <div className="h-1 overflow-hidden rounded-full bg-[var(--white-a10)] sm:hidden">
               <div
-                className="h-full rounded-full bg-gradient-to-l from-flame-700 to-flame-400 transition-all duration-700"
+                className="h-full rounded-full bg-flame-600 transition-all duration-700"
                 style={{ width: `${progress}%` }}
               />
             </div>
-            <div className="mt-2 flex items-center justify-between text-[12.5px] text-mist-500 sm:hidden">
+            <div className="mt-1.5 flex items-center justify-between text-[12.5px] leading-none text-mist-500 sm:hidden">
               <span>
                 مرحله <span className="num">{toFa(stepNo)}</span> از{" "}
                 <span className="num">{toFa(steps.length)}</span>

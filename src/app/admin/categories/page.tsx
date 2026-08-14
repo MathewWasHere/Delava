@@ -62,7 +62,7 @@ export default function AdminCategoriesPage() {
             >
               <div className="relative h-28">
                 <Image src={c.image} alt={c.name} fill sizes="360px" className="object-cover opacity-70" />
-                <div className="absolute inset-0 bg-gradient-to-t from-ink-900 to-transparent" />
+                <div className="absolute inset-0 bg-black/40" />
                 <span className="num absolute right-3 top-3 grid size-7 place-items-center rounded-lg bg-black/60 text-[11px] font-extrabold text-white backdrop-blur">
                   {toFa(c.sortOrder)}
                 </span>

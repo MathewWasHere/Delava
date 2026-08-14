@@ -46,7 +46,7 @@ export default function AdminDeliveryPage() {
         </Button>
       </div>
 
-      <div className="rounded-2xl border border-[var(--surface-border)] bg-gradient-to-l from-flame-600/8 to-ink-900 p-5">
+      <div className="rounded-2xl border border-[var(--surface-border)] bg-ink-900 p-5">
         <div className="flex items-center gap-3">
           <span className="grid size-11 place-items-center rounded-2xl bg-flame-600/15 text-flame-500">
             <Icon name="pin" />

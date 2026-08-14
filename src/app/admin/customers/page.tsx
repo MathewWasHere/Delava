@@ -100,7 +100,7 @@ export default function AdminCustomersPage() {
 
               {loyal && (
                 <span className="mt-2 inline-flex w-fit items-center gap-1 rounded-md bg-flame-600/12 px-1.5 py-0.5 text-[9.5px] font-extrabold text-flame-500">
-                  <Icon name="star" filled className="size-2.5" />
+                  <Icon name="star" filled className="size-2.5 text-gold-600" />
                   وفادار
                 </span>
               )}

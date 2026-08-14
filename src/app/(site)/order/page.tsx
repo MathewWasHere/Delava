@@ -65,7 +65,7 @@ function OrderDetailInner() {
       </Link>
 
       {celebrate && (
-        <div className="mb-5 animate-fade-up rounded-2xl border border-emerald-500/30 bg-gradient-to-l from-emerald-500/12 to-transparent p-6 text-center">
+        <div className="mb-5 animate-fade-up rounded-2xl border border-emerald-500/30 bg-emerald-500/10 p-6 text-center">
           <div className="text-4xl">🎉</div>
           <h1 className="mt-3 text-xl font-extrabold text-mist-100">سفارش شما با موفقیت ثبت شد</h1>
           <p className="num mt-2 text-[13px] text-mist-300">
@@ -83,7 +83,7 @@ function OrderDetailInner() {
         <div className="space-y-4">
           {/* Status header */}
           <div className="surface overflow-hidden rounded-2xl">
-            <div className="border-b border-[var(--surface-border)] bg-gradient-to-l from-flame-600/10 to-transparent p-6">
+            <div className="border-b border-[var(--surface-border)] bg-flame-600/8 p-6">
               <div className="flex items-start justify-between gap-4">
                 <div>
                   <div className="num text-[13px] text-mist-400">شماره سفارش</div>
@@ -108,7 +108,7 @@ function OrderDetailInner() {
                   </div>
                   <div className="mt-4 h-2 overflow-hidden rounded-full bg-[var(--white-a8)]">
                     <div
-                      className="h-full rounded-full bg-gradient-to-l from-flame-700 to-flame-400 transition-all duration-700"
+                      className="h-full rounded-full bg-flame-600 transition-all duration-700"
                       style={{ width: `${progress}%` }}
                     />
                   </div>

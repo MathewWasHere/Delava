@@ -43,16 +43,29 @@
   --color-ink-600: #232328;
   --color-ink-500: #2e2e34;
 
-  /* BRAND ACCENT — deep red #C20D00.
-     The ramp keeps the flame-* token names so all 300+ existing usages adopt
-     the new palette centrally instead of being rewritten one by one.
-     Tints are tuned for contrast: 400/500 read on dark, 600/700 on light. */
-  --color-flame-300: #ff8a80;
-  --color-flame-400: #f2483a;
-  --color-flame-500: #e01100;
-  --color-flame-600: #c20d00;
-  --color-flame-700: #9c0a00;
-  --color-flame-800: #6f0700;
+  /* ------------------------------------------------------------------ *
+   * BRAND PALETTE  (solid colours only — no gradient ramps anywhere)
+   *   Crimson  #E0163D  primary brand / accent
+   *   Red      #DA291C  strong CTA / action
+   *   Yellow   #FFC72C  small attention accent (prices, promos, badges)
+   *   White    #FFFFFF  dominant surface
+   *
+   * The flame-* token names are retained so ~300 existing usages adopt the
+   * palette centrally. 500 = crimson, 600 = action red; the darker steps are
+   * hover/active states only, never gradient stops.
+   * ------------------------------------------------------------------ */
+  --color-flame-300: #f7889b;
+  --color-flame-400: #ea4a68;
+  --color-flame-500: #e0163d;  /* crimson — brand */
+  --color-flame-600: #da291c;  /* red — action */
+  --color-flame-700: #b21f15;  /* red hover */
+  --color-flame-800: #8c1810;  /* red active */
+
+  /* Golden yellow accent */
+  --color-gold-400: #ffd75e;
+  --color-gold-500: #ffc72c;
+  --color-gold-600: #e0ab13;
+  --color-gold-700: #a87d06;
 
   --color-mist-100: #ffffff;
   --color-mist-200: #d6d6d6;
@@ -83,7 +96,7 @@
 [data-theme="light"] {
   color-scheme: light;
 
-  --color-ink-950: #f7f7f8;  /* page background */
+  --color-ink-950: #f6f6f7;  /* page background (near-white) */
   --color-ink-900: #ffffff;  /* raised surface / bars */
   --color-ink-850: #ffffff;  /* cards */
   --color-ink-800: #f2f2f4;  /* inputs */
@@ -113,11 +126,12 @@
 [data-theme="dark"] {
   color-scheme: dark;
 
-  /* Accent lift: #C20D00 is too dark to read as text on a black surface, so
-     the mid-ramp brightens in dark mode. The brand red stays exact wherever it
-     is a FILL (buttons/badges use flame-600 as background with white text). */
-  --color-flame-500: #ff3b2b;
-  --color-flame-600: #f2483a;
+  /* Accent lift for dark surfaces: the brand crimson/red are too dark to read
+     as TEXT on black. Fills keep the exact brand colours (white text on
+     flame-500/600); only the text-tint steps brighten here. */
+  --color-flame-500: #ff4d6d;
+  --color-flame-600: #ff5a4a;
+  --color-gold-500: #ffd24d;
 
   --color-ink-950: #000000;
   --color-ink-900: #0a0a0a;
@@ -225,20 +239,22 @@ body {
   transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
 }
 .surface-hover:hover {
-  border-color: rgba(194, 13, 0, 0.45);
-  box-shadow: 0 10px 30px -16px rgba(194, 13, 0, 0.35);
+  border-color: rgba(224, 22, 61, 0.45);
+  box-shadow: 0 10px 30px -16px rgba(224, 22, 61, 0.35);
 }
 
 .glow-text {
-  text-shadow: 0 0 24px rgba(226, 17, 0, 0.45), 0 0 60px rgba(194, 13, 0, 0.22);
+  text-shadow: 0 0 24px rgba(226, 17, 0, 0.45), 0 0 60px rgba(224, 22, 61, 0.22);
 }
 
 .glow-ring {
-  box-shadow: 0 0 0 1px rgba(194, 13, 0, 0.35), 0 10px 45px -12px rgba(194, 13, 0, 0.45);
+  box-shadow: 0 0 0 1px rgba(224, 22, 61, 0.35);
 }
 
+/* Solid brand fill (was a gradient). Kept under the same class name so all
+   existing call-sites pick up the flat colour with no markup churn. */
 .flame-gradient {
-  background: linear-gradient(135deg, var(--color-flame-500) 0%, var(--color-flame-700) 100%);
+  background: var(--color-flame-600);
 }
 
 .hairline {
@@ -297,10 +313,10 @@ body {
 @keyframes pulse-dot {
   0%,
   100% {
-    box-shadow: 0 0 0 0 rgba(194, 13, 0, 0.55);
+    box-shadow: 0 0 0 0 rgba(224, 22, 61, 0.55);
   }
   70% {
-    box-shadow: 0 0 0 10px rgba(194, 13, 0, 0);
+    box-shadow: 0 0 0 10px rgba(224, 22, 61, 0);
   }
 }
 .animate-pulse-dot {
@@ -555,39 +571,11 @@ body {
   width: 0;
   height: 0;
 }
-/* Fades hint that the belt continues past the edge (RTL-aware). */
+/* The belt previously used gradient edge-fades to hint at overflow. Gradients
+   are banned, so the affordance is now purely structural: a trailing spacer in
+   the markup plus the partially-visible next tile do the same job. */
 .belt-mask {
   position: relative;
-}
-@media (min-width: 640px) {
-  .belt-mask::after,
-  .belt-mask::before {
-    display: none;
-  }
-}
-.belt-mask::after,
-.belt-mask::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 28px;
-  pointer-events: none;
-  z-index: 1;
-}
-.belt-mask::before {
-  inset-inline-start: 0;
-  background: linear-gradient(to right, var(--color-ink-950), transparent);
-}
-.belt-mask::after {
-  inset-inline-end: 0;
-  background: linear-gradient(to left, var(--color-ink-950), transparent);
-}
-[dir="rtl"] .belt-mask::before {
-  background: linear-gradient(to left, var(--color-ink-950), transparent);
-}
-[dir="rtl"] .belt-mask::after {
-  background: linear-gradient(to right, var(--color-ink-950), transparent);
 }
 
 @keyframes ping-slow {

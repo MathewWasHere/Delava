@@ -75,12 +75,12 @@ function OrderCard({
     <article
       className={cn(
         "surface surface-hover rounded-2xl p-4",
-        highlight && "border-flame-600/30 bg-gradient-to-b from-flame-600/6 to-transparent",
+        highlight && "border-flame-600/30 bg-flame-600/5",
       )}
     >
       <div className="flex items-start justify-between gap-3">
         <div>
-          <Link href={`/order?id=${order.id}`} className="num text-[15px] font-extrabold text-mist-100 hover:text-flame-600">
+          <Link href={`/order?id=${order.id}`} className="num -my-2 inline-flex min-h-9 items-center text-[15px] font-extrabold text-mist-100 hover:text-flame-600">
             سفارش #{toFa(order.number)}
           </Link>
           <div className="num mt-1 text-[13px] text-mist-500">

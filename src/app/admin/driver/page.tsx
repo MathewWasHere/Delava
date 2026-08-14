@@ -108,7 +108,7 @@ export default function DriverPage() {
 
       {/* ---------- Current delivery (hero card) ---------- */}
       {current && (
-        <section className="overflow-hidden rounded-xl border border-flame-600/35 bg-gradient-to-l from-flame-600/10 to-ink-900">
+        <section className="overflow-hidden rounded-xl border border-flame-600/35 bg-ink-900">
           <div className="flex items-center gap-2.5 border-b border-[var(--hairline)] px-3 py-2">
             <span className="relative grid size-8 shrink-0 place-items-center rounded-full bg-flame-600/15 text-flame-600">
               <Icon name="bike" className="size-4" />

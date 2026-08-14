@@ -47,7 +47,7 @@ export default function AdminDiscountsPage() {
             className={cn(
               "relative overflow-hidden rounded-2xl border p-5",
               c.active
-                ? "border-flame-600/30 bg-gradient-to-l from-flame-600/8 to-ink-900"
+                ? "border-flame-600/30 bg-flame-600/6"
                 : "border-[var(--surface-border)] bg-ink-900 opacity-70",
             )}
           >

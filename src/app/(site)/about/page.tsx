@@ -24,7 +24,7 @@ export default function AboutPage() {
             sizes="100vw"
             className="object-cover object-center opacity-35"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-ink-950/70 via-ink-950/85 to-ink-950" />
+          <div className="absolute inset-0 bg-ink-950/75" />
         </div>
         <div className="shell relative py-20 text-center">
           <span className="text-[13px] font-bold tracking-[0.3em] text-flame-500">DELAVA — FASA</span>
@@ -88,7 +88,7 @@ export default function AboutPage() {
               sizes="(max-width:1024px) 100vw, 600px"
               className="object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
+            <div className="absolute inset-0 bg-black/50" />
             <div className="absolute inset-x-0 bottom-0 p-6">
               <div className="num text-[13px] text-mist-300">
                 {toFa(RESTAURANT.lat.toFixed(4))}, {toFa(RESTAURANT.lng.toFixed(4))}
@@ -100,7 +100,7 @@ export default function AboutPage() {
       </section>
 
       <section className="shell py-14">
-        <div className="rounded-2xl border border-flame-600/25 bg-gradient-to-l from-flame-700/20 to-ink-900 p-8 text-center sm:p-12">
+        <div className="rounded-2xl border border-flame-600/25 bg-ink-900 p-8 text-center sm:p-12">
           <h2 className="text-2xl font-extrabold text-mist-100 sm:text-3xl">
             سفارش بعدی‌ات را مستقیم از دلاوا ثبت کن
           </h2>

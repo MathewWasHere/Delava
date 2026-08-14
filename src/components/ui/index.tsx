@@ -337,7 +337,8 @@ export function SectionHead({
 export function Rating({ value, count }: { value: number; count?: number }) {
   return (
     <span className="inline-flex items-center gap-1 num text-[13px] text-mist-200">
-      <span className="text-flame-500">★</span>
+      {/* Golden star — the yellow accent earns its place on ratings. */}
+      <span className="text-gold-500">★</span>
       <span className="font-bold">{toFa(value.toFixed(1))}</span>
       {count !== undefined && <span className="text-mist-500">({toFa(count)})</span>}
     </span>

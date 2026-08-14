@@ -92,7 +92,7 @@ export default function AdminDashboard() {
                   className={cn(
                     "w-full min-h-1 rounded-t-lg transition-all duration-500",
                     i === week.length - 2
-                      ? "bg-gradient-to-t from-flame-700 to-flame-400 shadow-[0_-6px_24px_-6px_rgba(194,13,0,0.7)]"
+                      ? "bg-flame-600 shadow-[0_-6px_24px_-6px_rgba(194,13,0,0.7)]"
                       : "bg-[var(--white-a10)] group-hover:bg-flame-600/50",
                   )}
                   style={{ height: `${Math.max(4, (w.value / maxWeek) * 100)}%` }}

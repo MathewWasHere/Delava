@@ -41,7 +41,7 @@ export function CategoryStrip() {
                   sizes="(max-width: 640px) 88px, 220px"
                   className="object-cover transition-all duration-500 group-hover:scale-110"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/45 to-transparent" />
+                <div className="absolute inset-0 bg-black/45" />
               </div>
               <span className="absolute inset-x-0 bottom-0 p-2 text-center text-[12.5px] font-extrabold text-white sm:p-2.5 sm:text-[13.5px]">
                 {c.name}
@@ -91,22 +91,20 @@ export function PromoBanner() {
       {/* Compact by design: a single horizontal band on desktop, a tight card on
           phones. One action only — the «درباره دلاوا» button was removed and the
           remaining space reclaimed rather than left empty. */}
-      <div className="relative overflow-hidden rounded-2xl border border-flame-600/25 bg-gradient-to-l from-flame-700/22 via-ink-900 to-ink-900 p-3.5 sm:p-4">
-        <div className="absolute -left-20 -top-20 size-56 rounded-full bg-flame-600/20 blur-[90px]" />
-        <div className="absolute inset-y-0 left-0 hidden w-1/3 lg:block">
+      <div className="relative overflow-hidden rounded-2xl border border-flame-600/25 bg-ink-900 p-3.5 sm:p-4">        <div className="absolute inset-y-0 left-0 hidden w-1/3 lg:block">
           <Image
             src="/food/pizza-makhsoos.webp"
             alt=""
             aria-hidden="true"
             fill
             sizes="33vw"
-            className="object-cover opacity-30 [mask-image:linear-gradient(to_right,black,transparent)]"
+            className="object-cover opacity-30"
           />
         </div>
 
         <div className="relative flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between sm:gap-6">
           <div className="min-w-0">
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-flame-600 px-2.5 py-1 text-[12.5px] font-extrabold text-white">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-gold-500 px-2.5 py-1 text-[12.5px] font-bold text-black">
               <Icon name="gift" className="size-3.5" />
               کد تخفیف: DELAVA10
             </span>
@@ -212,14 +210,15 @@ export function VisitUs() {
         <div className="relative min-h-56 overflow-hidden rounded-2xl border border-[var(--surface-border)]">
           <Image
             src="/brand/interior.webp"
-            alt="فضای بیرونی فست فود دلاوا"
+            alt="فضای نشیمن بیرونی فست فود دلاوا با میز و صندلی"
             fill
             sizes="(max-width:1024px) 100vw, 700px"
             className="object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/35 to-transparent" />
-          <div className="absolute inset-x-0 bottom-0 p-4 sm:p-5">
-            <p className="max-w-sm text-[13px] leading-7 text-mist-300">
+          {/* Flat scrim confined to the caption band — the photo stays bright
+              and legible, the text gets the contrast it needs. No gradient. */}
+          <div className="absolute inset-x-0 bottom-0 bg-black/65 p-3.5 sm:p-4">
+            <p className="max-w-sm text-[13px] font-medium leading-6 text-white">
               فضای بیرونی دنج با نورهای گرم، مخصوص شب‌های فسا. سفارش آنلاین بده و حضوری تحویل بگیر.
             </p>
           </div>

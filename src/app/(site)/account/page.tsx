@@ -50,9 +50,7 @@ export default function AccountPage() {
   return (
     <div className="shell py-4 pb-24 sm:py-6 lg:pb-12">
       {/* Header card */}
-      <div className="surface relative overflow-hidden rounded-2xl p-4 sm:rounded-2xl sm:p-5">
-        <div className="absolute -left-20 -top-20 size-56 rounded-full bg-flame-600/20 blur-[90px]" />
-        <div className="relative flex flex-wrap items-center gap-4">
+      <div className="surface relative overflow-hidden rounded-2xl p-4 sm:rounded-2xl sm:p-5">        <div className="relative flex flex-wrap items-center gap-4">
           {/* Avatar placeholder removed — the app has no profile pictures. */}
           <div className="min-w-0 flex-1">
             <h1 className="text-lg font-extrabold text-mist-100 sm:text-xl">{user?.name}</h1>
@@ -245,9 +243,7 @@ export default function AccountPage() {
 
           {tab === "rewards" && (
             <div className="animate-fade-up space-y-4">
-              <div className="surface relative overflow-hidden rounded-2xl p-6">
-                <div className="absolute -left-16 -top-16 size-48 rounded-full bg-flame-600/25 blur-[80px]" />
-                <div className="relative">
+              <div className="surface relative overflow-hidden rounded-2xl p-6">                <div className="relative">
                   <span className="inline-flex items-center gap-2 rounded-full bg-flame-600 px-3 py-1 text-[13px] font-extrabold text-white">
                     <Icon name="gift" className="size-3.5" />
                     DELAVA REWARDS
@@ -257,7 +253,7 @@ export default function AccountPage() {
 
                   <div className="mt-5 h-2.5 overflow-hidden rounded-full bg-[var(--white-a8)]">
                     <div
-                      className="h-full rounded-full bg-gradient-to-l from-flame-700 to-flame-400 transition-all duration-700"
+                      className="h-full rounded-full bg-flame-600 transition-all duration-700"
                       style={{ width: `${progress}%` }}
                     />
                   </div>

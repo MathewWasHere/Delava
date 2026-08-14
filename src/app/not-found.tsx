@@ -13,7 +13,7 @@ export default function NotFound() {
       <div className="mt-8 flex flex-wrap justify-center gap-3">
         <Link
           href="/menu"
-          className="inline-flex h-12 items-center rounded-2xl bg-gradient-to-l from-flame-700 to-flame-500 px-6 text-[14px] font-extrabold text-white"
+          className="inline-flex h-12 items-center rounded-2xl bg-flame-600 px-6 text-[14px] font-extrabold text-white"
         >
           مشاهده منو
         </Link>

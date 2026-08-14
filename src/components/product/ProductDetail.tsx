@@ -56,7 +56,7 @@ export function ProductDetail({ product, related }: { product: Product; related:
               className="aspect-square w-full"
               sizes="(max-width:1024px) 100vw, 560px"
             />
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-black/35" />
             <div className="absolute inset-x-4 top-4 flex justify-between">
               <div className="flex gap-2">
                 {product.badges?.map((b) => (
