@@ -19,7 +19,11 @@ export default function CartPage() {
   if (state.hydrated && cartCount === 0) {
     return (
       <div className="shell flex min-h-[70vh] flex-col items-center justify-center py-16 text-center">
-        <span className="grid size-24 place-items-center rounded-full bg-flame-600/10 text-5xl">🛒</span>
+        {/* SVG from the app's own icon set — Snapp Web has no emoji glyphs,
+            so a literal 🛒 rendered as a "no glyph" tofu box. */}
+        <span className="grid size-24 place-items-center rounded-full bg-flame-600/10 text-flame-600">
+          <Icon name="cart" className="size-10" />
+        </span>
         <h1 className="mt-6 text-2xl font-extrabold text-mist-100">سبد خریدت خالیه</h1>
         <p className="mt-2 max-w-sm text-[14px] leading-7 text-mist-400">
           یه سر به منو بزن؛ برگر مخصوص دلاوا همین الان روی گریله.
@@ -41,7 +45,7 @@ export default function CartPage() {
   }
 
   return (
-    <div className="shell py-5 pb-44 sm:py-8 lg:pb-14">
+    <div className="pb-nav-action shell py-5 sm:py-8 lg:pb-14">
       <div className="mb-6 flex items-end justify-between">
         <div>
           <h1 className="text-xl font-extrabold text-mist-100 sm:text-3xl">سبد خرید</h1>

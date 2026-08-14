@@ -43,7 +43,7 @@ export function ProductDetail({ product, related }: { product: Product; related:
   );
 
   return (
-    <div className="pb-32 lg:pb-8">
+    <div className="pb-nav-action lg:pb-8">
       <div className="shell pt-5">
         <nav className="flex min-w-0 flex-wrap items-center gap-x-2 text-[13px] text-mist-500">
           <Link href="/" className="inline-flex min-h-11 shrink-0 items-center hover:text-flame-600">

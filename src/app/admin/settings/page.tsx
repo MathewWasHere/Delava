@@ -86,7 +86,7 @@ export default function AdminSettingsPage() {
           <button
             onClick={() => setOpen(!open)}
             className={cn(
-              "shrink-0 rounded-lg px-3 py-2 text-[12px] font-extrabold transition-colors",
+              "inline-flex min-h-9 shrink-0 items-center rounded-lg px-3 text-[12px] font-extrabold transition-colors",
               open ? "bg-emerald-500/15 text-emerald-600" : "bg-flame-600/15 text-flame-600",
             )}
           >

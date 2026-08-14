@@ -48,7 +48,7 @@ export default function AccountPage() {
   const progress = Math.min(100, Math.round((points / nextReward) * 100));
 
   return (
-    <div className="shell py-4 pb-24 sm:py-6 lg:pb-12">
+    <div className="shell py-4 sm:py-6 lg:pb-12">
       {/* Header card */}
       <div className="surface relative overflow-hidden rounded-2xl p-4 sm:rounded-2xl sm:p-5">        <div className="relative flex flex-wrap items-center gap-4">
           {/* Avatar placeholder removed — the app has no profile pictures. */}
@@ -265,10 +265,10 @@ export default function AccountPage() {
 
               <div className="grid gap-3 sm:grid-cols-2">
                 {[
-                  { p: 150, title: "یک نوشیدنی رایگان", icon: "🥤" },
-                  { p: 200, title: "سیب زمینی رایگان", icon: "🍟" },
-                  { p: 400, title: "۵۰٪ تخفیف برگر مخصوص", icon: "🍔" },
-                  { p: 700, title: "یک پیتزا مخصوص رایگان", icon: "🍕" },
+                  { p: 150, title: "یک نوشیدنی رایگان", icon: "cart" as const },
+                  { p: 200, title: "سیب زمینی رایگان", icon: "gift" as const },
+                  { p: 400, title: "۵۰٪ تخفیف برگر مخصوص", icon: "tag" as const },
+                  { p: 700, title: "یک پیتزا مخصوص رایگان", icon: "flame" as const },
                 ].map((r) => {
                   const unlocked = points >= r.p;
                   return (
@@ -279,7 +279,14 @@ export default function AccountPage() {
                         unlocked && "border-flame-600/40 bg-flame-600/6",
                       )}
                     >
-                      <span className="text-3xl">{r.icon}</span>
+                      <span
+                        className={cn(
+                          "grid size-11 shrink-0 place-items-center rounded-xl",
+                          unlocked ? "bg-flame-600/12 text-flame-600" : "bg-[var(--white-a6)] text-mist-500",
+                        )}
+                      >
+                        <Icon name={r.icon} className="size-5" />
+                      </span>
                       <div className="flex-1">
                         <div className="text-[13px] font-extrabold text-mist-100">{r.title}</div>
                         <div className="num text-[13px] text-mist-400">{toFa(r.p)} امتیاز</div>

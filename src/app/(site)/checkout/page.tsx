@@ -93,7 +93,7 @@ export default function CheckoutPage() {
   }
 
   return (
-    <div className="shell py-5 pb-24 sm:py-8 lg:pb-14">
+    <div className="shell py-5 sm:py-8 lg:pb-14">
       <h1 className="text-xl font-extrabold text-mist-100 sm:text-3xl">ثبت سفارش</h1>
 
       {/* Stepper */}

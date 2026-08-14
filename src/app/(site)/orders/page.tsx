@@ -19,7 +19,7 @@ export default function OrdersPage() {
   const past = orders.filter((o) => ["DELIVERED", "CANCELLED", "PAYMENT_FAILED"].includes(o.status));
 
   return (
-    <div className="shell py-5 pb-24 sm:py-8 lg:pb-14">
+    <div className="shell py-5 sm:py-8 lg:pb-14">
       <h1 className="text-xl font-extrabold text-mist-100 sm:text-3xl">سفارش‌های من</h1>
       <p className="mt-1.5 text-[13px] text-mist-400">پیگیری لحظه‌ای و سفارش مجدد با یک لمس.</p>
 

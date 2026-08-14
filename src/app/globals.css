@@ -408,6 +408,36 @@ body {
   padding-bottom: env(safe-area-inset-bottom, 0px);
 }
 
+/* --------------------------------------------------------------------------
+   FLOATING ISLAND NAV METRICS (items 13-18)
+
+   ONE source of truth for how much room the floating bottom nav occupies:
+     island body (min-h-12 + 2x1.5 padding) + bottom gutter + safe area.
+   Every "keep clear of the nav" rule derives from this token, so the island's
+   height can change in one place without hunting for magic numbers.
+   -------------------------------------------------------------------------- */
+:root {
+  --nav-island-h: 3.75rem; /* 48px row + 12px vertical padding */
+  --nav-gutter: 0.625rem;
+  --nav-clearance: calc(
+    var(--nav-island-h) + var(--nav-gutter) + env(safe-area-inset-bottom, 0px)
+  );
+}
+
+/* Content must never end underneath the island. Applied at the page level so
+   the last card/button is always reachable (item 18). */
+@media (max-width: 1023px) {
+  .pb-nav {
+    padding-bottom: calc(var(--nav-clearance) + 0.75rem);
+  }
+
+  /* For pages with a sticky action bar (cart total, add-to-cart): clear the
+     island AND the bar above it. `--action-bar-h` is the bar's own height. */
+  .pb-nav-action {
+    padding-bottom: calc(var(--nav-clearance) + var(--action-bar-h, 4.25rem) + 0.75rem);
+  }
+}
+
 /* ==========================================================================
    MOBILE-FIRST OPTIMIZATION
    100% of customers order on phones. Minimum tap target 44px, minimum
@@ -453,8 +483,10 @@ body {
 }
 
 /* Sticky mobile action bars sit above the bottom navigation */
+/* Sticky action bars (add-to-cart, cart total) sit directly above the
+   floating island, spaced by the same token. */
 .above-nav {
-  bottom: calc(4rem + env(safe-area-inset-bottom, 0px));
+  bottom: calc(var(--nav-clearance) + 0.5rem);
 }
 
 /* ==========================================================================

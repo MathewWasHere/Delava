@@ -1,12 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { cn } from "@/lib/cn";
 import { Icon, type IconName } from "@/components/ui/Icon";
 import { ThemeToggle } from "@/components/theme/ThemeToggle";
-import { useCurrentAdmin, usePermission } from "@/lib/use-roles";
+import { useCurrentAdmin, usePermission, useRoleSession } from "@/lib/use-roles";
+import { RoleGate } from "@/components/admin/RoleGate";
+import { RoleSessionMenu } from "@/components/admin/RoleSessionMenu";
 import type { Permission } from "@/lib/roles";
 import { Logo } from "@/components/brand/Logo";
 import { useStore } from "@/lib/store";
@@ -31,15 +33,58 @@ const NAV: Array<{
   { href: "/admin/settings", label: "تنظیمات", icon: "settings", permission: "settings.view" },
 ];
 
+/**
+ * Outer shell: decides between the role-selection gate and the panel.
+ *
+ * Kept separate so `AdminPanel` can call hooks unconditionally — returning
+ * <RoleGate /> early from inside the panel would put a `useEffect` behind a
+ * conditional return and break the rules of hooks.
+ */
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
+  const { member } = useRoleSession();
+  if (!member) return <RoleGate />;
+  return <AdminPanel>{children}</AdminPanel>;
+}
+
+function AdminPanel({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+  const router = useRouter();
   const { state } = useStore();
   const [open, setOpen] = useState(false);
   const newOrders = state.orders.filter((o) => o.status === "PENDING").length;
   const currentUser = useCurrentAdmin();
+  const { signOut } = useRoleSession();
   const allow = usePermission();
   // Never render a link the current role cannot open (no dead nav items).
   const nav = NAV.filter((item) => allow(item.permission));
+
+  /*
+   * ROUTE-LEVEL PERMISSION GUARD.
+   *
+   * Filtering the sidebar was not enough: a KITCHEN user landing on /admin
+   * still rendered the full revenue dashboard, because the page itself was
+   * never gated. Now the route's own permission is checked, and a role that
+   * cannot view it is offered its real home instead of a dead end.
+   */
+  const current = NAV.find((item) =>
+    item.href === "/admin" ? pathname === "/admin" : pathname.startsWith(item.href),
+  );
+  const home = nav[0]?.href ?? "/";
+
+  /*
+   * /admin is the shared entry URL, but KITCHEN and DRIVER cannot view the
+   * dashboard. Rather than greeting them with a permission error on login,
+   * send them straight to their own landing page; the error screen is then
+   * reserved for genuine attempts to reach a forbidden section.
+   */
+  const redirectHome = pathname === "/admin" && !allow("dashboard.view") && home !== "/admin";
+  const denied = !redirectHome && current ? !allow(current.permission) : false;
+
+  // Navigate rather than render a forbidden page (effect: navigation is a
+  // side effect, and this keeps render pure for the React Compiler).
+  useEffect(() => {
+    if (redirectHome) router.replace(home);
+  }, [redirectHome, home, router]);
 
   return (
     <div className="min-h-screen bg-ink-950 lg:grid lg:grid-cols-[248px_1fr]">
@@ -85,12 +130,26 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           })}
         </nav>
 
-        <div className="absolute inset-x-3 bottom-3">
+        {/* Two distinct exits: leave the ROLE (back to selection) or leave the
+            admin area entirely. Previously only the latter existed, which is
+            why a kitchen user could never reach another role. */}
+        <div className="absolute inset-x-3 bottom-3 space-y-1.5">
+          <button
+            type="button"
+            onClick={() => {
+              setOpen(false);
+              signOut();
+            }}
+            className="flex w-full items-center gap-2.5 rounded-xl border border-red-600/25 bg-red-600/10 px-3.5 py-2.5 text-[12px] font-extrabold text-red-600 transition-colors hover:bg-red-600/15"
+          >
+            <Icon name="logout" className="size-4 shrink-0" />
+            خروج از این سمت
+          </button>
           <Link
             href="/"
             className="flex items-center gap-2.5 rounded-xl border border-[var(--surface-border)] px-3.5 py-2.5 text-[12px] font-bold text-mist-400 transition-colors hover:text-mist-100"
           >
-            <Icon name="logout" className="size-4" />
+            <Icon name="home" className="size-4 shrink-0" />
             بازگشت به سایت
           </Link>
         </div>
@@ -127,18 +186,46 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           {/* Same theme system as the customer app. */}
           <ThemeToggle className="size-9" />
 
-          {/* Current admin user — name + role, no avatar placeholder. */}
-          <div className="flex min-w-0 items-center gap-2 rounded-lg border border-[var(--surface-border)] bg-[var(--white-a4)] py-1 pl-2.5 pr-2.5">
-            <div className="min-w-0 text-right leading-tight">
-              <div className="truncate text-[12px] font-extrabold text-mist-100">
-                {currentUser.name}
-              </div>
-              <div className="truncate text-[10.5px] text-flame-600">{currentUser.roleLabel}</div>
-            </div>
-          </div>
+          {/* Current role + exit/switch — one shared control for every role. */}
+          <RoleSessionMenu
+            name={currentUser.name}
+            roleLabel={currentUser.roleLabel}
+            phone={currentUser.phone}
+          />
         </header>
 
+        {denied ? (
+          <main className="mx-auto w-full max-w-lg px-4 py-10 text-center">
+            <span className="mx-auto grid size-12 place-items-center rounded-2xl bg-flame-600/12 text-flame-600">
+              <Icon name="shield" className="size-5" />
+            </span>
+            <h1 className="mt-3 text-[17px] font-extrabold text-mist-100">
+              دسترسی به این بخش ندارید
+            </h1>
+            <p className="mx-auto mt-1.5 max-w-sm text-[13px] leading-6 text-mist-500">
+              سمت «{currentUser.roleLabel}» به این صفحه دسترسی ندارد. می‌توانید به
+              بخش خودتان بروید یا از این سمت خارج شوید.
+            </p>
+            <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
+              <Link
+                href={home}
+                className="inline-flex min-h-11 items-center rounded-xl bg-flame-600 px-4 text-[13px] font-extrabold text-white transition-colors hover:bg-flame-700"
+              >
+                رفتن به بخش من
+              </Link>
+              <button
+                type="button"
+                onClick={signOut}
+                className="inline-flex min-h-11 items-center gap-1.5 rounded-xl border border-red-600/25 bg-red-600/10 px-4 text-[13px] font-extrabold text-red-600 transition-colors hover:bg-red-600/15"
+              >
+                <Icon name="logout" className="size-4 shrink-0" />
+                خروج از این سمت
+              </button>
+            </div>
+          </main>
+        ) : (
         <main className="p-3 sm:p-4 lg:p-6">{children}</main>
+        )}
       </div>
     </div>
   );

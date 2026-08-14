@@ -119,72 +119,99 @@ export function RolesPanel() {
           return (
             <div
               key={member.phone}
-              className="flex flex-wrap items-center gap-2 rounded-lg border border-[var(--surface-border)] bg-ink-850 px-3 py-2"
+              /*
+               * ZONED LAYOUT (items 3 & 5)
+               *
+               * Previously every zone competed for one cramped flex row, so
+               * names, phone numbers and the role <select> collided. Now the
+               * card is an explicit grid:
+               *
+               *   mobile               >= sm
+               *   [ identity      ]    [ identity | role | actions ]
+               *   [ role | actions]    [ description             ]
+               *   [ description   ]
+               *
+               * Nothing is hidden or shrunk — the rows simply stack while
+               * space is tight, and the description always gets full width to
+               * wrap naturally.
+               */
+              className="rounded-lg border border-[var(--surface-border)] bg-ink-850 p-3"
             >
-              <div className="min-w-0 flex-1">
-                <div className="flex items-center gap-1.5">
-                  <span className="truncate text-[12.5px] font-bold text-mist-100">
-                    {member.name}
-                  </span>
-                  {isMe && (
-                    <span className="shrink-0 rounded bg-flame-600/12 px-1.5 py-0.5 text-[10.5px] font-extrabold text-flame-600">
-                      شما
+              <div className="grid gap-2.5 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-start sm:gap-3">
+                {/* ZONE 1 — identity */}
+                <div className="min-w-0">
+                  <div className="flex flex-wrap items-center gap-x-1.5 gap-y-1">
+                    <span className="break-words text-[13px] font-bold text-mist-100">
+                      {member.name}
                     </span>
-                  )}
+                    {isMe && (
+                      <span className="shrink-0 rounded bg-flame-600/12 px-1.5 py-0.5 text-[10.5px] font-extrabold text-flame-600">
+                        شما
+                      </span>
+                    )}
+                  </div>
+                  <div className="num mt-0.5 text-[11.5px] text-mist-500" dir="ltr">
+                    {toFa(member.phone)}
+                  </div>
                 </div>
-                <div className="num truncate text-[11px] text-mist-500" dir="ltr">
-                  {toFa(member.phone)}
+
+                {/* ZONES 2 + 3 — role selector and actions, kept together so
+                    they wrap as one unit instead of splitting awkwardly. */}
+                <div className="flex items-center gap-1.5">
+                  <select
+                    value={member.role}
+                    onChange={(e) => {
+                      setRole(member.phone, e.target.value as Role);
+                      pushToast({ title: "نقش به‌روزرسانی شد", tone: "success" });
+                    }}
+                    aria-label={`نقش ${member.name}`}
+                    className="h-10 min-w-0 flex-1 rounded-lg border border-[var(--surface-border-strong)] bg-ink-800 px-2 text-[12.5px] font-bold text-mist-100 outline-none transition-colors focus:border-flame-600/70 sm:w-36 sm:flex-none"
+                  >
+                    {ROLES.map((r) => (
+                      <option key={r.role} value={r.role}>
+                        {r.label}
+                      </option>
+                    ))}
+                  </select>
+
+                  {/* Switch identity — Stage 1 has no admin auth, so this
+                      previews what each role actually sees. */}
+                  <button
+                    onClick={() => {
+                      me.switchTo(member.phone);
+                      pushToast({ title: `نمایش پنل به‌عنوان ${member.name}`, tone: "success" });
+                    }}
+                    disabled={isMe}
+                    title="مشاهده پنل با این نقش"
+                    aria-label={`مشاهده پنل به‌عنوان ${member.name}`}
+                    className="grid size-10 shrink-0 place-items-center rounded-lg border border-[var(--surface-border-strong)] text-mist-300 transition-colors hover:border-flame-600/50 hover:text-flame-600 disabled:opacity-30"
+                  >
+                    <Icon name="user" className="size-4" />
+                  </button>
+
+                  <button
+                    onClick={() => {
+                      if (isMe) {
+                        pushToast({ title: "نمی‌توانید دسترسی خودتان را حذف کنید", tone: "error" });
+                        return;
+                      }
+                      remove(member.phone);
+                      pushToast({ title: "دسترسی حذف شد" });
+                    }}
+                    disabled={isMe}
+                    title="حذف دسترسی"
+                    aria-label={`حذف دسترسی ${member.name}`}
+                    className="grid size-10 shrink-0 place-items-center rounded-lg border border-[var(--surface-border-strong)] text-mist-300 transition-colors hover:border-red-500/60 hover:text-red-500 disabled:opacity-30"
+                  >
+                    <Icon name="trash" className="size-4" />
+                  </button>
                 </div>
               </div>
 
-              {/* Change role inline */}
-              <select
-                value={member.role}
-                onChange={(e) => {
-                  setRole(member.phone, e.target.value as Role);
-                  pushToast({ title: "نقش به‌روزرسانی شد", tone: "success" });
-                }}
-                aria-label={`نقش ${member.name}`}
-                className="h-9 shrink-0 rounded-lg border border-[var(--surface-border-strong)] bg-ink-800 px-2 text-[12px] font-bold text-mist-100 outline-none transition-colors focus:border-flame-600/70"
-              >
-                {ROLES.map((r) => (
-                  <option key={r.role} value={r.role}>
-                    {r.label}
-                  </option>
-                ))}
-              </select>
-
-              {/* Switch identity — Stage 1 has no admin auth, so this previews
-                  what each role actually sees. */}
-              <button
-                onClick={() => {
-                  me.switchTo(member.phone);
-                  pushToast({ title: `نمایش پنل به‌عنوان ${member.name}`, tone: "success" });
-                }}
-                disabled={isMe}
-                title="مشاهده پنل با این نقش"
-                className="grid size-9 shrink-0 place-items-center rounded-lg border border-[var(--surface-border-strong)] text-mist-300 transition-colors hover:border-flame-600/50 hover:text-flame-600 disabled:opacity-30"
-              >
-                <Icon name="user" className="size-3.5" />
-              </button>
-
-              <button
-                onClick={() => {
-                  if (isMe) {
-                    pushToast({ title: "نمی‌توانید دسترسی خودتان را حذف کنید", tone: "error" });
-                    return;
-                  }
-                  remove(member.phone);
-                  pushToast({ title: "دسترسی حذف شد" });
-                }}
-                disabled={isMe}
-                title="حذف دسترسی"
-                className="grid size-9 shrink-0 place-items-center rounded-lg border border-[var(--surface-border-strong)] text-mist-300 transition-colors hover:border-red-500/60 hover:text-red-500 disabled:opacity-30"
-              >
-                <Icon name="trash" className="size-3.5" />
-              </button>
-
-              <p className="w-full text-[10.5px] leading-4 text-mist-500">{def?.description}</p>
+              {/* ZONE 4 — secondary description, full width so it wraps. */}
+              <p className="mt-2 border-t border-[var(--hairline)] pt-2 text-[11.5px] leading-5 text-mist-500">
+                {def?.description}
+              </p>
             </div>
           );
         })}

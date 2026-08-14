@@ -56,7 +56,7 @@ export function AuthPanel({ onDone, compact }: { onDone?: () => void; compact?: 
     setTimeout(() => {
       setLoading(false);
       login(normalizePhone(phone), name.trim() || undefined);
-      pushToast({ title: "خوش آمدی به دلاوا 🎉", tone: "success" });
+      pushToast({ title: "خوش آمدی به دلاوا", tone: "success" });
       onDone?.();
     }, 600);
   };

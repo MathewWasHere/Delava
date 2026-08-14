@@ -155,14 +155,35 @@ export const ACTIVE_ADMIN_KEY = "delava.activeAdmin.v1";
  * role, so wiring real auth in Stage 2 is a one-function change.
  */
 export function readActiveAdmin(): StaffMember {
-  if (typeof window === "undefined") return DEFAULT_STAFF[0];
+  return readActiveAdminOrNull() ?? DEFAULT_STAFF[0];
+}
+
+/**
+ * The signed-in staff member, or `null` when no role has been chosen yet.
+ *
+ * The null state is what makes "خروج از این سمت" possible: exiting clears the
+ * key, the layout falls back to the role-selection screen, and the operator
+ * picks a different role. Without it, `readActiveAdmin()` would silently
+ * default to the first staff member and the user could never actually leave
+ * a role — which is the trap this fixes.
+ */
+export function readActiveAdminOrNull(): StaffMember | null {
+  if (typeof window === "undefined") return null;
   try {
-    const staff = readStaff();
     const phone = localStorage.getItem(ACTIVE_ADMIN_KEY);
-    const found = staff.find((s) => s.phone === phone);
-    return found ?? staff[0] ?? DEFAULT_STAFF[0];
+    if (!phone) return null;
+    return readStaff().find((s) => s.phone === phone) ?? null;
   } catch {
-    return DEFAULT_STAFF[0];
+    return null;
+  }
+}
+
+/** Leave the current role and return to the role-selection screen. */
+export function clearActiveAdmin(): void {
+  try {
+    localStorage.removeItem(ACTIVE_ADMIN_KEY);
+  } catch {
+    /* ignore */
   }
 }
 

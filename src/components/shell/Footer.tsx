@@ -37,7 +37,7 @@ function Heartbeat() {
 
 export function Footer() {
   return (
-    <footer className="mt-8 border-t border-[var(--surface-border)] bg-ink-900 pb-24 sm:mt-16 lg:pb-10">
+    <footer className="pb-nav mt-8 border-t border-[var(--surface-border)] bg-ink-900 sm:mt-16 lg:pb-10">
       <div className="shell py-5 sm:py-8">
         {/* ---------- Brand + socials ---------- */}
         <div className="flex items-center justify-between gap-4">

@@ -6,7 +6,8 @@ import {
   DEFAULT_STAFF,
   STAFF_STORAGE_KEY,
   can,
-  readActiveAdmin,
+  clearActiveAdmin,
+  readActiveAdminOrNull,
   readStaff,
   roleLabel,
   writeStaff,
@@ -61,9 +62,9 @@ function staffServerSnapshot(): StaffMember[] {
 }
 
 let adminCache: StaffMember | null = null;
-let adminCacheKey = "";
+let adminCacheKey = "\u0000";
 
-function adminSnapshot(): StaffMember {
+function adminSnapshot(): StaffMember | null {
   const key = (() => {
     try {
       return (
@@ -75,15 +76,15 @@ function adminSnapshot(): StaffMember {
       return "";
     }
   })();
-  if (key !== adminCacheKey || adminCache === null) {
+  if (key !== adminCacheKey) {
     adminCacheKey = key;
-    adminCache = readActiveAdmin();
+    adminCache = readActiveAdminOrNull();
   }
   return adminCache;
 }
 
-function adminServerSnapshot(): StaffMember {
-  return DEFAULT_STAFF[0];
+function adminServerSnapshot(): StaffMember | null {
+  return null;
 }
 
 /** The staff directory plus mutators. */
@@ -113,11 +114,16 @@ export function useStaff() {
   return { staff, upsert, remove, setRole };
 }
 
-/** Who is currently operating the admin panel. */
-export function useCurrentAdmin() {
+/**
+ * The active role session, or `null` when nobody has picked a role yet.
+ *
+ * This is the single source of truth every admin surface reads — one reusable
+ * session hook rather than a bespoke implementation per role.
+ */
+export function useRoleSession() {
   const member = useSyncExternalStore(subscribe, adminSnapshot, adminServerSnapshot);
 
-  const switchTo = useCallback((phone: string) => {
+  const signInAs = useCallback((phone: string) => {
     try {
       localStorage.setItem(ACTIVE_ADMIN_KEY, phone);
     } catch {
@@ -126,10 +132,29 @@ export function useCurrentAdmin() {
     emit();
   }, []);
 
+  const signOut = useCallback(() => {
+    clearActiveAdmin();
+    emit();
+  }, []);
+
+  return { member, signInAs, signOut };
+}
+
+/**
+ * Who is currently operating the admin panel.
+ *
+ * Falls back to the first staff member so existing callers keep a non-null
+ * object; screens that must distinguish "no role chosen" use `useRoleSession`.
+ */
+export function useCurrentAdmin() {
+  const { member, signInAs, signOut } = useRoleSession();
+  const resolved = member ?? DEFAULT_STAFF[0];
+
   return {
-    ...member,
-    roleLabel: roleLabel(member.role),
-    switchTo,
+    ...resolved,
+    roleLabel: roleLabel(resolved.role),
+    switchTo: signInAs,
+    signOut,
   };
 }
 

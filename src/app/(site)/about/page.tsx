@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <div className="pb-24 lg:pb-10">
+    <div className="lg:pb-10">
       <section className="relative">
         <div className="absolute inset-0">
           <Image

@@ -65,7 +65,7 @@ function MenuInner() {
   );
 
   return (
-    <div className="pb-24 lg:pb-10">
+    <div className="lg:pb-10">
       {/* Header — compact on mobile so food is visible immediately */}
       <div className="relative border-b border-[var(--surface-border)] bg-ink-900">        <div className="shell relative py-4 sm:py-10">
           <div className="hidden sm:block">

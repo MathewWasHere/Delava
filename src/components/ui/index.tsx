@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useEffect, useId, useRef, useState } from "react";
 import { cn } from "@/lib/cn";
 import { faNumber, toEn, toFa } from "@/lib/format";
+import { Icon } from "@/components/ui/Icon";
 
 /* ------------------------------- Price -------------------------------- */
 
@@ -237,7 +238,7 @@ export function QuantitySelector({
         onClick={() => onChange(value - 1)}
         className={cn(btn, "grid place-items-center text-mist-200 transition-colors hover:bg-[var(--white-a8)]")}
       >
-        {value === min ? "🗑" : "−"}
+        {value === min ? <Icon name="trash" className="size-4" /> : "\u2212"}
       </button>
     </div>
   );
@@ -338,7 +339,7 @@ export function Rating({ value, count }: { value: number; count?: number }) {
   return (
     <span className="inline-flex items-center gap-1 num text-[13px] text-mist-200">
       {/* Golden star — the yellow accent earns its place on ratings. */}
-      <span className="text-gold-500">★</span>
+      <Icon name="star" filled className="size-3.5 shrink-0 text-gold-500" />
       <span className="font-bold">{toFa(value.toFixed(1))}</span>
       {count !== undefined && <span className="text-mist-500">({toFa(count)})</span>}
     </span>

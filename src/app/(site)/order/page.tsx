@@ -58,15 +58,17 @@ function OrderDetailInner() {
   const progress = Math.min(100, Math.round(((statusIndex(order.status) + 1) / 6) * 100));
 
   return (
-    <div className="shell py-5 pb-24 sm:py-8 lg:pb-14">
-      <Link href="/orders" className="mb-5 inline-flex items-center gap-1.5 text-[13px] text-mist-400 hover:text-mist-100">
+    <div className="shell py-5 sm:py-8 lg:pb-14">
+      <Link href="/orders" className="mb-5 -my-2 inline-flex min-h-11 items-center gap-1.5 text-[13px] text-mist-400 hover:text-mist-100">
         <Icon name="chevron" className="size-4 rotate-180" />
         سفارش‌های من
       </Link>
 
       {celebrate && (
         <div className="mb-5 animate-fade-up rounded-2xl border border-emerald-500/30 bg-emerald-500/10 p-6 text-center">
-          <div className="text-4xl">🎉</div>
+          <div className="mx-auto grid size-14 place-items-center rounded-full bg-emerald-500/15 text-emerald-600">
+            <Icon name="check" className="size-7" />
+          </div>
           <h1 className="mt-3 text-xl font-extrabold text-mist-100">سفارش شما با موفقیت ثبت شد</h1>
           <p className="num mt-2 text-[13px] text-mist-300">
             شماره سفارش: <span className="font-extrabold text-emerald-600">#{toFa(order.number)}</span>

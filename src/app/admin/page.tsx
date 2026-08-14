@@ -61,7 +61,7 @@ export default function AdminDashboard() {
         </div>
         <Link
           href="/admin/orders"
-          className="rounded-lg bg-flame-600 px-3 py-2 text-[12px] font-extrabold text-white transition-colors hover:bg-flame-500"
+          className="inline-flex min-h-9 items-center rounded-lg bg-flame-600 px-3 text-[12px] font-extrabold text-white transition-colors hover:bg-flame-500"
         >
           مدیریت سفارش‌های زنده
         </Link>
