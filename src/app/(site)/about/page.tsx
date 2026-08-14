@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <div className="pb-28 lg:pb-10">
+    <div className="pb-24 lg:pb-10">
       <section className="relative">
         <div className="absolute inset-0">
           <Image
@@ -52,7 +52,7 @@ export default function AboutPage() {
             { icon: "spark" as const, title: "خمیر روزانه", text: "خمیر پیتزا هر روز صبح تازه ورز داده و استراحت داده می‌شود." },
             { icon: "bike" as const, title: "پیک خودمان", text: "غذا را خودمان می‌رسانیم تا گرم و سالم به دستت برسد." },
           ].map((c) => (
-            <div key={c.title} className="surface rounded-3xl p-6">
+            <div key={c.title} className="surface rounded-2xl p-6">
               <span className="grid size-12 place-items-center rounded-2xl bg-flame-600/12 text-flame-500">
                 <Icon name={c.icon} className="size-6" />
               </span>
@@ -64,9 +64,9 @@ export default function AboutPage() {
       </section>
 
       <section className="shell py-8">
-        <SectionHead eyebrow="اطلاعات تماس" title="کجا پیدامان کنی" />
+        <SectionHead title="کجا پیدامان کنی" />
         <div className="grid gap-6 lg:grid-cols-[1fr_1fr]">
-          <div className="surface space-y-6 rounded-3xl p-7">
+          <div className="surface space-y-6 rounded-2xl p-7">
             <Info icon="pin" title="آدرس" value={RESTAURANT.address} />
             <Info icon="clock" title="ساعات کاری" value={toFa(RESTAURANT.hours)} />
             <Info icon="phone" title="شماره تماس" value={toFa(RESTAURANT.phoneDisplay)} ltr />
@@ -80,7 +80,7 @@ export default function AboutPage() {
             </ButtonLink>
           </div>
 
-          <div className="relative min-h-72 overflow-hidden rounded-3xl border border-[var(--surface-border)]">
+          <div className="relative min-h-72 overflow-hidden rounded-2xl border border-[var(--surface-border)]">
             <Image
               src="/brand/hero-storefront.webp"
               alt="نمای فست فود دلاوا"
@@ -100,7 +100,7 @@ export default function AboutPage() {
       </section>
 
       <section className="shell py-14">
-        <div className="rounded-[32px] border border-flame-600/25 bg-gradient-to-l from-flame-700/20 to-ink-900 p-8 text-center sm:p-12">
+        <div className="rounded-2xl border border-flame-600/25 bg-gradient-to-l from-flame-700/20 to-ink-900 p-8 text-center sm:p-12">
           <h2 className="text-2xl font-extrabold text-mist-100 sm:text-3xl">
             سفارش بعدی‌ات را مستقیم از دلاوا ثبت کن
           </h2>

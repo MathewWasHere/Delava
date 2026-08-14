@@ -262,3 +262,86 @@ working service worker now apply.
 ### Regression
 8 widths × 6 routes × both themes + admin: **0 problems** — no overflow, no
 sub-12.5px text, no tap target under 44px, no console/page errors.
+
+---
+
+# Round 3 — Mobile-first refactor (29 requirements)
+
+## Palette (5)
+Orange retired. `flame-*` token names kept so **326 usages across 39 files**
+adopted the new ramp centrally instead of being rewritten one by one:
+
+| Token | Value |
+| --- | --- |
+| `flame-600` (accent/fill) | **#C20D00** |
+| `flame-500` | #E01100 |
+| surfaces | pure **#FFFFFF** / **#000000** neutrals |
+
+Structure is black + white; red is reserved for action/brand. Semantic status
+colours (green/amber/sky/violet) were **kept** — forcing them to brand red
+would destroy scannability. Their text weights moved to `-600` so they clear
+contrast on white. Dark mode lifts `flame-500/600` (#FF3B2B/#F2483A) because
+#C20D00 text is unreadable on black; the *fill* colour stays exact.
+
+## Hero (1)
+`scripts/prepare-brand.py` now emits **three 16:9 crops of one composition**
+(1600×900 / 1024×576 / 768×432). Mobile shows the landscape image as a band
+with copy stacked beneath — verified 390×219, **ratio 1.78**.
+
+## Header (7, 8)
+3-column grid (`1fr auto 1fr`) with `dir="ltr"` on the bar and `dir="rtl"`
+inside each cell — physical placement that RTL cannot flip. Measured at 390px:
+logo x=14 (left), status centre 189 vs viewport 195, hamburger x=332 (right).
+Logo 92px → **58px**; header 56px → **53px**.
+
+## Circular indicators (9)
+Root cause: badges centred numerals with text baselines. Persian digits (۱۲۳)
+have different vertical metrics to Latin, so they always sat off-centre. Added
+a single `CountBadge` primitive — square box, `place-items-center`,
+`leading-none`, `tabular-nums` — and applied the same fix to the admin badge
+and checkout step circles.
+
+## Roles & RBAC (17, 18, 19, 22)
+New `src/lib/roles.ts` + `use-roles.tsx`: four roles (مدیر ارشد / مدیر فناوری /
+کارمند آشپزخانه / پیک) with a real `Permission` matrix and `can()` gate.
+Assignment is **by phone number**, matching the app's existing phone+OTP
+identity. Nav is filtered by permission, so no role ever sees a dead link —
+verified: kitchen sees 4 items, driver sees exactly `["پیک من"]`.
+
+`/admin/driver` is a polished showcase: daily summary, live delivery card with
+progress rail, three lanes (queue / active / done), pick-up + deliver actions
+that drive the **real** state machine. Couriers see address, recipient and a
+call button — never the full customer record.
+
+## Removed (10, 20, 21)
+Avatar placeholders, the Category-QR block and Connected Services are gone —
+along with their data and helpers, not just hidden.
+
+## Density (13, 14, 15, 16, 24, 25)
+A scripted spacing pass rewrote the scale across 23 files (section padding,
+card padding, radii, gaps). Admin `StatCard` became a horizontal row (−40px
+dead height each). **Live-orders overflow** was caused by an unbounded item
+list plus shrink-resistant chips on one flex line — rebuilt as two lines with
+`min-w-0` + `truncate` on every flexible cell.
+
+## Cancel button (11)
+`bg-red-600/10` — the **container** is 10% opacity, the label is full strength.
+Fading the whole button would have failed contrast. Verified computed:
+`background: …/0.1`, `opacity: 1`.
+
+## Verified
+
+| Metric | Result |
+| --- | --- |
+| Widths × routes × themes | 320/360/375/390/414/768/1024/1440 × 7 × 2 |
+| Horizontal overflow | **0** |
+| Text under 12.5px | **0** |
+| Tap targets under 44px | **0** |
+| Leftover orange (computed styles) | **0** |
+| Console / page errors | **0** |
+
+Compact controls keep a 40px visual box but get a 44px hit area via the
+`.tap-44` pseudo-element — density without sacrificing accessibility.
+
+E2E re-run after every change: cart → OTP → address → payment → tracking, live
+banner above hero, admin board intact. Package: **4.8 MB / 402 files**.

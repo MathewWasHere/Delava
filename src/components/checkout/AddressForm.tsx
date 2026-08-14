@@ -70,7 +70,7 @@ export function AddressForm({
                 className={cn(
                   "rounded-xl border px-4 py-2 text-[13px] font-bold transition-all",
                   title === t
-                    ? "border-flame-600 bg-flame-600/12 text-flame-400"
+                    ? "border-flame-600 bg-flame-600/12 text-flame-600"
                     : "border-[var(--surface-border)] bg-ink-850 text-mist-400",
                 )}
               >

@@ -10,6 +10,7 @@ import { cn } from "@/lib/cn";
 import { toFa } from "@/lib/format";
 import { RESTAURANT } from "@/lib/data/catalog";
 import { Icon } from "@/components/ui/Icon";
+import { CountBadge } from "@/components/ui";
 import { ThemeToggle, ThemeSwitch } from "@/components/theme/ThemeToggle";
 import { OpenStatus } from "@/components/shell/OpenStatus";
 
@@ -59,11 +60,37 @@ export function Navbar() {
           : "border-b border-transparent bg-[var(--scrim)]/85",
       )}
     >
-      <div>
-        <div className="shell flex h-14 items-center gap-1.5 sm:h-[72px] sm:gap-3">
-          <Logo width={72} withSub={false} />
+      {/*
+        HEADER COMPOSITION — physically fixed, not RTL-flipped.
 
-          <nav className="mr-4 hidden items-center gap-1 lg:flex">
+        [ logo ]        [ status ]        [ actions ]
+          LEFT           CENTER             RIGHT
+
+        `dir="ltr"` on the bar pins the three columns to those physical sides;
+        each cell restores `dir="rtl"` so Persian text inside still lays out
+        correctly. A 3-column grid with equal outer tracks keeps the status
+        optically centred no matter how wide the side clusters get — which a
+        flex row with `justify-between` cannot guarantee.
+      */}
+      <div
+        dir="ltr"
+        className="shell grid h-13 grid-cols-[1fr_auto_1fr] items-center gap-2 sm:h-16"
+      >
+        {/* LEFT — brand */}
+        <div className="flex items-center justify-start">
+          <Logo width={58} withSub={false} />
+        </div>
+
+        {/* CENTER — store status */}
+        <div dir="rtl" className="flex items-center justify-center">
+          <OpenStatus />
+        </div>
+
+        {/* RIGHT — actions.
+            Physical order left->right: nav, theme, cart, hamburger.
+            The hamburger therefore sits at the far right edge. */}
+        <div dir="rtl" className="flex items-center justify-end gap-1.5 sm:gap-2">
+          <nav className="hidden items-center gap-0.5 lg:flex">
             {LINKS.map((l) => {
               const active = l.href === "/" ? pathname === "/" : pathname.startsWith(l.href);
               return (
@@ -72,89 +99,50 @@ export function Navbar() {
                   href={l.href}
                   prefetch={false}
                   className={cn(
-                    "relative flex min-h-11 items-center rounded-xl px-3.5 text-[14px] font-medium transition-colors",
+                    "relative flex min-h-11 items-center rounded-lg px-3 text-[13.5px] font-medium transition-colors",
                     active ? "text-mist-100" : "text-mist-400 hover:text-mist-100",
                   )}
                 >
                   {l.label}
                   {active && (
-                    <span className="absolute inset-x-3 -bottom-0.5 h-0.5 rounded-full bg-flame-500 shadow-[0_0_12px_rgba(238,109,27,0.9)]" />
+                    <span className="absolute inset-x-3 bottom-0.5 h-0.5 rounded-full bg-flame-600" />
                   )}
                 </Link>
               );
             })}
           </nav>
 
-          <div className="flex flex-1 items-center justify-end gap-1.5 sm:gap-2">
-            {/* Open/closed indicator — moved out of the hero (item 3). */}
-            <OpenStatus />
-
-            <a
-              href={`tel:${RESTAURANT.phone}`}
-              className="hidden min-h-11 items-center gap-2 rounded-xl border border-flame-600/25 bg-flame-600/8 px-3 text-[13px] font-bold text-flame-500 transition-colors hover:bg-flame-600/15 xl:inline-flex"
+          <button
+            type="button"
+            onClick={() => setMenuOpen(true)}
+            aria-label="منوی اصلی"
+            aria-expanded={menuOpen}
+            className="tap-44 grid size-10 place-items-center rounded-lg border border-[var(--surface-border)] bg-[var(--white-a4)] text-mist-200 transition-colors hover:border-flame-600/40 hover:text-mist-100"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.9"
+              strokeLinecap="round"
+              className="size-[18px]"
+              aria-hidden="true"
             >
-              <Icon name="phone" className="size-4" />
-              <span className="num" dir="ltr">
-                {toFa(RESTAURANT.phoneDisplay)}
-              </span>
-            </a>
+              <path d="M4 7h16M4 12h16M4 17h16" />
+            </svg>
+          </button>
 
-            <ThemeToggle className="hidden sm:grid" />
+          <Link
+            href="/cart"
+            prefetch={false}
+            aria-label={`سبد خرید، ${cartCount} کالا`}
+            className="tap-44 relative grid size-10 place-items-center rounded-lg border border-[var(--surface-border)] bg-[var(--white-a4)] text-mist-200 transition-colors hover:border-flame-600/40 hover:text-mist-100"
+          >
+            <Icon name="cart" className="size-[18px]" />
+            {cartCount > 0 && <CountBadge value={cartCount} pulseKey={cartPulse} />}
+          </Link>
 
-            <Link
-              href={state.user ? "/account" : "/auth"}
-              prefetch={false}
-              aria-label="حساب کاربری"
-              className="hidden size-11 place-items-center rounded-xl border border-[var(--surface-border)] bg-[var(--white-a6)] text-mist-200 transition-colors hover:border-flame-600/40 hover:text-mist-100 sm:grid"
-            >
-              <Icon name="user" className="size-5" />
-            </Link>
-
-            <Link
-              href="/cart"
-              prefetch={false}
-              aria-label={`سبد خرید، ${cartCount} کالا`}
-              className="relative grid size-11 place-items-center rounded-xl border border-[var(--surface-border)] bg-[var(--white-a6)] text-mist-200 transition-colors hover:border-flame-600/40 hover:text-mist-100"
-            >
-              <Icon name="cart" className="size-5" />
-              {cartCount > 0 && (
-                <span
-                  key={cartPulse}
-                  className="num absolute -top-1.5 -left-1.5 grid min-w-5 animate-pop place-items-center rounded-full bg-flame-600 px-1 text-[13px] font-extrabold text-white"
-                >
-                  {toFa(cartCount)}
-                </span>
-              )}
-            </Link>
-
-            <Link
-              href="/menu"
-              className="hidden h-11 items-center rounded-xl bg-gradient-to-l from-flame-700 to-flame-500 px-5 text-[13px] font-bold text-white transition-all hover:brightness-110 lg:inline-flex"
-            >
-              سفارش آنلاین
-            </Link>
-
-            {/* Hamburger — phones & tablets */}
-            <button
-              type="button"
-              onClick={() => setMenuOpen(true)}
-              aria-label="منوی اصلی"
-              aria-expanded={menuOpen}
-              className="grid size-11 place-items-center rounded-xl border border-[var(--surface-border)] bg-[var(--white-a6)] text-mist-200 transition-colors hover:border-flame-600/40 hover:text-mist-100 lg:hidden"
-            >
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.9"
-                strokeLinecap="round"
-                className="size-5"
-                aria-hidden="true"
-              >
-                <path d="M4 7h16M4 12h16M4 17h16" />
-              </svg>
-            </button>
-          </div>
+          <ThemeToggle />
         </div>
       </div>
 

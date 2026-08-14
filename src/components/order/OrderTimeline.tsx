@@ -69,7 +69,7 @@ export function StepCircle({
         "relative z-10 grid size-8 shrink-0 place-items-center rounded-full transition-all",
         state === "done" && "bg-emerald-500 text-white ring-1 ring-emerald-500/40",
         state === "active" &&
-          "bg-flame-600 text-white ring-4 ring-flame-500/20 shadow-[0_0_0_1px_rgba(238,109,27,0.5)]",
+          "bg-flame-600 text-white ring-4 ring-flame-500/20 shadow-[0_0_0_1px_rgba(194,13,0,0.5)]",
         state === "todo" && "border border-[var(--surface-border-strong)] bg-ink-850 text-mist-500",
         className,
       )}

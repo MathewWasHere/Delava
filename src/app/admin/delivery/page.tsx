@@ -18,10 +18,10 @@ export default function AdminDeliveryPage() {
     setZones((prev) => prev.map((z) => (z.id === id ? { ...z, ...changes } : z)));
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-3">
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h1 className="text-xl font-extrabold text-mist-100">مناطق ارسال</h1>
+          <h1 className="text-[17px] font-extrabold text-mist-100">مناطق ارسال</h1>
           <p className="mt-1 text-[12px] text-mist-500">
             هزینه، زمان و حداقل سفارش هر منطقه — همان مقادیری که در پرداخت مشتری اعمال می‌شود.
           </p>
@@ -46,7 +46,7 @@ export default function AdminDeliveryPage() {
         </Button>
       </div>
 
-      <div className="rounded-3xl border border-[var(--surface-border)] bg-gradient-to-l from-flame-600/8 to-ink-900 p-5">
+      <div className="rounded-2xl border border-[var(--surface-border)] bg-gradient-to-l from-flame-600/8 to-ink-900 p-5">
         <div className="flex items-center gap-3">
           <span className="grid size-11 place-items-center rounded-2xl bg-flame-600/15 text-flame-500">
             <Icon name="pin" />
@@ -65,7 +65,7 @@ export default function AdminDeliveryPage() {
           <div
             key={z.id}
             className={cn(
-              "rounded-3xl border bg-ink-900 p-5 transition-all",
+              "rounded-2xl border bg-ink-900 p-5 transition-all",
               z.active ? "border-[var(--surface-border)]" : "border-[var(--surface-border)] opacity-60",
             )}
           >
@@ -78,8 +78,8 @@ export default function AdminDeliveryPage() {
               <button
                 onClick={() => patch(z.id, { active: !z.active })}
                 className={cn(
-                  "shrink-0 rounded-xl px-3 py-2 text-[11px] font-bold transition-colors",
-                  z.active ? "bg-emerald-500/12 text-emerald-300" : "bg-[var(--white-a6)] text-mist-400",
+                  "inline-flex min-h-9 shrink-0 items-center rounded-lg px-3 text-[11px] font-bold transition-colors",
+                  z.active ? "bg-emerald-500/12 text-emerald-600" : "bg-[var(--white-a6)] text-mist-400",
                 )}
               >
                 {z.active ? "فعال" : "غیرفعال"}

@@ -48,22 +48,20 @@ export default function AccountPage() {
   const progress = Math.min(100, Math.round((points / nextReward) * 100));
 
   return (
-    <div className="shell py-5 pb-28 sm:py-8 lg:pb-14">
+    <div className="shell py-4 pb-24 sm:py-6 lg:pb-12">
       {/* Header card */}
-      <div className="surface relative overflow-hidden rounded-3xl p-5 sm:rounded-[32px] sm:p-8">
+      <div className="surface relative overflow-hidden rounded-2xl p-4 sm:rounded-2xl sm:p-5">
         <div className="absolute -left-20 -top-20 size-56 rounded-full bg-flame-600/20 blur-[90px]" />
-        <div className="relative flex flex-wrap items-center gap-5">
-          <span className="grid size-16 place-items-center rounded-3xl bg-gradient-to-br from-flame-600 to-flame-800 text-2xl font-extrabold text-white">
-            {(user?.name ?? "د").slice(0, 1)}
-          </span>
-          <div className="flex-1">
-            <h1 className="text-xl font-extrabold text-mist-100">{user?.name}</h1>
+        <div className="relative flex flex-wrap items-center gap-4">
+          {/* Avatar placeholder removed — the app has no profile pictures. */}
+          <div className="min-w-0 flex-1">
+            <h1 className="text-lg font-extrabold text-mist-100 sm:text-xl">{user?.name}</h1>
             <p className="num mt-1 text-[13px] text-mist-400" dir="ltr">
               {toFa(user?.phone ?? "")}
             </p>
           </div>
-          <div className="rounded-2xl border border-flame-600/30 bg-flame-600/8 px-5 py-3 text-center">
-            <div className="num text-xl font-extrabold text-flame-400">{toFa(points)}</div>
+          <div className="rounded-xl border border-flame-600/30 bg-flame-600/8 px-4 py-2 text-center">
+            <div className="num text-lg font-extrabold text-flame-600">{toFa(points)}</div>
             <div className="text-[13px] text-mist-400">امتیاز دلاوا</div>
           </div>
         </div>
@@ -79,7 +77,7 @@ export default function AccountPage() {
               className={cn(
                 "flex min-h-11 shrink-0 items-center gap-2.5 rounded-2xl px-4 py-3 text-[13px] font-bold transition-all lg:w-full",
                 tab === t.key
-                  ? "bg-flame-600/12 text-flame-400"
+                  ? "bg-flame-600/12 text-flame-600"
                   : "bg-ink-850 text-mist-400 hover:text-mist-100 lg:bg-transparent",
               )}
             >
@@ -92,7 +90,7 @@ export default function AccountPage() {
               logout();
               pushToast({ title: "از حساب خارج شدی" });
             }}
-            className="flex shrink-0 items-center gap-2.5 rounded-2xl px-4 py-3 text-[13px] font-bold text-mist-500 transition-colors hover:text-red-400 lg:w-full lg:mt-4"
+            className="flex shrink-0 items-center gap-2.5 rounded-2xl px-4 py-3 text-[13px] font-bold text-mist-500 transition-colors hover:text-red-500 lg:w-full lg:mt-4"
           >
             <Icon name="logout" className="size-4.5" />
             خروج از حساب
@@ -101,7 +99,7 @@ export default function AccountPage() {
 
         <div>
           {tab === "profile" && (
-            <div className="surface animate-fade-up rounded-3xl p-6">
+            <div className="surface animate-fade-up rounded-2xl p-6">
               <h2 className="text-lg font-extrabold text-mist-100">اطلاعات حساب</h2>
               <div className="mt-5 grid gap-4 sm:grid-cols-2">
                 <Field label="نام و نام خانوادگی">
@@ -132,14 +130,14 @@ export default function AccountPage() {
           {tab === "orders" && (
             <div className="animate-fade-up space-y-3">
               {state.orders.length === 0 && (
-                <div className="surface rounded-3xl p-12 text-center text-[13px] text-mist-400">
+                <div className="surface rounded-2xl p-12 text-center text-[13px] text-mist-400">
                   هنوز سفارشی ثبت نکرده‌ای.
                 </div>
               )}
               {state.orders.map((o) => (
-                <div key={o.id} className="surface flex flex-wrap items-center gap-4 rounded-3xl p-4">
+                <div key={o.id} className="surface flex flex-wrap items-center gap-4 rounded-2xl p-4">
                   <div className="flex-1">
-                    <Link href={`/order?id=${o.id}`} className="num text-[14px] font-extrabold text-mist-100 hover:text-flame-400">
+                    <Link href={`/order?id=${o.id}`} className="num text-[14px] font-extrabold text-mist-100 hover:text-flame-600">
                       #{toFa(o.number)}
                     </Link>
                     <div className="num mt-1 text-[13px] text-mist-500">{faDate(o.createdAt)}</div>
@@ -172,7 +170,7 @@ export default function AccountPage() {
                 </Button>
               </div>
               {state.addresses.length === 0 && (
-                <div className="surface rounded-3xl p-12 text-center text-[13px] text-mist-400">
+                <div className="surface rounded-2xl p-12 text-center text-[13px] text-mist-400">
                   هنوز آدرسی ذخیره نکرده‌ای.
                 </div>
               )}
@@ -182,7 +180,7 @@ export default function AccountPage() {
                   <div
                     key={a.id}
                     className={cn(
-                      "surface rounded-3xl p-5",
+                      "surface rounded-2xl p-5",
                       a.id === state.selectedAddressId && "border-flame-600/40",
                     )}
                   >
@@ -226,7 +224,7 @@ export default function AccountPage() {
           {tab === "favorites" && (
             <div className="animate-fade-up">
               {favorites.length === 0 ? (
-                <div className="surface rounded-3xl p-12 text-center">
+                <div className="surface rounded-2xl p-12 text-center">
                   <span className="text-4xl">🤍</span>
                   <p className="mt-4 text-[13px] text-mist-400">
                     هنوز چیزی به علاقه‌مندی‌ها اضافه نکرده‌ای.
@@ -247,7 +245,7 @@ export default function AccountPage() {
 
           {tab === "rewards" && (
             <div className="animate-fade-up space-y-4">
-              <div className="surface relative overflow-hidden rounded-3xl p-6">
+              <div className="surface relative overflow-hidden rounded-2xl p-6">
                 <div className="absolute -left-16 -top-16 size-48 rounded-full bg-flame-600/25 blur-[80px]" />
                 <div className="relative">
                   <span className="inline-flex items-center gap-2 rounded-full bg-flame-600 px-3 py-1 text-[13px] font-extrabold text-white">
@@ -281,7 +279,7 @@ export default function AccountPage() {
                     <div
                       key={r.title}
                       className={cn(
-                        "surface flex items-center gap-4 rounded-3xl p-5",
+                        "surface flex items-center gap-4 rounded-2xl p-5",
                         unlocked && "border-flame-600/40 bg-flame-600/6",
                       )}
                     >

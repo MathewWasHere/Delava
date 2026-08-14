@@ -16,7 +16,7 @@ export function ToastHost() {
           className={cn(
             "pointer-events-auto flex w-full max-w-sm animate-fade-up items-center gap-3 rounded-2xl border bg-ink-850/95 p-3 text-right shadow-2xl backdrop-blur",
             t.tone === "success"
-              ? "border-flame-600/40 shadow-[0_18px_50px_-20px_rgba(255,122,0,0.7)]"
+              ? "border-flame-600/40 shadow-[0_18px_50px_-20px_rgba(194,13,0,0.7)]"
               : t.tone === "error"
                 ? "border-red-500/40"
                 : "border-[var(--surface-border)]",

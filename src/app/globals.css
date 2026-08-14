@@ -35,20 +35,24 @@
 @theme {
   --font-sans: "Vazirmatn", ui-sans-serif, system-ui, sans-serif;
 
-  --color-ink-950: #050505;
+  --color-ink-950: #000000;
   --color-ink-900: #0a0a0a;
-  --color-ink-850: #0f0f0f;
-  --color-ink-800: #111111;
-  --color-ink-700: #171717;
-  --color-ink-600: #1f1f1f;
-  --color-ink-500: #2a2a2a;
+  --color-ink-850: #101012;
+  --color-ink-800: #141417;
+  --color-ink-700: #1b1b1f;
+  --color-ink-600: #232328;
+  --color-ink-500: #2e2e34;
 
-  --color-flame-300: #f9a56a;
-  --color-flame-400: #f58c42;
-  --color-flame-500: #ee6d1b;
-  --color-flame-600: #ee6d1b;
-  --color-flame-700: #d55c11;
-  --color-flame-800: #a8470b;
+  /* BRAND ACCENT — deep red #C20D00.
+     The ramp keeps the flame-* token names so all 300+ existing usages adopt
+     the new palette centrally instead of being rewritten one by one.
+     Tints are tuned for contrast: 400/500 read on dark, 600/700 on light. */
+  --color-flame-300: #ff8a80;
+  --color-flame-400: #f2483a;
+  --color-flame-500: #e01100;
+  --color-flame-600: #c20d00;
+  --color-flame-700: #9c0a00;
+  --color-flame-800: #6f0700;
 
   --color-mist-100: #ffffff;
   --color-mist-200: #d6d6d6;
@@ -79,43 +83,49 @@
 [data-theme="light"] {
   color-scheme: light;
 
-  --color-ink-950: #fdf6f0;  /* page background (warm, from the brand assets) */
+  --color-ink-950: #f7f7f8;  /* page background */
   --color-ink-900: #ffffff;  /* raised surface / bars */
-  --color-ink-850: #fffaf6;  /* cards */
-  --color-ink-800: #fff5ee;  /* inputs */
-  --color-ink-700: #f6e9df;  /* subtle fills */
-  --color-ink-600: #efe0d4;  /* hover fills */
-  --color-ink-500: #e6d4c6;  /* borders-ish */
+  --color-ink-850: #ffffff;  /* cards */
+  --color-ink-800: #f2f2f4;  /* inputs */
+  --color-ink-700: #ebebee;  /* subtle fills */
+  --color-ink-600: #e2e2e6;  /* hover fills */
+  --color-ink-500: #d6d6dc;  /* borders-ish */
 
-  --color-mist-100: #14100d;  /* primary text */
-  --color-mist-200: #3c332c;  /* secondary text */
-  --color-mist-300: #574c43;  /* tertiary text */
-  --color-mist-400: #6f6259;  /* muted text */
-  --color-mist-500: #8d7f74;  /* faint text */
+  --color-mist-100: #000000;  /* primary text */
+  --color-mist-200: #26262b;  /* secondary text */
+  --color-mist-300: #46464e;  /* tertiary text */
+  --color-mist-400: #62626b;  /* muted text */
+  --color-mist-500: #83838d;  /* faint text */
 
-  --surface-border: rgba(20, 16, 13, 0.10);
-  --surface-border-strong: rgba(20, 16, 13, 0.16);
-  --surface-card: linear-gradient(180deg, #ffffff 0%, #fffaf6 100%);
-  --surface-shadow: 0 6px 24px -12px rgba(83, 51, 26, 0.28);
-  --hairline: rgba(20, 16, 13, 0.08);
-  --white-a4: rgba(20, 16, 13, 0.04);
-  --white-a6: rgba(20, 16, 13, 0.06);
-  --white-a8: rgba(20, 16, 13, 0.08);
-  --white-a10: rgba(20, 16, 13, 0.10);
-  --scrim: rgba(255, 255, 255, 0.86);
+  --surface-border: rgba(0, 0, 0, 0.10);
+  --surface-border-strong: rgba(0, 0, 0, 0.16);
+  --surface-card: #ffffff;
+  --surface-shadow: 0 1px 2px rgba(0, 0, 0, 0.06), 0 4px 16px -8px rgba(0, 0, 0, 0.10);
+  --hairline: rgba(0, 0, 0, 0.08);
+  --white-a4: rgba(0, 0, 0, 0.035);
+  --white-a6: rgba(0, 0, 0, 0.05);
+  --white-a8: rgba(0, 0, 0, 0.07);
+  --white-a10: rgba(0, 0, 0, 0.09);
+  --scrim: rgba(255, 255, 255, 0.88);
 }
 
 /* DARK — the original night identity */
 [data-theme="dark"] {
   color-scheme: dark;
 
-  --color-ink-950: #050505;
+  /* Accent lift: #C20D00 is too dark to read as text on a black surface, so
+     the mid-ramp brightens in dark mode. The brand red stays exact wherever it
+     is a FILL (buttons/badges use flame-600 as background with white text). */
+  --color-flame-500: #ff3b2b;
+  --color-flame-600: #f2483a;
+
+  --color-ink-950: #000000;
   --color-ink-900: #0a0a0a;
-  --color-ink-850: #0f0f0f;
-  --color-ink-800: #111111;
-  --color-ink-700: #171717;
-  --color-ink-600: #1f1f1f;
-  --color-ink-500: #2a2a2a;
+  --color-ink-850: #101012;
+  --color-ink-800: #141417;
+  --color-ink-700: #1b1b1f;
+  --color-ink-600: #232328;
+  --color-ink-500: #2e2e34;
 
   --color-mist-100: #ffffff;
   --color-mist-200: #d6d6d6;
@@ -125,14 +135,14 @@
 
   --surface-border: rgba(255, 255, 255, 0.08);
   --surface-border-strong: rgba(255, 255, 255, 0.14);
-  --surface-card: linear-gradient(180deg, #121212 0%, #0c0c0c 100%);
+  --surface-card: #101012;
   --surface-shadow: none;
   --hairline: rgba(255, 255, 255, 0.07);
   --white-a4: rgba(255, 255, 255, 0.04);
   --white-a6: rgba(255, 255, 255, 0.06);
   --white-a8: rgba(255, 255, 255, 0.08);
   --white-a10: rgba(255, 255, 255, 0.10);
-  --scrim: rgba(5, 5, 5, 0.86);
+  --scrim: rgba(0, 0, 0, 0.88);
 }
 
 * {
@@ -215,16 +225,16 @@ body {
   transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
 }
 .surface-hover:hover {
-  border-color: rgba(238, 109, 27, 0.45);
-  box-shadow: 0 12px 40px -18px rgba(238, 109, 27, 0.45);
+  border-color: rgba(194, 13, 0, 0.45);
+  box-shadow: 0 10px 30px -16px rgba(194, 13, 0, 0.35);
 }
 
 .glow-text {
-  text-shadow: 0 0 24px rgba(255, 138, 0, 0.55), 0 0 60px rgba(255, 122, 0, 0.25);
+  text-shadow: 0 0 24px rgba(226, 17, 0, 0.45), 0 0 60px rgba(194, 13, 0, 0.22);
 }
 
 .glow-ring {
-  box-shadow: 0 0 0 1px rgba(255, 122, 0, 0.35), 0 10px 45px -12px rgba(255, 122, 0, 0.5);
+  box-shadow: 0 0 0 1px rgba(194, 13, 0, 0.35), 0 10px 45px -12px rgba(194, 13, 0, 0.45);
 }
 
 .flame-gradient {
@@ -287,10 +297,10 @@ body {
 @keyframes pulse-dot {
   0%,
   100% {
-    box-shadow: 0 0 0 0 rgba(255, 122, 0, 0.6);
+    box-shadow: 0 0 0 0 rgba(194, 13, 0, 0.55);
   }
   70% {
-    box-shadow: 0 0 0 10px rgba(255, 122, 0, 0);
+    box-shadow: 0 0 0 10px rgba(194, 13, 0, 0);
   }
 }
 .animate-pulse-dot {
@@ -407,13 +417,13 @@ body {
    the dark token values here converts every child utility automatically.
    ========================================================================== */
 .on-photo {
-  --color-ink-950: #050505;
+  --color-ink-950: #000000;
   --color-ink-900: #0a0a0a;
-  --color-ink-850: #0f0f0f;
-  --color-ink-800: #111111;
-  --color-ink-700: #171717;
-  --color-ink-600: #1f1f1f;
-  --color-ink-500: #2a2a2a;
+  --color-ink-850: #101012;
+  --color-ink-800: #141417;
+  --color-ink-700: #1b1b1f;
+  --color-ink-600: #232328;
+  --color-ink-500: #2e2e34;
 
   --color-mist-100: #ffffff;
   --color-mist-200: #d6d6d6;
@@ -423,13 +433,44 @@ body {
 
   --surface-border: rgba(255, 255, 255, 0.08);
   --surface-border-strong: rgba(255, 255, 255, 0.14);
-  --surface-card: linear-gradient(180deg, #121212 0%, #0c0c0c 100%);
+  --surface-card: #101012;
   --surface-shadow: none;
   --hairline: rgba(255, 255, 255, 0.07);
   --white-a4: rgba(255, 255, 255, 0.04);
   --white-a6: rgba(255, 255, 255, 0.06);
   --white-a8: rgba(255, 255, 255, 0.08);
   --white-a10: rgba(255, 255, 255, 0.10);
+}
+
+/* Breakpoint-scoped variant: the hero section only becomes an always-dark
+   island from `sm` up, where the copy sits ON the photograph. Below that the
+   copy is under the image and must follow the active theme. */
+@media (min-width: 640px) {
+  .sm\:on-photo {
+    --color-ink-950: #000000;
+    --color-ink-900: #0a0a0a;
+    --color-ink-850: #101012;
+    --color-ink-800: #141417;
+    --color-ink-700: #1b1b1f;
+    --color-ink-600: #232328;
+    --color-ink-500: #2e2e34;
+
+    --color-mist-100: #ffffff;
+    --color-mist-200: #d6d6d6;
+    --color-mist-300: #b8b8b8;
+    --color-mist-400: #999999;
+    --color-mist-500: #6b6b6b;
+
+    --surface-border: rgba(255, 255, 255, 0.08);
+    --surface-border-strong: rgba(255, 255, 255, 0.14);
+    --surface-card: #101012;
+    --surface-shadow: none;
+    --hairline: rgba(255, 255, 255, 0.07);
+    --white-a4: rgba(255, 255, 255, 0.04);
+    --white-a6: rgba(255, 255, 255, 0.06);
+    --white-a8: rgba(255, 255, 255, 0.08);
+    --white-a10: rgba(255, 255, 255, 0.10);
+  }
 }
 
 /* Always-dark contexts (e.g. the hero photo overlay) force the light mark. */
@@ -567,4 +608,59 @@ body {
   .animate-ping-slow {
     animation: none;
   }
+}
+
+/* ==========================================================================
+   HEARTBEAT — footer credit
+   Two quick beats then a rest, like a real pulse rather than a even throb.
+   ========================================================================== */
+@keyframes heartbeat {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  14% {
+    transform: scale(1.18);
+  }
+  28% {
+    transform: scale(1);
+  }
+  42% {
+    transform: scale(1.14);
+  }
+  56% {
+    transform: scale(1);
+  }
+}
+.animate-heartbeat {
+  animation: heartbeat 1.8s ease-in-out infinite;
+  transform-origin: center;
+  will-change: transform;
+}
+@media (prefers-reduced-motion: reduce) {
+  .animate-heartbeat {
+    animation: none;
+  }
+}
+
+/* ==========================================================================
+   TOUCH TARGET EXPANSION
+   Some controls are intentionally compact (40px) so the header and footer stay
+   dense. Rather than inflating the visible box — which would undo the density
+   work — we extend the *hit area* to the 44px accessibility minimum with a
+   centred pseudo-element. The control looks 40px; the finger gets 44px.
+   ========================================================================== */
+.tap-44 {
+  position: relative;
+}
+.tap-44::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 44px;
+  height: 44px;
+  transform: translate(-50%, -50%);
+  /* Sits behind the icon so it never intercepts hover styling. */
+  z-index: 0;
 }

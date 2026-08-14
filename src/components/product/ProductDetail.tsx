@@ -30,14 +30,14 @@ export function ProductDetail({ product, related }: { product: Product; related:
   const total = unit * qty;
 
   return (
-    <div className="pb-40 lg:pb-10">
+    <div className="pb-32 lg:pb-8">
       <div className="shell pt-5">
         <nav className="flex min-w-0 flex-wrap items-center gap-x-2 text-[13px] text-mist-500">
-          <Link href="/" className="inline-flex min-h-11 shrink-0 items-center hover:text-flame-400">
+          <Link href="/" className="inline-flex min-h-11 shrink-0 items-center hover:text-flame-600">
             خانه
           </Link>
           <Icon name="chevron" className="size-3.5 rotate-180" />
-          <Link href="/menu" className="inline-flex min-h-11 shrink-0 items-center hover:text-flame-400">
+          <Link href="/menu" className="inline-flex min-h-11 shrink-0 items-center hover:text-flame-600">
             منو
           </Link>
           <Icon name="chevron" className="size-3.5 rotate-180" />
@@ -48,7 +48,7 @@ export function ProductDetail({ product, related }: { product: Product; related:
       <div className="shell grid gap-6 py-4 sm:py-6 lg:grid-cols-2 lg:gap-12 lg:py-10">
         {/* Gallery */}
         <div className="lg:sticky lg:top-28 lg:self-start">
-          <div className="relative overflow-hidden rounded-[32px] border border-[var(--surface-border)]">
+          <div className="relative overflow-hidden rounded-2xl border border-[var(--surface-border)]">
             <FoodImage
               src={product.image}
               alt={product.name}
@@ -72,7 +72,7 @@ export function ProductDetail({ product, related }: { product: Product; related:
                 className={cn(
                   "grid size-11 place-items-center rounded-full border backdrop-blur-md transition-all",
                   fav
-                    ? "border-flame-600/50 bg-flame-600/25 text-flame-400"
+                    ? "border-flame-600/50 bg-flame-600/25 text-flame-600"
                     : "border-[var(--surface-border)] bg-black/40 text-white/70",
                 )}
               >
@@ -162,7 +162,7 @@ export function ProductDetail({ product, related }: { product: Product; related:
                         </span>
                         <span className="text-[14px] font-medium text-mist-100">{m.name}</span>
                       </span>
-                      <span className="num text-[13px] font-bold text-flame-400">+{faNumber(m.price)}</span>
+                      <span className="num text-[13px] font-bold text-flame-600">+{faNumber(m.price)}</span>
                     </button>
                   );
                 })}
@@ -180,7 +180,7 @@ export function ProductDetail({ product, related }: { product: Product; related:
           </div>
 
           {/* Desktop add-to-cart */}
-          <div className="mt-8 hidden items-center gap-4 rounded-3xl border border-[var(--surface-border)] bg-ink-850 p-4 lg:flex">
+          <div className="mt-8 hidden items-center gap-4 rounded-2xl border border-[var(--surface-border)] bg-ink-850 p-4 lg:flex">
             <QuantitySelector value={qty} onChange={(v) => setQty(Math.max(1, v))} />
             <div className="flex-1">
               <div className="text-[13px] text-mist-500">مبلغ قابل پرداخت</div>
@@ -199,7 +199,7 @@ export function ProductDetail({ product, related }: { product: Product; related:
 
       {related.length > 0 && (
         <section className="shell py-8">
-          <SectionHead eyebrow="شاید بپسندی" title="کنارش اینا هم عالیه" />
+          <SectionHead title="کنارش اینا هم عالیه" />
           <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 sm:gap-4 lg:grid-cols-4">
             {related.map((p) => (
               <ProductCard key={p.id} product={p} />

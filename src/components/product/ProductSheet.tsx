@@ -81,7 +81,7 @@ export function ProductSheet({
                       </span>
                       <span className="text-[14px] font-medium text-mist-100">{m.name}</span>
                     </span>
-                    <span className="num text-[13px] font-bold text-flame-400">+{faNumber(m.price)}</span>
+                    <span className="num text-[13px] font-bold text-flame-600">+{faNumber(m.price)}</span>
                   </button>
                 );
               })}

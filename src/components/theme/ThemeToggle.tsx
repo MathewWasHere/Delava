@@ -50,16 +50,16 @@ export function ThemeToggle({ className = "" }: { className?: string }) {
       onClick={toggleTheme}
       aria-label={isDark ? "روشن کردن حالت روز" : "روشن کردن حالت شب"}
       title={isDark ? "حالت روز" : "حالت شب"}
-      className={`grid size-11 shrink-0 place-items-center rounded-full border border-[var(--surface-border)] bg-[var(--white-a4)] text-mist-200 transition hover:border-flame-600/50 hover:text-flame-500 active:scale-95 ${className}`}
+      className={`tap-44 grid size-10 shrink-0 place-items-center rounded-lg border border-[var(--surface-border)] bg-[var(--white-a4)] text-mist-200 transition hover:border-flame-600/50 hover:text-flame-600 active:scale-95 ${className}`}
     >
-      <span className="relative block size-5">
+      <span className="relative block size-[18px]">
         <SunIcon
-          className={`absolute inset-0 size-5 transition-all duration-300 ${
+          className={`absolute inset-0 size-[18px] transition-all duration-300 ${
             isDark ? "scale-50 opacity-0 rotate-90" : "scale-100 opacity-100 rotate-0"
           }`}
         />
         <MoonIcon
-          className={`absolute inset-0 size-5 transition-all duration-300 ${
+          className={`absolute inset-0 size-[18px] transition-all duration-300 ${
             isDark ? "scale-100 opacity-100 rotate-0" : "scale-50 opacity-0 -rotate-90"
           }`}
         />
@@ -96,7 +96,7 @@ export function ThemeSwitch({ className = "" }: { className?: string }) {
             aria-pressed={active}
             className={`flex h-10 flex-1 items-center justify-center gap-2 rounded-full px-3 text-[13px] font-bold transition ${
               active
-                ? "bg-flame-600 text-white shadow-[0_6px_18px_-8px_rgba(238,109,27,0.9)]"
+                ? "bg-flame-600 text-white shadow-[0_6px_18px_-8px_rgba(194,13,0,0.9)]"
                 : "text-mist-400 hover:text-mist-100"
             }`}
           >

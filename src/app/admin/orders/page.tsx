@@ -6,6 +6,7 @@ import { useStore } from "@/lib/store";
 import type { Order, OrderStatus } from "@/lib/types";
 import {
   ACTION_BUTTON_CLASS,
+  CANCEL_BUTTON_CLASS,
   STATUS_ACTION_TONE,
   STATUS_BADGE,
   STATUS_LABEL,
@@ -41,10 +42,10 @@ export default function AdminOrdersPage() {
   };
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-3">
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h1 className="flex items-center gap-2 text-xl font-extrabold text-mist-100">
+          <h1 className="flex items-center gap-2 text-[17px] font-extrabold text-mist-100">
             <span className="size-2.5 animate-pulse-dot rounded-full bg-flame-500" />
             سفارش‌های زنده
           </h1>
@@ -78,7 +79,7 @@ export default function AdminOrdersPage() {
             <section
               key={col.status}
               className={cn(
-                "w-[290px] shrink-0 rounded-3xl border border-t-2 border-[var(--surface-border)] bg-ink-900/60 p-3",
+                "w-[290px] shrink-0 rounded-2xl border border-t-2 border-[var(--surface-border)] bg-ink-900/60 p-3",
                 col.accent,
               )}
             >
@@ -112,7 +113,7 @@ export default function AdminOrdersPage() {
                       <div className="mt-2.5 space-y-1">
                         {o.items.slice(0, 3).map((i, idx) => (
                           <div key={idx} className="num flex gap-1.5 text-[11px] text-mist-300">
-                            <span className="font-bold text-flame-400">{toFa(i.quantity)} ×</span>
+                            <span className="font-bold text-flame-600">{toFa(i.quantity)} ×</span>
                             <span className="truncate">{i.name}</span>
                           </div>
                         ))}
@@ -124,7 +125,7 @@ export default function AdminOrdersPage() {
                       </div>
 
                       <div className="mt-3 flex items-center justify-between border-t border-[var(--surface-border)] pt-2.5">
-                        <span className="num text-[13px] font-extrabold text-flame-400">
+                        <span className="num text-[13px] font-extrabold text-flame-600">
                           {faNumber(o.total)}
                         </span>
                         <span className="flex items-center gap-1 text-[10px] text-mist-500">
@@ -167,7 +168,7 @@ export default function AdminOrdersPage() {
                             aria-label="لغو سفارش"
                             className={cn(
                               "flex min-h-9 items-center justify-center rounded-lg px-2.5 text-[11.5px] font-extrabold transition-colors",
-                              ACTION_BUTTON_CLASS.negative,
+                              CANCEL_BUTTON_CLASS,
                             )}
                           >
                             لغو
@@ -191,7 +192,7 @@ export default function AdminOrdersPage() {
         maxWidth="max-w-2xl"
       >
         {order && (
-          <div className="space-y-5 p-5">
+          <div className="space-y-3 p-5">
             <div className="flex flex-wrap items-center gap-2">
               <span className={cn("rounded-xl border px-3 py-1.5 text-[12px] font-bold", STATUS_BADGE[order.status])}>
                 {STATUS_LABEL[order.status]}
@@ -210,18 +211,18 @@ export default function AdminOrdersPage() {
             </div>
 
             <div className="grid gap-3 sm:grid-cols-2">
-              <div className="rounded-2xl border border-[var(--surface-border)] bg-ink-850 p-4">
+              <div className="rounded-lg border border-[var(--surface-border)] bg-ink-850 p-3">
                 <h3 className="text-[12px] font-extrabold text-mist-100">مشتری</h3>
                 <p className="mt-2 text-[13px] text-mist-300">{order.customer.name}</p>
                 <a
                   href={`tel:${order.customer.phone}`}
                   dir="ltr"
-                  className="num mt-1 block text-[13px] font-bold text-flame-400"
+                  className="num mt-1 block text-[13px] font-bold text-flame-600"
                 >
                   {toFa(order.customer.phone)}
                 </a>
               </div>
-              <div className="rounded-2xl border border-[var(--surface-border)] bg-ink-850 p-4">
+              <div className="rounded-lg border border-[var(--surface-border)] bg-ink-850 p-3">
                 <h3 className="text-[12px] font-extrabold text-mist-100">تحویل</h3>
                 {order.address ? (
                   <>
@@ -230,7 +231,7 @@ export default function AdminOrdersPage() {
                       {deliveryZones.find((z) => z.id === order.zoneId)?.name} — {toFa(order.etaMinutes)} دقیقه
                     </p>
                     {order.address.note && (
-                      <p className="mt-1 text-[11px] text-flame-400">📝 {order.address.note}</p>
+                      <p className="mt-1 text-[11px] text-flame-600">📝 {order.address.note}</p>
                     )}
                   </>
                 ) : (
@@ -239,7 +240,7 @@ export default function AdminOrdersPage() {
               </div>
             </div>
 
-            <div className="rounded-2xl border border-[var(--surface-border)] bg-ink-850 p-4">
+            <div className="rounded-lg border border-[var(--surface-border)] bg-ink-850 p-3">
               <h3 className="text-[12px] font-extrabold text-mist-100">اقلام</h3>
               <div className="mt-3 space-y-2.5">
                 {order.items.map((i, idx) => (
@@ -248,7 +249,7 @@ export default function AdminOrdersPage() {
                     <div className="min-w-0 flex-1">
                       <div className="truncate text-[12px] font-bold text-mist-100">{i.name}</div>
                       {i.modifiers.length > 0 && (
-                        <div className="truncate text-[10px] text-flame-400">
+                        <div className="truncate text-[10px] text-flame-600">
                           {i.modifiers.map((m) => m.name).join("، ")}
                         </div>
                       )}
@@ -270,7 +271,7 @@ export default function AdminOrdersPage() {
                   <span className="num">{faNumber(order.deliveryFee)}</span>
                 </div>
                 {order.discount > 0 && (
-                  <div className="flex justify-between text-flame-400">
+                  <div className="flex justify-between text-flame-600">
                     <span>تخفیف {order.couponCode}</span>
                     <span className="num">−{faNumber(order.discount)}</span>
                   </div>
@@ -312,8 +313,10 @@ export default function AdminOrdersPage() {
                     setDetail(null);
                   }}
                   className={cn(
-                    "flex min-h-12 flex-1 items-center justify-center rounded-xl px-4 text-[13px] font-extrabold transition-colors",
-                    ACTION_BUTTON_CLASS[STATUS_ACTION_TONE[next]],
+                    "flex min-h-11 flex-1 items-center justify-center rounded-lg px-4 text-[13px] font-extrabold transition-colors",
+                    next === "CANCELLED"
+                      ? CANCEL_BUTTON_CLASS
+                      : ACTION_BUTTON_CLASS[STATUS_ACTION_TONE[next]],
                   )}
                 >
                   {next === "CANCELLED" ? "لغو سفارش" : `تغییر به ${STATUS_SHORT[next]}`}

@@ -13,12 +13,11 @@ import { StepCircle } from "@/components/order/OrderTimeline";
 
 export function CategoryStrip() {
   return (
-    <section className="shell py-9 sm:py-14">
+    <section className="shell py-6 sm:py-9">
       <SectionHead
-        eyebrow="منوی دلاوا"
         title="دنبال چی می‌گردی؟"
         action={
-          <Link href="/menu" className="-m-2 inline-flex min-h-11 items-center p-2 text-[13px] font-bold text-flame-400 hover:text-flame-300">
+          <Link href="/menu" className="-m-2 inline-flex min-h-11 items-center p-2 text-[13px] font-bold text-flame-600 hover:text-flame-500">
             همه دسته‌ها ←
           </Link>
         }
@@ -32,7 +31,7 @@ export function CategoryStrip() {
               key={c.id}
               href={`/menu?c=${c.slug}`}
               prefetch={false}
-              className="group relative w-[88px] overflow-hidden rounded-2xl border border-[var(--surface-border)] bg-ink-850 transition-all hover:border-flame-600/45 sm:w-auto sm:rounded-3xl"
+              className="group relative w-[88px] overflow-hidden rounded-2xl border border-[var(--surface-border)] bg-ink-850 transition-all hover:border-flame-600/45 sm:w-auto sm:rounded-2xl"
             >
               <div className="relative aspect-square sm:aspect-square">
                 <Image
@@ -62,12 +61,11 @@ export function CategoryStrip() {
 export function PopularProducts() {
   const items = popularProducts();
   return (
-    <section className="shell py-6 sm:py-8">
+    <section className="shell py-5 sm:py-7">
       <SectionHead
-        eyebrow="پرفروش‌ها"
         title="انتخاب مشتری‌های دلاوا"
         action={
-          <Link href="/menu" className="-m-2 hidden min-h-11 items-center p-2 text-[13px] font-bold text-flame-400 hover:text-flame-300 sm:inline-flex">
+          <Link href="/menu" className="-m-2 hidden min-h-11 items-center p-2 text-[13px] font-bold text-flame-600 hover:text-flame-500 sm:inline-flex">
             مشاهده منو ←
           </Link>
         }
@@ -93,7 +91,7 @@ export function PromoBanner() {
       {/* Compact by design: a single horizontal band on desktop, a tight card on
           phones. One action only — the «درباره دلاوا» button was removed and the
           remaining space reclaimed rather than left empty. */}
-      <div className="relative overflow-hidden rounded-3xl border border-flame-600/25 bg-gradient-to-l from-flame-700/22 via-ink-900 to-ink-900 p-5 sm:p-6">
+      <div className="relative overflow-hidden rounded-2xl border border-flame-600/25 bg-gradient-to-l from-flame-700/22 via-ink-900 to-ink-900 p-3.5 sm:p-4">
         <div className="absolute -left-20 -top-20 size-56 rounded-full bg-flame-600/20 blur-[90px]" />
         <div className="absolute inset-y-0 left-0 hidden w-1/3 lg:block">
           <Image
@@ -143,10 +141,10 @@ const TRACK_STEPS: Array<{ label: string; state: "done" | "active" | "todo" }> =
 
 export function TrackingPreview() {
   return (
-    <section className="shell py-9 sm:py-14">
+    <section className="shell py-6 sm:py-9">
       <div className="grid items-center gap-6 lg:grid-cols-2 lg:gap-12">
         <div>
-          <SectionHead eyebrow="پیگیری لحظه‌ای" title="سفارشت را زنده دنبال کن" />
+          <SectionHead title="سفارشت را زنده دنبال کن" />
           <p className="-mt-2 max-w-md text-[13.5px] leading-7 text-mist-400">
             از لحظه ثبت سفارش تا رسیدن پیک، هر مرحله را روی گوشی‌ات می‌بینی. وقتی آشپزخانه وضعیت را
             عوض می‌کند، صفحه‌ات بدون رفرش به‌روز می‌شود.
@@ -160,7 +158,7 @@ export function TrackingPreview() {
         </div>
 
         {/* Static illustration of the live tracker */}
-        <div className="surface rounded-3xl p-5 sm:p-6">
+        <div className="surface rounded-2xl p-3.5 sm:p-4">
           <div className="flex items-start justify-between gap-3">
             <div>
               <div className="text-[12.5px] text-mist-500">شماره سفارش</div>
@@ -208,10 +206,10 @@ export function TrackingPreview() {
 
 export function VisitUs() {
   return (
-    <section className="shell py-9 sm:py-14">
-      <SectionHead eyebrow="حضوری" title="حضوری هم بیا دلاوا" />
+    <section className="shell py-6 sm:py-9">
+      <SectionHead title="حضوری هم بیا دلاوا" />
       <div className="grid gap-5 lg:grid-cols-[1.15fr_1fr]">
-        <div className="relative min-h-56 overflow-hidden rounded-3xl border border-[var(--surface-border)]">
+        <div className="relative min-h-56 overflow-hidden rounded-2xl border border-[var(--surface-border)]">
           <Image
             src="/brand/interior.webp"
             alt="فضای بیرونی فست فود دلاوا"
@@ -220,7 +218,7 @@ export function VisitUs() {
             className="object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black via-black/35 to-transparent" />
-          <div className="absolute inset-x-0 bottom-0 p-5 sm:p-7">
+          <div className="absolute inset-x-0 bottom-0 p-4 sm:p-5">
             <p className="max-w-sm text-[13px] leading-7 text-mist-300">
               فضای بیرونی دنج با نورهای گرم، مخصوص شب‌های فسا. سفارش آنلاین بده و حضوری تحویل بگیر.
             </p>

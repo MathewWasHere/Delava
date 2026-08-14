@@ -49,7 +49,7 @@ export default function CartPage() {
             <span className="num">{toFa(cartCount)}</span> آیتم آماده سفارش
           </p>
         </div>
-        <Link href="/menu" className="text-[13px] font-bold text-flame-400 hover:text-flame-300">
+        <Link href="/menu" className="text-[13px] font-bold text-flame-600 hover:text-flame-500">
           + افزودن آیتم دیگر
         </Link>
       </div>
@@ -58,14 +58,14 @@ export default function CartPage() {
         {/* Items */}
         <div className="space-y-3">
           {state.cart.map((item) => (
-            <article key={item.key} className="surface flex gap-4 rounded-3xl p-3.5">
+            <article key={item.key} className="surface flex gap-4 rounded-2xl p-3.5">
               <FoodImage src={item.image} alt={item.name} className="size-24 shrink-0 rounded-2xl" sizes="96px" />
               <div className="flex min-w-0 flex-1 flex-col">
                 <div className="flex items-start justify-between gap-3">
                   <div className="min-w-0">
                     <h3 className="truncate text-[15px] font-extrabold leading-6 text-mist-100">{item.name}</h3>
                     {item.modifiers.length > 0 && (
-                      <p className="mt-1 text-[13px] text-flame-400">
+                      <p className="mt-1 text-[13px] text-flame-600">
                         {item.modifiers.map((m) => m.name).join("، ")}
                       </p>
                     )}
@@ -79,7 +79,7 @@ export default function CartPage() {
                   <button
                     onClick={() => removeItem(item.key)}
                     aria-label={`حذف ${item.name}`}
-                    className="-m-1 grid size-11 shrink-0 place-items-center rounded-lg text-mist-500 transition-colors hover:bg-red-500/10 hover:text-red-400"
+                    className="-m-1 grid size-11 shrink-0 place-items-center rounded-lg text-mist-500 transition-colors hover:bg-red-500/10 hover:text-red-500"
                   >
                     <Icon name="trash" className="size-4" />
                   </button>
@@ -100,7 +100,7 @@ export default function CartPage() {
 
         {/* Summary */}
         <aside className="lg:sticky lg:top-28 lg:self-start">
-          <div className="surface rounded-3xl p-5">
+          <div className="surface rounded-2xl p-5">
             <h2 className="text-[15px] font-extrabold text-mist-100">خلاصه سفارش</h2>
 
             <div className="mt-4 space-y-3 border-b border-[var(--surface-border)] pb-4 text-[13.5px]">
@@ -139,10 +139,10 @@ export default function CartPage() {
                 </Button>
               </div>
               {state.couponCode && totals.couponError && (
-                <p className="mt-2 text-[13px] text-red-400">{totals.couponError}</p>
+                <p className="mt-2 text-[13px] text-red-500">{totals.couponError}</p>
               )}
               {totals.appliedCoupon && (
-                <p className="mt-2 flex items-center gap-1.5 text-[13px] text-emerald-400">
+                <p className="mt-2 flex items-center gap-1.5 text-[13px] text-emerald-500">
                   <Icon name="check" className="size-3.5" />
                   {totals.appliedCoupon.description}
                 </p>
@@ -153,7 +153,7 @@ export default function CartPage() {
                     setCode("DELAVA10");
                     setCoupon("DELAVA10");
                   }}
-                  className="mt-2 text-[13px] text-flame-400 hover:text-flame-300"
+                  className="mt-2 text-[13px] text-flame-600 hover:text-flame-500"
                 >
                   کد DELAVA10 را برای من اعمال کن
                 </button>
@@ -203,7 +203,7 @@ function Row({
       <span
         className={cn(
           "num font-bold",
-          tone === "flame" ? "text-flame-400" : muted ? "text-[13px] font-medium text-mist-500" : "text-mist-100",
+          tone === "flame" ? "text-flame-600" : muted ? "text-[13px] font-medium text-mist-500" : "text-mist-100",
         )}
       >
         {value}

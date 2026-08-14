@@ -24,10 +24,10 @@ export default function AdminCategoriesPage() {
   };
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-3">
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h1 className="text-xl font-extrabold text-mist-100">دسته‌بندی‌ها</h1>
+          <h1 className="text-[17px] font-extrabold text-mist-100">دسته‌بندی‌ها</h1>
           <p className="mt-1 text-[12px] text-mist-500">ترتیب نمایش در منو را اینجا تنظیم کن.</p>
         </div>
         <Button
@@ -49,14 +49,14 @@ export default function AdminCategoriesPage() {
         </Button>
       </div>
 
-      <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+      <div className="grid gap-2.5 sm:grid-cols-2 xl:grid-cols-3">
         {items.map((c, i) => {
           const count = products.filter((p) => p.categoryId === c.id).length;
           return (
             <div
               key={c.id}
               className={cn(
-                "overflow-hidden rounded-3xl border bg-ink-900 transition-all",
+                "overflow-hidden rounded-2xl border bg-ink-900 transition-all",
                 c.active ? "border-[var(--surface-border)]" : "border-[var(--surface-border)] opacity-55",
               )}
             >
@@ -69,14 +69,14 @@ export default function AdminCategoriesPage() {
                 <div className="absolute left-3 top-3 flex gap-1">
                   <button
                     onClick={() => move(i, -1)}
-                    className="grid size-7 place-items-center rounded-lg bg-black/60 text-white backdrop-blur transition-colors hover:text-flame-400"
+                    className="tap-44 grid size-7 place-items-center rounded-lg bg-black/60 text-white backdrop-blur transition-colors hover:text-flame-600"
                     aria-label="بالا"
                   >
                     <Icon name="chevron" className="size-3.5 rotate-90" />
                   </button>
                   <button
                     onClick={() => move(i, 1)}
-                    className="grid size-7 place-items-center rounded-lg bg-black/60 text-white backdrop-blur transition-colors hover:text-flame-400"
+                    className="tap-44 grid size-7 place-items-center rounded-lg bg-black/60 text-white backdrop-blur transition-colors hover:text-flame-600"
                     aria-label="پایین"
                   >
                     <Icon name="chevron" className="size-3.5 -rotate-90" />
@@ -102,9 +102,9 @@ export default function AdminCategoriesPage() {
                         )
                       }
                       className={cn(
-                        "rounded-lg px-2.5 py-1.5 text-[11px] font-bold transition-colors",
+                        "inline-flex min-h-9 items-center rounded-lg px-2.5 text-[11px] font-bold transition-colors",
                         c.active
-                          ? "bg-emerald-500/12 text-emerald-300"
+                          ? "bg-emerald-500/12 text-emerald-600"
                           : "bg-[var(--white-a6)] text-mist-400",
                       )}
                     >
@@ -115,7 +115,7 @@ export default function AdminCategoriesPage() {
                         setItems((prev) => prev.filter((x) => x.id !== c.id));
                         pushToast({ title: "دسته حذف شد", tone: "error" });
                       }}
-                      className="rounded-lg px-2 py-1.5 text-[11px] font-bold text-mist-500 transition-colors hover:text-red-400"
+                      className="inline-flex min-h-9 items-center rounded-lg px-2 text-[11px] font-bold text-mist-500 transition-colors hover:text-red-500"
                     >
                       حذف
                     </button>

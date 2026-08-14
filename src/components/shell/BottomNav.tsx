@@ -4,8 +4,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useStore } from "@/lib/store";
 import { cn } from "@/lib/cn";
-import { toFa } from "@/lib/format";
 import { Icon, type IconName } from "@/components/ui/Icon";
+import { CountBadge } from "@/components/ui";
 
 const TABS: Array<{ href: string; label: string; icon: IconName; match: (p: string) => boolean }> = [
   { href: "/", label: "خانه", icon: "home", match: (p) => p === "/" },
@@ -33,22 +33,17 @@ export function BottomNav() {
               prefetch={false}
                 href={tab.href}
                 className={cn(
-                  "relative flex min-h-14 flex-col items-center justify-center gap-1 py-2 text-[13px] font-bold transition-colors",
-                  active ? "text-flame-500" : "text-mist-500",
+                  "relative flex min-h-13 flex-col items-center justify-center gap-0.5 py-1.5 text-[11.5px] font-bold transition-colors",
+                  active ? "text-flame-600" : "text-mist-400",
                 )}
               >
                 {active && (
-                  <span className="absolute -top-px h-0.5 w-8 rounded-full bg-flame-500 shadow-[0_0_14px_rgba(255,138,0,1)]" />
+                  <span className="absolute -top-px h-0.5 w-7 rounded-full bg-flame-600" />
                 )}
                 <span className="relative">
-                  <Icon name={tab.icon} filled={active && tab.icon !== "cart"} className="size-6.5" />
+                  <Icon name={tab.icon} filled={active && tab.icon !== "cart"} className="size-[22px]" />
                   {tab.icon === "cart" && cartCount > 0 && (
-                    <span
-                      key={cartPulse}
-                      className="num absolute -top-1.5 -left-2 grid min-w-4.5 animate-pop place-items-center rounded-full bg-flame-600 px-1 text-[9px] font-extrabold text-white"
-                    >
-                      {toFa(cartCount)}
-                    </span>
+                    <CountBadge value={cartCount} pulseKey={cartPulse} className="-top-2 -left-2.5" />
                   )}
                 </span>
                 {tab.label}

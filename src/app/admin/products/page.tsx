@@ -32,10 +32,10 @@ export default function AdminProductsPage() {
     setItems((prev) => prev.map((p) => (p.id === id ? { ...p, ...changes } : p)));
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-3">
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h1 className="text-xl font-extrabold text-mist-100">محصولات</h1>
+          <h1 className="text-[17px] font-extrabold text-mist-100">محصولات</h1>
           <p className="num mt-1 text-[12px] text-mist-500">
             {toFa(items.length)} محصول — {toFa(items.filter((p) => !p.available).length)} ناموجود
           </p>
@@ -65,8 +65,8 @@ export default function AdminProductsPage() {
         </div>
       </div>
 
-      <div className="overflow-hidden rounded-3xl border border-[var(--surface-border)] bg-ink-900">
-        <div className="hidden grid-cols-[1fr_120px_100px_90px_90px_120px] gap-3 border-b border-[var(--surface-border)] px-5 py-3 text-[11px] font-bold text-mist-500 lg:grid">
+      <div className="overflow-hidden rounded-xl border border-[var(--surface-border)] bg-ink-900">
+        <div className="hidden grid-cols-[1fr_110px_92px_74px_74px_104px] gap-2.5 border-b border-[var(--surface-border)] px-3 py-2 text-[10.5px] font-bold text-mist-500 lg:grid">
           <span>محصول</span>
           <span>دسته</span>
           <span>قیمت</span>
@@ -79,21 +79,21 @@ export default function AdminProductsPage() {
           {filtered.map((p) => (
             <div
               key={p.id}
-              className="grid grid-cols-1 items-center gap-3 px-4 py-3.5 transition-colors hover:bg-[var(--white-a4)] lg:grid-cols-[1fr_120px_100px_90px_90px_120px] lg:px-5"
+              className="grid grid-cols-1 items-center gap-2 px-3 py-2 transition-colors hover:bg-[var(--white-a4)] lg:grid-cols-[1fr_110px_92px_74px_74px_104px] lg:gap-2.5"
             >
-              <div className="flex items-center gap-3">
-                <Image src={p.image} alt={p.name} width={44} height={44} className="size-11 rounded-xl object-cover" />
+              <div className="flex min-w-0 items-center gap-2">
+                <Image src={p.image} alt="" aria-hidden="true" width={36} height={36} className="size-9 shrink-0 rounded-lg object-cover" />
                 <div className="min-w-0">
-                  <div className="truncate text-[13px] font-bold text-mist-100">{p.name}</div>
-                  <div className="truncate text-[11px] text-mist-500">{p.shortDescription}</div>
+                  <div className="truncate text-[12.5px] font-bold leading-tight text-mist-100">{p.name}</div>
+                  <div className="truncate text-[10.5px] leading-tight text-mist-500">{p.shortDescription}</div>
                 </div>
               </div>
 
-              <span className="text-[12px] text-mist-400">
+              <span className="truncate text-[11.5px] text-mist-400">
                 {categories.find((c) => c.id === p.categoryId)?.name}
               </span>
 
-              <span className="num text-[13px] font-bold text-mist-100">{faNumber(p.price)}</span>
+              <span className="num text-[12px] font-bold text-mist-100">{faNumber(p.price)}</span>
 
               <Toggle
                 on={p.available}
@@ -108,7 +108,7 @@ export default function AdminProductsPage() {
               <div className="flex gap-1.5 lg:justify-end">
                 <button
                   onClick={() => setEditing(p)}
-                  className="rounded-lg border border-[var(--surface-border)] px-2.5 py-1.5 text-[11px] font-bold text-mist-300 transition-colors hover:border-flame-600/40 hover:text-flame-400"
+                  className="inline-flex min-h-9 items-center rounded-md border border-[var(--surface-border)] px-2 text-[10.5px] font-bold text-mist-300 transition-colors hover:border-flame-600/40 hover:text-flame-600"
                 >
                   ویرایش
                 </button>
@@ -117,7 +117,7 @@ export default function AdminProductsPage() {
                     setItems((prev) => prev.filter((x) => x.id !== p.id));
                     pushToast({ title: "محصول حذف شد", tone: "error" });
                   }}
-                  className="rounded-lg border border-[var(--surface-border)] px-2.5 py-1.5 text-[11px] font-bold text-mist-500 transition-colors hover:border-red-500/40 hover:text-red-400"
+                  className="inline-flex min-h-9 items-center rounded-md border border-[var(--surface-border)] px-2 text-[10.5px] font-bold text-mist-500 transition-colors hover:border-red-500/40 hover:text-red-500"
                 >
                   حذف
                 </button>
@@ -154,7 +154,7 @@ function FilterChip({
       onClick={onClick}
       className={cn(
         "h-11 shrink-0 rounded-xl border px-4 text-[12px] font-bold transition-all",
-        active ? "border-flame-600/60 bg-flame-600/12 text-flame-400" : "border-[var(--surface-border)] bg-ink-850 text-mist-400",
+        active ? "border-flame-600/60 bg-flame-600/12 text-flame-600" : "border-[var(--surface-border)] bg-ink-850 text-mist-400",
       )}
     >
       {children}
@@ -169,7 +169,7 @@ function Toggle({ on, onClick, tone }: { on: boolean; onClick: () => void; tone?
       role="switch"
       aria-checked={on}
       className={cn(
-        "relative h-6 w-11 shrink-0 rounded-full transition-colors",
+        "tap-44 relative h-6 w-11 shrink-0 rounded-full transition-colors",
         on ? (tone === "flame" ? "bg-flame-600" : "bg-emerald-500/80") : "bg-[var(--white-a10)]",
       )}
     >
@@ -199,8 +199,8 @@ function ProductEditor({
 
   return (
     <BottomSheet open={!!product} onClose={onClose} title="ویرایش محصول" maxWidth="max-w-xl">
-      <div className="space-y-4 p-5">
-        <div className="flex gap-4">
+      <div className="space-y-3 p-4">
+        <div className="flex gap-3">
           <Image src={draft.image} alt="" width={80} height={80} className="size-20 rounded-2xl object-cover" />
           <div className="flex-1">
             <Field label="نام محصول" required>
@@ -261,7 +261,7 @@ function ProductEditor({
                 className={cn(
                   "rounded-xl border px-3.5 py-2 text-[12px] font-bold transition-all",
                   draft.categoryId === c.id
-                    ? "border-flame-600 bg-flame-600/12 text-flame-400"
+                    ? "border-flame-600 bg-flame-600/12 text-flame-600"
                     : "border-[var(--surface-border)] bg-ink-850 text-mist-400",
                 )}
               >
@@ -296,7 +296,7 @@ function ProductEditor({
         </div>
       </div>
 
-      <div className="sticky bottom-0 flex gap-3 border-t border-[var(--surface-border)] bg-ink-900/95 p-4 backdrop-blur">
+      <div className="sticky bottom-0 flex gap-2 border-t border-[var(--surface-border)] bg-ink-900/95 p-3 backdrop-blur">
         <Button variant="secondary" onClick={onClose}>
           انصراف
         </Button>

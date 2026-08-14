@@ -65,10 +65,10 @@ function MenuInner() {
   );
 
   return (
-    <div className="pb-28 lg:pb-10">
+    <div className="pb-24 lg:pb-10">
       {/* Header — compact on mobile so food is visible immediately */}
       <div className="relative border-b border-[var(--surface-border)] bg-gradient-to-b from-ink-900 to-ink-950">
-        <div className="absolute inset-0 bg-[radial-gradient(70%_100%_at_100%_0%,rgba(255,122,0,0.14),transparent_60%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(70%_100%_at_100%_0%,rgba(194,13,0,0.14),transparent_60%)]" />
         <div className="shell relative py-4 sm:py-10">
           <div className="hidden sm:block">
             <span className="flex items-center gap-2 text-[13px] font-bold text-flame-500">
@@ -102,7 +102,7 @@ function MenuInner() {
                   className={cn(
                     "h-11 shrink-0 rounded-2xl border px-4 text-[13px] font-bold transition-all sm:h-12",
                     sort === s.key
-                      ? "border-flame-600/60 bg-flame-600/12 text-flame-400"
+                      ? "border-flame-600/60 bg-flame-600/12 text-flame-600"
                       : "border-[var(--surface-border)] bg-ink-850 text-mist-400 hover:text-mist-100",
                   )}
                 >
@@ -142,7 +142,7 @@ function MenuInner() {
               onClick={() => scrollTo("all")}
               className={cn(
                 "flex w-full items-center justify-between rounded-2xl px-4 py-3 text-[13px] font-bold transition-all",
-                active === "all" ? "bg-flame-600/12 text-flame-400" : "text-mist-400 hover:bg-[var(--white-a4)] hover:text-white",
+                active === "all" ? "bg-flame-600/12 text-flame-600" : "text-mist-400 hover:bg-[var(--white-a4)] hover:text-white",
               )}
             >
               همه دسته‌ها
@@ -157,7 +157,7 @@ function MenuInner() {
                   className={cn(
                     "flex w-full items-center justify-between rounded-2xl px-4 py-3 text-[13px] font-bold transition-all",
                     active === c.slug
-                      ? "bg-flame-600/12 text-flame-400"
+                      ? "bg-flame-600/12 text-flame-600"
                       : "text-mist-400 hover:bg-[var(--white-a4)] hover:text-mist-100",
                   )}
                 >
@@ -167,11 +167,11 @@ function MenuInner() {
               );
             })}
 
-            <div className="mt-6 rounded-3xl border border-flame-600/25 bg-flame-600/8 p-5">
+            <div className="mt-6 rounded-2xl border border-flame-600/25 bg-flame-600/8 p-5">
               <Icon name="gift" className="size-6 text-flame-500" />
               <div className="mt-3 text-[13px] font-extrabold text-mist-100">۱۰٪ تخفیف اولین سفارش</div>
               <p className="mt-1.5 text-[13px] leading-6 text-mist-400">
-                کد <span className="font-bold text-flame-400">DELAVA10</span> را هنگام پرداخت وارد کن.
+                کد <span className="font-bold text-flame-600">DELAVA10</span> را هنگام پرداخت وارد کن.
               </p>
             </div>
           </div>
@@ -180,7 +180,7 @@ function MenuInner() {
         {/* Product sections */}
         <div>
           {resultCount === 0 ? (
-            <div className="surface flex flex-col items-center rounded-3xl px-6 py-20 text-center">
+            <div className="surface flex flex-col items-center rounded-2xl px-6 py-20 text-center">
               <span className="grid size-16 place-items-center rounded-full bg-flame-600/10 text-3xl">🔍</span>
               <h3 className="mt-5 text-lg font-extrabold text-mist-100">چیزی پیدا نشد</h3>
               <p className="mt-2 text-[13px] text-mist-400">عبارت دیگری را امتحان کن یا فیلتر را بردار.</p>
@@ -189,7 +189,7 @@ function MenuInner() {
                   setQuery("");
                   setActive("all");
                 }}
-                className="mt-5 rounded-xl border border-flame-600/40 px-4 py-2 text-[13px] font-bold text-flame-400"
+                className="mt-5 rounded-xl border border-flame-600/40 px-4 py-2 text-[13px] font-bold text-flame-600"
               >
                 پاک کردن فیلترها
               </button>
@@ -205,7 +205,7 @@ function MenuInner() {
                   ref={(el) => {
                     sectionRefs.current[c.slug] = el;
                   }}
-                  className="mb-7 scroll-mt-32 sm:mb-10"
+                  className="mb-7 scroll-mt-32 sm:mb-7"
                 >
                   <div className="mb-4 flex items-center gap-3">
                     <h2 className="text-xl font-extrabold text-mist-100">{c.name}</h2>
@@ -228,7 +228,7 @@ function MenuInner() {
       {cartCount > 0 && (
         <Link
           href="/cart"
-          className="above-nav fixed inset-x-3 z-45 mb-2 flex animate-fade-up items-center justify-between gap-3 rounded-2xl bg-gradient-to-l from-flame-700 to-flame-500 px-5 py-4 text-white shadow-[0_18px_50px_-14px_rgba(255,122,0,0.85)] lg:hidden"
+          className="above-nav fixed inset-x-3 z-45 mb-2 flex animate-fade-up items-center justify-between gap-3 rounded-2xl bg-gradient-to-l from-flame-700 to-flame-500 px-5 py-4 text-white shadow-[0_18px_50px_-14px_rgba(194,13,0,0.85)] lg:hidden"
         >
           <span className="flex items-center gap-2 text-[13px] font-extrabold">
             <span className="num grid size-6 place-items-center rounded-full bg-black/20">{toFa(cartCount)}</span>

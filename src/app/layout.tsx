@@ -39,7 +39,7 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   // Light is the default theme; ThemeProvider rewrites this meta on switch.
-  themeColor: "#fdf6f0",
+  themeColor: "#ffffff",
   colorScheme: "light dark",
   width: "device-width",
   initialScale: 1,

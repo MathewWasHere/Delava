@@ -19,12 +19,12 @@ export default function OrdersPage() {
   const past = orders.filter((o) => ["DELIVERED", "CANCELLED", "PAYMENT_FAILED"].includes(o.status));
 
   return (
-    <div className="shell py-5 pb-28 sm:py-8 lg:pb-14">
+    <div className="shell py-5 pb-24 sm:py-8 lg:pb-14">
       <h1 className="text-xl font-extrabold text-mist-100 sm:text-3xl">سفارش‌های من</h1>
       <p className="mt-1.5 text-[13px] text-mist-400">پیگیری لحظه‌ای و سفارش مجدد با یک لمس.</p>
 
       {orders.length === 0 && state.hydrated && (
-        <div className="surface mt-8 flex flex-col items-center rounded-3xl px-6 py-20 text-center">
+        <div className="surface mt-8 flex flex-col items-center rounded-2xl px-6 py-20 text-center">
           <span className="grid size-20 place-items-center rounded-full bg-flame-600/10 text-4xl">🧾</span>
           <h2 className="mt-5 text-lg font-extrabold text-mist-100">هنوز سفارشی ثبت نکرده‌ای</h2>
           <p className="mt-2 text-[13px] text-mist-400">اولین سفارشت ۱۰٪ تخفیف دارد.</p>
@@ -49,7 +49,7 @@ export default function OrdersPage() {
       )}
 
       {past.length > 0 && (
-        <section className="mt-10">
+        <section className="mt-7">
           <h2 className="mb-4 text-[15px] font-extrabold text-mist-100">تاریخچه سفارش‌ها</h2>
           <div className="grid gap-3 lg:grid-cols-2">
             {past.map((o) => (
@@ -74,13 +74,13 @@ function OrderCard({
   return (
     <article
       className={cn(
-        "surface surface-hover rounded-3xl p-4",
+        "surface surface-hover rounded-2xl p-4",
         highlight && "border-flame-600/30 bg-gradient-to-b from-flame-600/6 to-transparent",
       )}
     >
       <div className="flex items-start justify-between gap-3">
         <div>
-          <Link href={`/order?id=${order.id}`} className="num text-[15px] font-extrabold text-mist-100 hover:text-flame-400">
+          <Link href={`/order?id=${order.id}`} className="num text-[15px] font-extrabold text-mist-100 hover:text-flame-600">
             سفارش #{toFa(order.number)}
           </Link>
           <div className="num mt-1 text-[13px] text-mist-500">

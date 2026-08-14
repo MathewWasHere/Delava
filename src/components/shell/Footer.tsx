@@ -15,36 +15,49 @@ import { Icon } from "@/components/ui/Icon";
  * Mobile gets a genuinely short footer (brand row, contact rows, legal line),
  * not the desktop footer with parts hidden.
  */
+/**
+ * Small beating heart used in the footer credit.
+ * The pulse is subtle (scale 1 -> 1.18) and fully disabled under
+ * `prefers-reduced-motion`, which is handled in globals.css.
+ */
+function Heartbeat() {
+  return (
+    <span className="inline-flex" aria-label="love" role="img">
+      <svg
+        viewBox="0 0 24 24"
+        className="animate-heartbeat size-3.5 text-[#e01100]"
+        fill="currentColor"
+        aria-hidden="true"
+      >
+        <path d="M12 20.7s-7.6-4.9-9.5-9.2C1.1 8.2 3 4.9 6.2 4.3c2-.4 3.9.5 4.9 2.2l.9 1.5.9-1.5c1-1.7 2.9-2.6 4.9-2.2 3.2.6 5.1 3.9 3.7 7.2-1.9 4.3-9.5 9.2-9.5 9.2Z" />
+      </svg>
+    </span>
+  );
+}
+
 export function Footer() {
   return (
-    <footer className="mt-12 border-t border-[var(--surface-border)] bg-ink-900 pb-24 sm:mt-16 lg:pb-10">
-      <div className="shell py-7 sm:py-12">
+    <footer className="mt-8 border-t border-[var(--surface-border)] bg-ink-900 pb-24 sm:mt-16 lg:pb-10">
+      <div className="shell py-5 sm:py-8">
         {/* ---------- Brand + socials ---------- */}
         <div className="flex items-center justify-between gap-4">
           <Logo width={78} href={null} withSub={false} priority={false} />
 
-          <div className="flex gap-2">
-            <a
-              href={RESTAURANT.instagram}
-              aria-label="اینستاگرام دلاوا"
-              className="grid size-11 place-items-center rounded-xl border border-[var(--surface-border)] bg-[var(--white-a4)] text-mist-400 transition-colors hover:border-flame-600/40 hover:text-flame-500"
-            >
-              <Icon name="instagram" />
-            </a>
-            <a
-              href={RESTAURANT.telegram}
-              aria-label="تلگرام دلاوا"
-              className="grid size-11 place-items-center rounded-xl border border-[var(--surface-border)] bg-[var(--white-a4)] text-mist-400 transition-colors hover:border-flame-600/40 hover:text-flame-500"
-            >
-              <Icon name="telegram" />
-            </a>
-            <a
-              href={`tel:${RESTAURANT.phone}`}
-              aria-label="تماس با دلاوا"
-              className="grid size-11 place-items-center rounded-xl border border-[var(--surface-border)] bg-[var(--white-a4)] text-mist-400 transition-colors hover:border-flame-600/40 hover:text-flame-500"
-            >
-              <Icon name="phone" />
-            </a>
+          <div className="flex items-center gap-1.5">
+            {[
+              { href: RESTAURANT.instagram, icon: "instagram" as const, label: "اینستاگرام دلاوا" },
+              { href: RESTAURANT.telegram, icon: "telegram" as const, label: "تلگرام دلاوا" },
+              { href: `tel:${RESTAURANT.phone}`, icon: "phone" as const, label: "تماس با دلاوا" },
+            ].map((s) => (
+              <a
+                key={s.icon}
+                href={s.href}
+                aria-label={s.label}
+                className="tap-44 group relative grid size-10 place-items-center rounded-xl border border-[var(--surface-border)] bg-[var(--white-a4)] text-mist-400 transition-all duration-200 hover:-translate-y-0.5 hover:border-flame-600/45 hover:bg-flame-600/8 hover:text-flame-600 active:translate-y-0"
+              >
+                <Icon name={s.icon} className="size-[18px]" />
+              </a>
+            ))}
           </div>
         </div>
 
@@ -90,14 +103,31 @@ export function Footer() {
         </div>
 
         {/* ---------- Legal ---------- */}
-        <div className="mt-5 flex flex-wrap items-center justify-between gap-x-4 gap-y-2 border-t border-[var(--hairline)] pt-4 text-[12.5px] text-mist-500 sm:mt-8 sm:pt-6 sm:text-[13px]">
-          <span>© {toFa(1405)} فست فود دلاوا</span>
+        <div className="mt-5 flex flex-wrap items-center justify-between gap-x-4 gap-y-2 border-t border-[var(--hairline)] pt-4 text-[12.5px] text-mist-500 sm:mt-7 sm:pt-5">
+          {/* LEFT — credit. dir=ltr so the English reads correctly inside RTL. */}
+          <span dir="ltr" className="order-2 flex items-center gap-1.5 sm:order-1">
+            Made with
+            <Heartbeat />
+            by
+            <a
+              href="https://t.me/mathewrepresents"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex min-h-11 items-center font-bold text-mist-200 underline-offset-4 transition-colors hover:text-flame-600 hover:underline"
+            >
+              Mathew
+            </a>
+          </span>
+
           <Link
             href="/admin"
-            className="-my-2 inline-flex min-h-11 items-center transition-colors hover:text-flame-500"
+            className="order-3 -my-2 inline-flex min-h-11 items-center transition-colors hover:text-flame-600"
           >
             ورود مدیریت
           </Link>
+
+          {/* RIGHT — copyright */}
+          <span className="num order-1 sm:order-2">{toFa(2026)} فست فود دلاوا</span>
         </div>
       </div>
     </footer>

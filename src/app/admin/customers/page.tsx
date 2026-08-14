@@ -46,9 +46,9 @@ export default function AdminCustomersPage() {
   }, [state.orders, query]);
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-3">
       <div>
-        <h1 className="text-xl font-extrabold text-mist-100">مشتریان</h1>
+        <h1 className="text-[17px] font-extrabold text-mist-100">مشتریان</h1>
         <p className="num mt-1 text-[12px] text-mist-500">
           {toFa(customers.length)} مشتری ثبت‌شده
         </p>
@@ -88,17 +88,8 @@ export default function AdminCustomersPage() {
               )}
             >
               {/* Identity */}
+              {/* No avatar tile — this app has no profile pictures. */}
               <div className="flex items-center gap-2">
-                <span
-                  className={cn(
-                    "grid size-8 shrink-0 place-items-center rounded-lg text-[12px] font-extrabold",
-                    loyal
-                      ? "bg-gradient-to-br from-flame-600 to-flame-800 text-white"
-                      : "bg-[var(--white-a8)] text-mist-300",
-                  )}
-                >
-                  {c.name.slice(0, 1)}
-                </span>
                 <div className="min-w-0 flex-1">
                   <div className="truncate text-[12.5px] font-bold text-mist-100">{c.name}</div>
                   <div className="num truncate text-[10.5px] text-mist-500" dir="ltr">

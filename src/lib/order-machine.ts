@@ -50,15 +50,19 @@ export const STATUS_SHORT: Record<OrderStatus, string> = {
   PAYMENT_FAILED: "ناموفق",
 };
 
+/**
+ * Customer-facing status chips. Text uses the 600 weight so it clears contrast
+ * on the white light-mode surfaces; the tinted background keeps them soft.
+ */
 export const STATUS_TONE: Record<OrderStatus, string> = {
-  PENDING: "text-flame-400 bg-flame-500/10 border-flame-500/30",
-  CONFIRMED: "text-sky-300 bg-sky-400/10 border-sky-400/30",
-  PREPARING: "text-flame-400 bg-flame-500/10 border-flame-500/30",
-  READY: "text-violet-300 bg-violet-400/10 border-violet-400/30",
-  OUT_FOR_DELIVERY: "text-blue-300 bg-blue-400/10 border-blue-400/30",
-  DELIVERED: "text-emerald-300 bg-emerald-400/10 border-emerald-400/30",
-  CANCELLED: "text-red-300 bg-red-400/10 border-red-400/30",
-  PAYMENT_FAILED: "text-red-300 bg-red-400/10 border-red-400/30",
+  PENDING: "text-amber-600 bg-amber-500/10 border-amber-500/30",
+  CONFIRMED: "text-sky-600 bg-sky-500/10 border-sky-500/30",
+  PREPARING: "text-flame-600 bg-flame-600/10 border-flame-600/30",
+  READY: "text-violet-600 bg-violet-500/10 border-violet-500/30",
+  OUT_FOR_DELIVERY: "text-blue-600 bg-blue-500/10 border-blue-500/30",
+  DELIVERED: "text-emerald-600 bg-emerald-500/10 border-emerald-500/30",
+  CANCELLED: "text-red-600 bg-red-500/10 border-red-500/30",
+  PAYMENT_FAILED: "text-red-600 bg-red-500/10 border-red-500/30",
 };
 
 export function statusIndex(status: OrderStatus): number {
@@ -109,6 +113,19 @@ export const ACTION_BUTTON_CLASS: Record<ActionTone, string> = {
   neutral:
     "bg-ink-700 text-mist-100 hover:bg-ink-600 focus-visible:outline-mist-400 border border-[var(--surface-border-strong)]",
 };
+
+/**
+ * Cancel action on the live-orders board.
+ *
+ * The CONTAINER is 10% opacity; the label is not. Fading the whole button
+ * (`opacity: .1`) would make the text unreadable and fail contrast, so the
+ * 10% is applied to the background fill only — the destructive action stays
+ * visually recessive next to the primary "advance" button, which is the point,
+ * while the label keeps full-strength colour.
+ */
+export const CANCEL_BUTTON_CLASS =
+  "bg-red-600/10 text-red-600 border border-red-600/25 " +
+  "hover:bg-red-600/20 hover:border-red-600/45 focus-visible:outline-red-500";
 
 /** Quieter badge styles (status chips) using the same semantics. */
 export const STATUS_BADGE: Record<OrderStatus, string> = {

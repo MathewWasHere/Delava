@@ -53,36 +53,36 @@ export default function AdminDashboard() {
   const live = orders.filter((o) => !["DELIVERED", "CANCELLED"].includes(o.status)).slice(0, 6);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-3">
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h1 className="text-xl font-extrabold text-mist-100">داشبورد</h1>
-          <p className="mt-1 text-[12px] text-mist-500">نمای کلی عملکرد امروز رستوران</p>
+          <h1 className="text-[17px] font-extrabold text-mist-100">داشبورد</h1>
+          <p className="mt-0.5 text-[11.5px] text-mist-500">نمای کلی عملکرد امروز رستوران</p>
         </div>
         <Link
           href="/admin/orders"
-          className="rounded-xl bg-gradient-to-l from-flame-700 to-flame-500 px-4 py-2.5 text-[12px] font-extrabold text-white"
+          className="rounded-lg bg-flame-600 px-3 py-2 text-[12px] font-extrabold text-white transition-colors hover:bg-flame-500"
         >
           مدیریت سفارش‌های زنده
         </Link>
       </div>
 
       {/* KPI cards */}
-      <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+      <div className="grid grid-cols-2 gap-2 xl:grid-cols-4">
         <StatCard icon="tag" label="فروش امروز" value={`${faNumber(stats.revenue)}`} unit="تومان" trend="+۱۲٪" />
         <StatCard icon="receipt" label="سفارش‌های امروز" value={toFa(stats.count)} unit="سفارش" trend="+۵٪" />
         <StatCard icon="chart" label="میانگین سبد" value={faNumber(stats.aov)} unit="تومان" trend="+۳٪" />
         <StatCard icon="bike" label="تحویل‌شده امروز" value={toFa(stats.delivered)} unit="سفارش" />
       </div>
 
-      <div className="grid gap-4 xl:grid-cols-[1.4fr_1fr]">
+      <div className="grid gap-3 xl:grid-cols-[1.4fr_1fr]">
         {/* Weekly revenue */}
-        <div className="rounded-3xl border border-[var(--surface-border)] bg-ink-900 p-5">
+        <div className="rounded-xl border border-[var(--surface-border)] bg-ink-900 p-3.5">
           <div className="flex items-center justify-between">
-            <h2 className="text-[14px] font-extrabold text-mist-100">درآمد هفته</h2>
+            <h2 className="text-[13px] font-extrabold text-mist-100">درآمد هفته</h2>
             <span className="num text-[11px] text-mist-500">تومان</span>
           </div>
-          <div className="mt-6 flex h-48 items-end justify-between gap-2">
+          <div className="mt-3 flex h-32 items-end justify-between gap-1.5">
             {week.map((w, i) => (
               <div key={w.day} className="group flex h-full flex-1 flex-col items-center justify-end gap-2">
                 <span className="num text-[10px] text-mist-500 opacity-0 transition-opacity group-hover:opacity-100">
@@ -92,7 +92,7 @@ export default function AdminDashboard() {
                   className={cn(
                     "w-full min-h-1 rounded-t-lg transition-all duration-500",
                     i === week.length - 2
-                      ? "bg-gradient-to-t from-flame-700 to-flame-400 shadow-[0_-6px_24px_-6px_rgba(255,122,0,0.7)]"
+                      ? "bg-gradient-to-t from-flame-700 to-flame-400 shadow-[0_-6px_24px_-6px_rgba(194,13,0,0.7)]"
                       : "bg-[var(--white-a10)] group-hover:bg-flame-600/50",
                   )}
                   style={{ height: `${Math.max(4, (w.value / maxWeek) * 100)}%` }}
@@ -104,93 +104,116 @@ export default function AdminDashboard() {
         </div>
 
         {/* Orders by status */}
-        <div className="rounded-3xl border border-[var(--surface-border)] bg-ink-900 p-5">
-          <h2 className="text-[14px] font-extrabold text-mist-100">سفارش‌ها بر اساس وضعیت</h2>
-          <div className="mt-5 space-y-3">
+        <div className="rounded-xl border border-[var(--surface-border)] bg-ink-900 p-3.5">
+          <h2 className="text-[13px] font-extrabold text-mist-100">سفارش‌ها بر اساس وضعیت</h2>
+          <div className="mt-3 space-y-2">
             {Object.entries(byStatus).map(([status, count]) => (
-              <div key={status} className="flex items-center gap-3">
+              <div key={status} className="flex min-w-0 items-center gap-2">
                 <span
                   className={cn(
-                    "w-24 rounded-lg border px-2 py-1 text-center text-[11px] font-bold",
+                    "w-[70px] shrink-0 rounded border px-1.5 py-0.5 text-center text-[10.5px] font-bold",
                     STATUS_TONE[status as keyof typeof STATUS_TONE],
                   )}
                 >
                   {STATUS_SHORT[status as keyof typeof STATUS_SHORT]}
                 </span>
-                <div className="h-2 flex-1 overflow-hidden rounded-full bg-[var(--white-a6)]">
+                <div className="h-1.5 min-w-0 flex-1 overflow-hidden rounded-full bg-[var(--white-a6)]">
                   <div
                     className="h-full rounded-full bg-flame-600/70"
                     style={{ width: `${(count / orders.length) * 100}%` }}
                   />
                 </div>
-                <span className="num w-6 text-left text-[12px] font-bold text-mist-100">{toFa(count)}</span>
+                <span className="num w-5 shrink-0 text-left text-[11.5px] font-bold text-mist-100">{toFa(count)}</span>
               </div>
             ))}
           </div>
         </div>
       </div>
 
-      <div className="grid gap-4 xl:grid-cols-[1.4fr_1fr]">
+      <div className="grid gap-3 xl:grid-cols-[1.4fr_1fr]">
         {/* Live orders */}
-        <div className="rounded-3xl border border-[var(--surface-border)] bg-ink-900 p-5">
+        <div className="rounded-xl border border-[var(--surface-border)] bg-ink-900 p-3.5">
           <div className="flex items-center justify-between">
-            <h2 className="flex items-center gap-2 text-[14px] font-extrabold text-mist-100">
+            <h2 className="flex items-center gap-1.5 text-[13px] font-extrabold text-mist-100">
               <span className="size-2 animate-pulse-dot rounded-full bg-flame-500" />
               سفارش‌های در جریان
             </h2>
-            <Link href="/admin/orders" className="text-[12px] font-bold text-flame-400">
+            <Link href="/admin/orders" className="-my-2 inline-flex min-h-9 shrink-0 items-center text-[11.5px] font-bold text-flame-600">
               همه ←
             </Link>
           </div>
-          <div className="mt-4 space-y-2">
+          <div className="mt-3 space-y-1.5">
             {live.length === 0 && (
-              <p className="py-8 text-center text-[13px] text-mist-500">سفارش فعالی وجود ندارد.</p>
+              <p className="py-6 text-center text-[12.5px] text-mist-500">سفارش فعالی وجود ندارد.</p>
             )}
             {live.map((o) => (
+              /* Two-line row. The single flex line used to overflow: the item
+                 list has no natural width limit, and the price + status chips
+                 are shrink-resistant, so the row pushed past its container.
+                 Now the meta sits on its own line and every flexible cell has
+                 min-w-0 + truncate. */
               <Link
                 key={o.id}
                 href="/admin/orders"
-                className="flex items-center gap-3 rounded-2xl border border-[var(--surface-border)] bg-ink-850 p-3 transition-colors hover:border-flame-600/40"
+                className="block rounded-lg border border-[var(--surface-border)] bg-ink-850 px-2.5 py-2 transition-colors hover:border-flame-600/40"
               >
-                <span className="num text-[13px] font-extrabold text-mist-100">#{toFa(o.number)}</span>
-                <span className="min-w-0 flex-1 truncate text-[12px] text-mist-400">
-                  {o.customer.name} — {o.items.map((i) => i.name).join("، ")}
-                </span>
-                <span className="num hidden text-[11px] text-mist-500 sm:block">{faTime(o.createdAt)}</span>
-                <span className="num text-[12px] font-bold text-flame-400">{faNumber(o.total)}</span>
-                <span className={cn("rounded-lg border px-2 py-1 text-[10px] font-bold", STATUS_TONE[o.status])}>
-                  {STATUS_SHORT[o.status]}
-                </span>
+                <div className="flex min-w-0 items-center gap-2">
+                  <span className="num shrink-0 text-[12.5px] font-extrabold text-mist-100">
+                    #{toFa(o.number)}
+                  </span>
+                  <span className="min-w-0 flex-1 truncate text-[11.5px] text-mist-400">
+                    {o.customer.name}
+                  </span>
+                  <span
+                    className={cn(
+                      "shrink-0 rounded border px-1.5 py-0.5 text-[10px] font-bold",
+                      STATUS_TONE[o.status],
+                    )}
+                  >
+                    {STATUS_SHORT[o.status]}
+                  </span>
+                </div>
+                <div className="mt-1 flex min-w-0 items-center gap-2">
+                  <span className="min-w-0 flex-1 truncate text-[11px] text-mist-500">
+                    {o.items.map((i) => i.name).join("، ")}
+                  </span>
+                  <span className="num shrink-0 text-[11px] text-mist-500">
+                    {faTime(o.createdAt)}
+                  </span>
+                  <span className="num shrink-0 text-[12px] font-bold text-flame-600">
+                    {faNumber(o.total)}
+                  </span>
+                </div>
               </Link>
             ))}
           </div>
         </div>
 
         {/* Top products */}
-        <div className="rounded-3xl border border-[var(--surface-border)] bg-ink-900 p-5">
-          <h2 className="text-[14px] font-extrabold text-mist-100">پرفروش‌ترین محصولات</h2>
-          <div className="mt-4 space-y-3">
+        <div className="rounded-xl border border-[var(--surface-border)] bg-ink-900 p-3.5">
+          <h2 className="text-[13px] font-extrabold text-mist-100">پرفروش‌ترین محصولات</h2>
+          <div className="mt-2.5 space-y-1.5">
             {topProducts.map((p, i) => (
-              <div key={p.name} className="flex items-center gap-3">
-                <span className="num w-4 text-[12px] font-extrabold text-mist-500">{toFa(i + 1)}</span>
-                <Image src={p.image} alt={p.name} width={36} height={36} className="size-9 rounded-lg object-cover" />
+              <div key={p.name} className="flex min-w-0 items-center gap-2">
+                <span className="num w-3.5 shrink-0 text-[11px] font-extrabold text-mist-500">{toFa(i + 1)}</span>
+                <Image src={p.image} alt="" aria-hidden="true" width={28} height={28} className="size-7 shrink-0 rounded object-cover" />
                 <div className="min-w-0 flex-1">
-                  <div className="truncate text-[12px] font-bold text-mist-100">{p.name}</div>
-                  <div className="num text-[10px] text-mist-500">{toFa(p.qty)} فروش</div>
+                  <div className="truncate text-[11.5px] font-bold leading-tight text-mist-100">{p.name}</div>
+                  <div className="num text-[10px] leading-tight text-mist-500">{toFa(p.qty)} فروش</div>
                 </div>
-                <span className="num text-[12px] font-bold text-flame-400">{faNumber(p.revenue)}</span>
+                <span className="num shrink-0 text-[11.5px] font-bold text-flame-600">{faNumber(p.revenue)}</span>
               </div>
             ))}
           </div>
 
-          <div className="mt-5 rounded-2xl border border-[var(--surface-border)] bg-ink-850 p-4">
+          <div className="mt-2.5 rounded-lg border border-[var(--surface-border)] bg-ink-850 px-2.5 py-2">
             <div className="flex items-center justify-between text-[12px]">
               <span className="text-mist-400">محصولات ناموجود</span>
-              <span className="num font-bold text-red-400">
+              <span className="num font-bold text-flame-600">
                 {toFa(products.filter((p) => !p.available).length)}
               </span>
             </div>
-            <Link href="/admin/products" className="mt-2 block text-[11px] font-bold text-flame-400">
+            <Link href="/admin/products" className="mt-1.5 inline-flex min-h-9 items-center text-[11px] font-bold text-flame-600">
               مدیریت موجودی ←
             </Link>
           </div>
@@ -214,22 +237,26 @@ function StatCard({
   trend?: string;
 }) {
   return (
-    <div className="rounded-3xl border border-[var(--surface-border)] bg-gradient-to-b from-ink-850 to-ink-900 p-5">
-      <div className="flex items-start justify-between">
-        <span className="grid size-10 place-items-center rounded-2xl bg-flame-600/12 text-flame-500">
-          <Icon name={icon} className="size-5" />
-        </span>
-        {trend && (
-          <span className="num rounded-lg bg-emerald-500/12 px-2 py-1 text-[10px] font-bold text-emerald-300">
-            {trend}
+    /* Horizontal row: the icon sits beside the value instead of stacking above
+       it, which removes ~40px of dead height per card without shrinking text. */
+    <div className="flex items-center gap-2.5 rounded-lg border border-[var(--surface-border)] bg-ink-900 px-3 py-2.5">
+      <span className="grid size-9 shrink-0 place-items-center rounded-lg bg-flame-600/10 text-flame-600">
+        <Icon name={icon} className="size-[18px]" />
+      </span>
+      <div className="min-w-0 flex-1">
+        <div className="flex items-baseline gap-1">
+          <span className="num truncate text-[17px] font-extrabold leading-none text-mist-100">
+            {value}
           </span>
-        )}
+          <span className="shrink-0 text-[10px] text-mist-500">{unit}</span>
+        </div>
+        <div className="mt-1 truncate text-[10.5px] text-mist-500">{label}</div>
       </div>
-      <div className="num mt-4 text-2xl font-extrabold text-mist-100">{value}</div>
-      <div className="mt-1 flex items-center gap-1.5 text-[11px] text-mist-500">
-        <span>{label}</span>
-        <span className="text-mist-500">· {unit}</span>
-      </div>
+      {trend && (
+        <span className="num shrink-0 rounded bg-emerald-500/12 px-1.5 py-0.5 text-[10px] font-bold text-emerald-600">
+          {trend}
+        </span>
+      )}
     </div>
   );
 }

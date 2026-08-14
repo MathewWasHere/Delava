@@ -62,7 +62,7 @@ export function AuthPanel({ onDone, compact }: { onDone?: () => void; compact?: 
   };
 
   return (
-    <div className={compact ? "" : "surface rounded-3xl p-6"}>
+    <div className={compact ? "" : "surface rounded-2xl p-6"}>
       {step === "phone" ? (
         <>
           <h2 className="text-lg font-extrabold text-mist-100">ورود / ثبت‌نام</h2>
@@ -111,12 +111,12 @@ export function AuthPanel({ onDone, compact }: { onDone?: () => void; compact?: 
 
           <div className="mt-6">
             <OTPInput value={code} onChange={setCode} onComplete={verify} />
-            {error && <p className="mt-3 text-center text-[13px] text-red-400">{error}</p>}
+            {error && <p className="mt-3 text-center text-[13px] text-red-500">{error}</p>}
           </div>
 
           <div className="mt-4 rounded-2xl border border-flame-600/25 bg-flame-600/8 p-3 text-center">
             <p className="text-[13px] text-mist-300">
-              نسخه نمایشی — کد تأیید: <span className="num font-extrabold text-flame-400">{toFa(demoCode)}</span>
+              نسخه نمایشی — کد تأیید: <span className="num font-extrabold text-flame-600">{toFa(demoCode)}</span>
             </p>
           </div>
 
@@ -128,7 +128,7 @@ export function AuthPanel({ onDone, compact }: { onDone?: () => void; compact?: 
             {seconds > 0 ? (
               <span className="num">ارسال مجدد کد تا {toFa(seconds)} ثانیه دیگر</span>
             ) : (
-              <button onClick={requestOtp} className="font-bold text-flame-400 hover:text-flame-300">
+              <button onClick={requestOtp} className="font-bold text-flame-600 hover:text-flame-500">
                 ارسال مجدد کد
               </button>
             )}

@@ -53,10 +53,10 @@ def main():
     out = []
     # Desktop / tablet — wide, full composition
     out.append(("hero-desktop.webp", crop_focal(hero, 1600, 900, 0.60), 80))
-    # Mobile portrait — taller crop that keeps the illuminated round sign visible
-    out.append(("hero-mobile.webp", crop_focal(hero, 900, 1200, 0.74), 80))
-    # Small/short phones (e.g. 320x568) — slightly less tall so nothing key is lost
-    out.append(("hero-mobile-sm.webp", crop_focal(hero, 720, 900, 0.74), 78))
+    # Mobile uses the SAME landscape composition, just fewer pixels.
+    out.append(("hero-mobile.webp", crop_focal(hero, 1024, 576, 0.60), 80))
+    # Smallest phones — same framing again.
+    out.append(("hero-mobile-sm.webp", crop_focal(hero, 768, 432, 0.60), 78))
 
     for name, im, q in out:
         kb = save(im, PUB / "hero" / name, q)

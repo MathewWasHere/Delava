@@ -104,7 +104,7 @@ export function ProductCard({ product, priority }: { product: Product; priority?
       {/* ---------------- DESKTOP / TABLET: image-led card ---------------- */}
       <article
         className={cn(
-          "surface surface-hover group relative hidden flex-col overflow-hidden rounded-3xl sm:flex",
+          "surface surface-hover group relative hidden flex-col overflow-hidden rounded-2xl sm:flex",
           !product.available && "opacity-60",
         )}
       >
@@ -145,7 +145,7 @@ export function ProductCard({ product, priority }: { product: Product; priority?
           className={cn(
             "absolute left-3 top-3 grid size-11 place-items-center rounded-full border backdrop-blur-md transition-all",
             fav
-              ? "border-flame-600/50 bg-flame-600/25 text-flame-400"
+              ? "border-flame-600/50 bg-flame-600/25 text-flame-600"
               : "border-[var(--surface-border)] bg-black/40 text-white/70 hover:text-white",
           )}
         >
@@ -154,7 +154,7 @@ export function ProductCard({ product, priority }: { product: Product; priority?
 
         <div className="flex flex-1 flex-col p-4">
           <Link href={`/product/${product.slug}`} className="flex min-h-11 items-center">
-            <h3 className="text-[15px] font-extrabold text-mist-100 transition-colors group-hover:text-flame-400">
+            <h3 className="text-[15px] font-extrabold text-mist-100 transition-colors group-hover:text-flame-600">
               {product.name}
             </h3>
           </Link>

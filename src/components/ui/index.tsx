@@ -49,10 +49,10 @@ export function Badge({
   className?: string;
 }) {
   const tones = {
-    flame: "bg-flame-600/15 text-flame-400 border-flame-600/30",
+    flame: "bg-flame-600/15 text-flame-600 border-flame-600/30",
     neutral: "bg-[var(--white-a6)] text-mist-200 border-[var(--surface-border)]",
-    success: "bg-emerald-500/12 text-emerald-300 border-emerald-500/30",
-    danger: "bg-red-500/12 text-red-300 border-red-500/30",
+    success: "bg-emerald-500/12 text-emerald-600 border-emerald-500/30",
+    danger: "bg-red-500/12 text-red-600 border-red-500/30",
     custom: "",
   } as const;
   return (
@@ -91,7 +91,7 @@ export function Field({
       </span>
       {children}
       {error ? (
-        <span className="mt-1.5 block text-[13px] text-red-400">{error}</span>
+        <span className="mt-1.5 block text-[13px] text-red-500">{error}</span>
       ) : hint ? (
         <span className="mt-1.5 block text-[13px] text-mist-500">{hint}</span>
       ) : null}
@@ -190,7 +190,7 @@ export function OTPInput({
           }}
           className={cn(
             "h-15 w-13 rounded-2xl border bg-ink-850 text-center text-2xl font-bold text-mist-100 outline-none transition-all",
-            value[i] ? "border-flame-600 bg-flame-600/5 shadow-[0_0_24px_-8px_rgba(255,122,0,0.8)]" : "border-[var(--surface-border)]",
+            value[i] ? "border-flame-600 bg-flame-600/5 shadow-[0_0_24px_-8px_rgba(194,13,0,0.8)]" : "border-[var(--surface-border)]",
             "focus:border-flame-500",
           )}
         />
@@ -224,7 +224,7 @@ export function QuantitySelector({
         type="button"
         aria-label="افزایش تعداد"
         onClick={() => onChange(Math.min(max, value + 1))}
-        className={cn(btn, "grid place-items-center text-flame-400 transition-colors hover:bg-flame-600/15")}
+        className={cn(btn, "grid place-items-center text-flame-600 transition-colors hover:bg-flame-600/15")}
       >
         +
       </button>
@@ -310,26 +310,23 @@ export function Skeleton({ className }: { className?: string }) {
 
 /* ----------------------------- SectionHead ------------------------------ */
 
+/**
+ * Section heading.
+ *
+ * The small eyebrow/pre-title label was removed product-wide: it added a line
+ * of low-value text above every heading and pushed content down. The margin is
+ * tightened to match (mb-5 -> mb-3.5) so no gap is left behind.
+ */
 export function SectionHead({
-  eyebrow,
   title,
   action,
 }: {
-  eyebrow?: string;
   title: string;
   action?: React.ReactNode;
 }) {
   return (
-    <div className="mb-5 flex items-end justify-between gap-4">
-      <div>
-        {eyebrow && (
-          <span className="mb-1.5 flex items-center gap-2 text-[13px] font-bold tracking-wide text-flame-500">
-            <span className="h-px w-6 bg-flame-600" />
-            {eyebrow}
-          </span>
-        )}
-        <h2 className="text-lg font-extrabold text-mist-100 sm:text-2xl">{title}</h2>
-      </div>
+    <div className="mb-3.5 flex items-end justify-between gap-4">
+      <h2 className="text-[17px] font-extrabold text-mist-100 sm:text-2xl">{title}</h2>
       {action}
     </div>
   );
@@ -378,5 +375,45 @@ export function FoodImage({
         )}
       />
     </div>
+  );
+}
+
+/* ----------------------------- CountBadge ------------------------------- */
+
+/**
+ * Small circular counter (cart badge, nav badges, admin column counts).
+ *
+ * Centring is done with a grid + `place-items-center` on a square box, NOT with
+ * line-height or nudged pixel offsets — those drift as soon as the font, the
+ * digit count or the locale changes. Persian digits (۱۲۳) have different
+ * vertical metrics to Latin ones, which is exactly what made the old badge look
+ * off-centre.
+ *
+ * `tabular-nums` + `leading-none` keep multi-digit values from shifting the box.
+ */
+export function CountBadge({
+  value,
+  pulseKey,
+  className,
+  tone = "brand",
+}: {
+  value: number | string;
+  pulseKey?: number | string;
+  className?: string;
+  tone?: "brand" | "neutral";
+}) {
+  return (
+    <span
+      key={pulseKey}
+      className={cn(
+        "num pointer-events-none absolute -top-1.5 -left-1.5 grid h-[18px] min-w-[18px] place-items-center rounded-full px-1",
+        "text-[11px] font-extrabold leading-none tabular-nums",
+        pulseKey !== undefined && "animate-pop",
+        tone === "brand" ? "bg-flame-600 text-white" : "bg-ink-600 text-mist-100",
+        className,
+      )}
+    >
+      <span className="block translate-y-[0.5px] leading-none">{toFa(value)}</span>
+    </span>
   );
 }

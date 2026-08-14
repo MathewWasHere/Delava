@@ -58,21 +58,21 @@ function OrderDetailInner() {
   const progress = Math.min(100, Math.round(((statusIndex(order.status) + 1) / 6) * 100));
 
   return (
-    <div className="shell py-5 pb-28 sm:py-8 lg:pb-14">
+    <div className="shell py-5 pb-24 sm:py-8 lg:pb-14">
       <Link href="/orders" className="mb-5 inline-flex items-center gap-1.5 text-[13px] text-mist-400 hover:text-mist-100">
         <Icon name="chevron" className="size-4 rotate-180" />
         سفارش‌های من
       </Link>
 
       {celebrate && (
-        <div className="mb-5 animate-fade-up rounded-3xl border border-emerald-500/30 bg-gradient-to-l from-emerald-500/12 to-transparent p-6 text-center">
+        <div className="mb-5 animate-fade-up rounded-2xl border border-emerald-500/30 bg-gradient-to-l from-emerald-500/12 to-transparent p-6 text-center">
           <div className="text-4xl">🎉</div>
           <h1 className="mt-3 text-xl font-extrabold text-mist-100">سفارش شما با موفقیت ثبت شد</h1>
           <p className="num mt-2 text-[13px] text-mist-300">
-            شماره سفارش: <span className="font-extrabold text-emerald-300">#{toFa(order.number)}</span>
+            شماره سفارش: <span className="font-extrabold text-emerald-600">#{toFa(order.number)}</span>
           </p>
           {order.pointsEarned > 0 && (
-            <p className="num mt-1 text-[13px] text-flame-400">
+            <p className="num mt-1 text-[13px] text-flame-600">
               🎁 {toFa(order.pointsEarned)} امتیاز به باشگاه مشتریان شما اضافه شد
             </p>
           )}
@@ -82,7 +82,7 @@ function OrderDetailInner() {
       <div className="grid gap-6 lg:grid-cols-[1fr_360px]">
         <div className="space-y-4">
           {/* Status header */}
-          <div className="surface overflow-hidden rounded-3xl">
+          <div className="surface overflow-hidden rounded-2xl">
             <div className="border-b border-[var(--surface-border)] bg-gradient-to-l from-flame-600/10 to-transparent p-6">
               <div className="flex items-start justify-between gap-4">
                 <div>
@@ -103,7 +103,7 @@ function OrderDetailInner() {
 
               {!done && (
                 <>
-                  <div className="num mt-1 text-[13px] text-flame-400">
+                  <div className="num mt-1 text-[13px] text-flame-600">
                     حدود {toFa(remaining)} دقیقه تا تحویل
                   </div>
                   <div className="mt-4 h-2 overflow-hidden rounded-full bg-[var(--white-a8)]">
@@ -131,7 +131,7 @@ function OrderDetailInner() {
                 </div>
                 <a
                   href={`tel:${RESTAURANT.phone}`}
-                  className="rounded-xl border border-flame-600/40 px-3 py-2 text-[13px] font-bold text-flame-400"
+                  className="rounded-xl border border-flame-600/40 px-3 py-2 text-[13px] font-bold text-flame-600"
                 >
                   تماس
                 </a>
@@ -140,7 +140,7 @@ function OrderDetailInner() {
           </div>
 
           {/* Items */}
-          <div className="surface rounded-3xl p-4 sm:p-6">
+          <div className="surface rounded-2xl p-3.5 sm:p-4">
             <h2 className="text-[15px] font-extrabold text-mist-100">اقلام سفارش</h2>
             <div className="mt-4 space-y-3">
               {order.items.map((i, idx) => (
@@ -149,7 +149,7 @@ function OrderDetailInner() {
                   <div className="min-w-0 flex-1">
                     <div className="truncate text-[13px] font-bold text-mist-100">{i.name}</div>
                     {i.modifiers.length > 0 && (
-                      <div className="truncate text-[13px] text-flame-400">
+                      <div className="truncate text-[13px] text-flame-600">
                         {i.modifiers.map((m) => m.name).join("، ")}
                       </div>
                     )}
@@ -166,7 +166,7 @@ function OrderDetailInner() {
 
         {/* Sidebar */}
         <aside className="space-y-4 lg:sticky lg:top-28 lg:self-start">
-          <div className="surface rounded-3xl p-4 sm:p-5">
+          <div className="surface rounded-2xl p-4 sm:p-5">
             <h2 className="text-[15px] font-extrabold text-mist-100">صورتحساب</h2>
             <div className="mt-4 space-y-3 border-b border-[var(--surface-border)] pb-4 text-[13px]">
               <Row label="جمع سفارش" value={`${faNumber(order.subtotal)} تومان`} />
@@ -181,7 +181,7 @@ function OrderDetailInner() {
             </div>
 
             <div className="mt-4 flex items-center gap-2 rounded-2xl border border-[var(--surface-border)] bg-ink-850 p-3">
-              <Icon name="shield" className="size-4 text-emerald-400" />
+              <Icon name="shield" className="size-4 text-emerald-500" />
               <span className="text-[13px] text-mist-300">
                 {order.payment.method === "ONLINE"
                   ? `پرداخت آنلاین — ${order.payment.status === "PAID" ? "موفق" : "در انتظار"}`
@@ -202,7 +202,7 @@ function OrderDetailInner() {
           </div>
 
           {order.address && (
-            <div className="surface rounded-3xl p-4 sm:p-5">
+            <div className="surface rounded-2xl p-4 sm:p-5">
               <h2 className="flex items-center gap-2 text-[15px] font-extrabold text-mist-100">
                 <Icon name="pin" className="size-4 text-flame-500" />
                 آدرس تحویل
@@ -221,7 +221,7 @@ function OrderDetailInner() {
 
           <a
             href={`tel:${RESTAURANT.phone}`}
-            className="surface flex items-center justify-between rounded-3xl p-5 transition-colors hover:border-flame-600/40"
+            className="surface flex items-center justify-between rounded-2xl p-5 transition-colors hover:border-flame-600/40"
           >
             <span>
               <span className="block text-[13px] font-extrabold text-mist-100">مشکلی در سفارش هست؟</span>
@@ -239,7 +239,7 @@ function Row({ label, value, flame }: { label: string; value: string; flame?: bo
   return (
     <div className="flex justify-between">
       <span className="text-mist-400">{label}</span>
-      <span className={cn("num font-bold", flame ? "text-flame-400" : "text-mist-100")}>{value}</span>
+      <span className={cn("num font-bold", flame ? "text-flame-600" : "text-mist-100")}>{value}</span>
     </div>
   );
 }

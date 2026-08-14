@@ -58,7 +58,7 @@ const PATHS: Record<IconName, React.ReactNode> = {
     </>
   ),
   phone: (
-    <path d="M6.5 3.5h3l1.5 4-2 1.4a12 12 0 0 0 6.1 6.1l1.4-2 4 1.5v3c0 1-.8 1.9-1.9 1.8C10.9 18.9 5.1 13.1 4.7 5.4c0-1 .8-1.9 1.8-1.9Z" />
+    <path d="M7.1 3.6h2.6a.9.9 0 0 1 .85.6l1.05 2.9a.9.9 0 0 1-.33 1.03l-1.5 1.06a11.4 11.4 0 0 0 5.06 5.06l1.06-1.5a.9.9 0 0 1 1.03-.33l2.9 1.05a.9.9 0 0 1 .6.85v2.6a1.9 1.9 0 0 1-2.06 1.89C11.2 18.5 5.5 12.8 5.2 5.66A1.9 1.9 0 0 1 7.1 3.6Z" />
   ),
   pin: (
     <>
@@ -137,12 +137,21 @@ const PATHS: Record<IconName, React.ReactNode> = {
   trash: <path d="M4.5 6.5h15M9 6.5V4h6v2.5M6.5 6.5 7.5 20h9l1-13.5M10 10v6M14 10v6" />,
   instagram: (
     <>
-      <rect x="3.5" y="3.5" width="17" height="17" rx="5" />
-      <circle cx="12" cy="12" r="4" />
-      <circle cx="17" cy="7" r="1" />
+      {/* Squircle body — rx tuned to the real mark's corner curvature. */}
+      <rect x="3.25" y="3.25" width="17.5" height="17.5" rx="5.25" />
+      <circle cx="12" cy="12" r="3.9" />
+      {/* Flash dot: filled so it holds its weight at 16px. */}
+      <circle cx="16.9" cy="7.1" r="1.05" fill="currentColor" stroke="none" />
     </>
   ),
-  telegram: <path d="M21 4.5 2.8 11.3l5.3 1.8 1.9 5.8 2.9-3.6 4.5 3.3z" />,
+  telegram: (
+    <>
+      {/* Outer plane */}
+      <path d="M21.2 4.3 2.9 11.4a.42.42 0 0 0 .03.79l4.7 1.45 1.77 5.3a.42.42 0 0 0 .72.15l2.5-2.86 4.63 3.4a.42.42 0 0 0 .66-.24l3.9-14.6a.42.42 0 0 0-.6-.49Z" />
+      {/* Inner fold — the detail that makes it read as Telegram rather than a generic arrow. */}
+      <path d="m7.63 13.64 11-7.3-8.35 8.6" />
+    </>
+  ),
   flame: (
     <path d="M12 3s5 4 5 9a5 5 0 0 1-10 0c0-2 1-3.4 1-3.4s.4 1.9 1.7 2.4C9.4 8.5 12 7 12 3Z" />
   ),

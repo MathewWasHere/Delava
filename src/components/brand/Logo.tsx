@@ -5,14 +5,20 @@ import { cn } from "@/lib/cn";
 /**
  * The official DELAVA wordmark.
  *
- * Assets come straight from the supplied brand pack (`public/brand/`) — they are
- * never redrawn, traced or substituted. Per `delava-brand-guide.md`:
- *   light mode -> delava-logo-orange (#EE6D1B)
- *   dark  mode -> delava-logo-white
- * (served as the pack's own .webp twins — identical artwork, ~63% smaller)
+ * Assets come straight from the supplied brand pack (`public/brand/`) — never
+ * redrawn, traced, recoloured or substituted.
  *
- * Both variants are rendered and swapped with CSS driven by `data-theme`, so the
- * correct mark is painted on the first frame with no hydration flash.
+ * Variant choice follows the brand palette (white / black / #C20D00):
+ *   light mode -> delava-logo-dark   (the pack's black wordmark)
+ *   dark  mode -> delava-logo-white  (the pack's white wordmark)
+ *
+ * The pack's orange wordmark is no longer used, because orange was retired as
+ * the accent colour — but the mark itself is untouched official artwork, just
+ * the monochrome cut instead of the orange one. Red is carried by the UI
+ * accent, not by the logo, which keeps the lockup clean on both themes.
+ *
+ * Both variants render and swap via CSS on `data-theme`, so the right mark is
+ * painted on the first frame with no hydration flash.
  */
 
 const RATIO = 887 / 1797; // native aspect ratio of the wordmark assets
@@ -41,7 +47,7 @@ export function Logo({
       )}
       <span className="relative block" style={{ width, height }}>
         <Image
-          src="/brand/delava-logo-orange.webp"
+          src="/brand/delava-logo-dark.webp"
           alt="دلاوا"
           width={width}
           height={height}
@@ -67,7 +73,7 @@ export function Logo({
 
   if (href === null) return content;
   return (
-    <Link href={href} aria-label="دلاوا — صفحه اصلی" className="shrink-0">
+    <Link href={href} aria-label="دلاوا — صفحه اصلی" className="inline-flex min-h-11 shrink-0 items-center">
       {content}
     </Link>
   );
@@ -92,7 +98,7 @@ export function LogoMark({
       style={{ width: size, height: size }}
     >
       <Image
-        src="/brand/delava-icon-orange.webp"
+        src="/brand/delava-icon-dark.webp"
         alt="دلاوا"
         width={size}
         height={size}

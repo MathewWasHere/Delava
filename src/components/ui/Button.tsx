@@ -9,11 +9,11 @@ type Size = "sm" | "md" | "lg";
 
 const VARIANTS: Record<Variant, string> = {
   primary:
-    "bg-gradient-to-l from-flame-700 to-flame-500 text-white font-bold shadow-[0_10px_30px_-12px_rgba(255,122,0,0.75)] hover:brightness-110 active:brightness-95",
+    "bg-gradient-to-l from-flame-700 to-flame-500 text-white font-bold shadow-[0_10px_30px_-12px_rgba(194,13,0,0.75)] hover:brightness-110 active:brightness-95",
   secondary: "bg-ink-600 text-mist-100 hover:bg-ink-500 border border-[var(--surface-border)]",
   ghost: "text-mist-200 hover:text-mist-100 hover:bg-[var(--white-a6)]",
-  outline: "border border-flame-600/50 text-flame-400 hover:bg-flame-600/10",
-  danger: "bg-red-500/15 text-red-300 border border-red-500/30 hover:bg-red-500/25",
+  outline: "border border-flame-600/50 text-flame-600 hover:bg-flame-600/10",
+  danger: "bg-red-500/15 text-red-600 border border-red-500/30 hover:bg-red-500/25",
 };
 
 const SIZES: Record<Size, string> = {

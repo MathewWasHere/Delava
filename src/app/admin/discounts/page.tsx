@@ -14,10 +14,10 @@ export default function AdminDiscountsPage() {
   const [items, setItems] = useState<Coupon[]>(seed);
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-3">
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h1 className="text-xl font-extrabold text-mist-100">کدهای تخفیف</h1>
+          <h1 className="text-[17px] font-extrabold text-mist-100">کدهای تخفیف</h1>
           <p className="mt-1 text-[12px] text-mist-500">تخفیف‌های فعال برای سفارش مستقیم.</p>
         </div>
         <Button
@@ -45,7 +45,7 @@ export default function AdminDiscountsPage() {
           <div
             key={c.code}
             className={cn(
-              "relative overflow-hidden rounded-3xl border p-5",
+              "relative overflow-hidden rounded-2xl border p-5",
               c.active
                 ? "border-flame-600/30 bg-gradient-to-l from-flame-600/8 to-ink-900"
                 : "border-[var(--surface-border)] bg-ink-900 opacity-70",
@@ -62,7 +62,7 @@ export default function AdminDiscountsPage() {
                 </div>
                 <p className="mt-2 text-[12px] leading-6 text-mist-400">{c.description}</p>
               </div>
-              <span className="num rounded-2xl bg-flame-600/15 px-3 py-2 text-[15px] font-extrabold text-flame-400">
+              <span className="num rounded-2xl bg-flame-600/15 px-3 py-2 text-[15px] font-extrabold text-flame-600">
                 {c.type === "PERCENT" ? `${toFa(c.value)}٪` : `${faNumber(c.value)}`}
               </span>
             </div>
@@ -82,7 +82,7 @@ export default function AdminDiscountsPage() {
                 }
                 className={cn(
                   "rounded-xl px-3.5 py-2 text-[11px] font-bold transition-colors",
-                  c.active ? "bg-emerald-500/12 text-emerald-300" : "bg-[var(--white-a6)] text-mist-400",
+                  c.active ? "bg-emerald-500/12 text-emerald-600" : "bg-[var(--white-a6)] text-mist-400",
                 )}
               >
                 {c.active ? "فعال" : "غیرفعال"}
@@ -98,7 +98,7 @@ export default function AdminDiscountsPage() {
               </button>
               <button
                 onClick={() => setItems((prev) => prev.filter((x) => x.code !== c.code))}
-                className="mr-auto rounded-xl px-3 py-2 text-[11px] font-bold text-mist-500 hover:text-red-400"
+                className="mr-auto rounded-xl px-3 py-2 text-[11px] font-bold text-mist-500 hover:text-red-500"
               >
                 حذف
               </button>

@@ -84,8 +84,8 @@ export function InstallPrompt() {
   return (
     <div
       className={cn(
-        "pb-safe fixed inset-x-3 bottom-20 z-90 animate-fade-up rounded-3xl border border-flame-600/35",
-        "bg-ink-900/97 p-4 shadow-[0_24px_70px_-24px_rgba(255,122,0,0.8)] backdrop-blur-xl",
+        "pb-safe fixed inset-x-3 bottom-20 z-90 animate-fade-up rounded-2xl border border-flame-600/35",
+        "bg-ink-900/97 p-4 shadow-[0_24px_70px_-24px_rgba(194,13,0,0.8)] backdrop-blur-xl",
         "sm:right-auto sm:left-6 sm:bottom-6 sm:max-w-sm lg:bottom-6",
       )}
       role="dialog"
