@@ -67,11 +67,33 @@ export default function AdminDashboard() {
         </Link>
       </div>
 
-      {/* KPI cards */}
+      {/*
+        KPI cards.
+
+        The two Toman figures span the full width on phones: a 9-digit sum
+        like ۹,۹۲۰,۰۰۰ simply does not fit in half of a 390px screen, and
+        letting it truncate hid the most important number on the dashboard.
+        The two order COUNTS are short, so they stay paired. From xl the row
+        is four equal columns as before.
+      */}
       <div className="grid grid-cols-2 gap-2 xl:grid-cols-4">
-        <StatCard icon="tag" label="فروش امروز" value={`${faNumber(stats.revenue)}`} unit="تومان" trend="+۱۲٪" />
+        <StatCard
+          icon="tag"
+          label="فروش امروز"
+          value={faNumber(stats.revenue)}
+          unit="تومان"
+          trend="+۱۲٪"
+          className="col-span-2 xl:col-span-1"
+        />
+        <StatCard
+          icon="chart"
+          label="میانگین سبد"
+          value={faNumber(stats.aov)}
+          unit="تومان"
+          trend="+۳٪"
+          className="col-span-2 xl:col-span-1"
+        />
         <StatCard icon="receipt" label="سفارش‌های امروز" value={toFa(stats.count)} unit="سفارش" trend="+۵٪" />
-        <StatCard icon="chart" label="میانگین سبد" value={faNumber(stats.aov)} unit="تومان" trend="+۳٪" />
         <StatCard icon="bike" label="تحویل‌شده امروز" value={toFa(stats.delivered)} unit="سفارش" />
       </div>
 
@@ -229,34 +251,62 @@ function StatCard({
   value,
   unit,
   trend,
+  className,
 }: {
   icon: IconName;
   label: string;
   value: string;
   unit: string;
   trend?: string;
+  className?: string;
 }) {
   return (
-    /* Horizontal row: the icon sits beside the value instead of stacking above
-       it, which removes ~40px of dead height per card without shrinking text. */
-    <div className="flex items-center gap-2.5 rounded-lg border border-[var(--surface-border)] bg-ink-900 px-3 py-2.5">
+    /*
+     * KPI CARD
+     *
+     * Two bugs lived here:
+     *
+     * 1. `leading-none` set line-height == font-size (17px), leaving no room
+     *    for Persian digit ascenders, so glyphs painted outside their line box
+     *    and clipped against the card's top edge.
+     * 2. The value, unit and trend badge all shared one row. A 9-character
+     *    figure like ۹,۹۲۰,۰۰۰ needs ~72px but only got ~29px, so `truncate`
+     *    silently reduced today's revenue to "۵…". The owner could not read
+     *    the single most important number on the dashboard.
+     *
+     * Fix: the trend badge moves onto the label row (it is secondary
+     *    information), which hands the entire card width to the figure, and
+     *    `leading-tight` restores the ascender space. The card grows a few
+     *    pixels taller — exactly the trade requested.
+     */
+    <div
+      className={cn(
+        "flex items-center gap-2.5 rounded-lg border border-[var(--surface-border)] bg-ink-900 px-3 py-2.5",
+        className,
+      )}
+    >
       <span className="grid size-9 shrink-0 place-items-center rounded-lg bg-flame-600/10 text-flame-600">
         <Icon name={icon} className="size-[18px]" />
       </span>
+
       <div className="min-w-0 flex-1">
+        {/* Value owns the full row so long Toman figures are never clipped. */}
         <div className="flex items-baseline gap-1">
-          <span className="num truncate text-[17px] font-extrabold leading-none text-mist-100">
+          <span className="num min-w-0 truncate text-[17px] font-extrabold leading-tight text-mist-100">
             {value}
           </span>
-          <span className="shrink-0 text-[10px] text-mist-500">{unit}</span>
+          <span className="shrink-0 text-[10.5px] leading-tight text-mist-500">{unit}</span>
         </div>
-        <div className="mt-1 truncate text-[10.5px] text-mist-500">{label}</div>
+
+        <div className="mt-0.5 flex items-center gap-1.5">
+          <span className="min-w-0 truncate text-[10.5px] leading-tight text-mist-500">{label}</span>
+          {trend && (
+            <span className="num shrink-0 rounded bg-emerald-500/12 px-1 py-px text-[10.5px] font-bold leading-tight text-emerald-600">
+              {trend}
+            </span>
+          )}
+        </div>
       </div>
-      {trend && (
-        <span className="num shrink-0 rounded bg-emerald-500/12 px-1.5 py-0.5 text-[10px] font-bold text-emerald-600">
-          {trend}
-        </span>
-      )}
     </div>
   );
 }
