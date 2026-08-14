@@ -85,7 +85,7 @@ export function InstallPrompt() {
     <div
       className={cn(
         "pb-safe fixed inset-x-3 bottom-20 z-90 animate-fade-up rounded-2xl border border-flame-600/35",
-        "bg-ink-900/97 p-4 shadow-[0_24px_70px_-24px_rgba(194,13,0,0.8)] backdrop-blur-xl",
+        "bg-ink-900 pad-card shadow-[0_14px_40px_-16px_rgba(0,0,0,0.35)]",
         "sm:right-auto sm:left-6 sm:bottom-6 sm:max-w-sm lg:bottom-6",
       )}
       role="dialog"
@@ -111,9 +111,9 @@ export function InstallPrompt() {
         <button
           onClick={dismiss}
           aria-label="بستن"
-          className="grid size-8 shrink-0 place-items-center rounded-full bg-[var(--white-a6)] text-mist-400 transition-colors hover:bg-[var(--white-a10)] hover:text-mist-100"
+          className="grid size-9 shrink-0 place-items-center rounded-full bg-[var(--white-a6)] text-mist-400 transition-colors hover:bg-[var(--white-a10)] hover:text-mist-100"
         >
-          ✕
+          <Icon name="close" className="size-4" />
         </button>
       </div>
 

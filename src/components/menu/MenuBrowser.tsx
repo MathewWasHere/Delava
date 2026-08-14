@@ -226,7 +226,7 @@ function MenuInner() {
       {cartCount > 0 && (
         <Link
           href="/cart"
-          className="above-nav fixed inset-x-3 z-45 mb-2 flex animate-fade-up items-center justify-between gap-3 rounded-2xl bg-flame-600 px-5 py-4 text-white shadow-[0_18px_50px_-14px_rgba(194,13,0,0.85)] lg:hidden"
+          className="above-nav fixed inset-x-3 z-45 mb-2 flex animate-fade-up items-center justify-between gap-3 rounded-2xl bg-flame-600 px-5 py-4 text-white shadow-[0_12px_34px_-14px_rgba(0,0,0,0.45)] lg:hidden"
         >
           <span className="flex items-center gap-2 text-[13px] font-extrabold">
             <span className="num grid size-6 place-items-center rounded-full bg-black/20">{toFa(cartCount)}</span>

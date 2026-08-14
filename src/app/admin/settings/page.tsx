@@ -41,7 +41,7 @@ export default function AdminSettingsPage() {
         <p className="mt-0.5 text-[11.5px] text-mist-500">اطلاعات رستوران و مدیریت دسترسی‌ها.</p>
       </div>
 
-      <div className="rounded-xl border border-[var(--surface-border)] bg-ink-900 p-3.5">
+      <div className="rounded-xl border border-[var(--surface-border)] bg-ink-900 pad-panel">
         <h2 className="text-[13px] font-extrabold text-mist-100">اطلاعات رستوران</h2>
         {/* The restaurant name is part of the brand identity and is not
             editable here — the field was removed rather than disabled. */}

@@ -99,7 +99,7 @@ export default function AdminDashboard() {
 
       <div className="grid gap-3 xl:grid-cols-[1.4fr_1fr]">
         {/* Weekly revenue */}
-        <div className="rounded-xl border border-[var(--surface-border)] bg-ink-900 p-3.5">
+        <div className="rounded-xl border border-[var(--surface-border)] bg-ink-900 pad-panel">
           <div className="flex items-center justify-between">
             <h2 className="text-[13px] font-extrabold text-mist-100">درآمد هفته</h2>
             <span className="num text-[11px] text-mist-500">تومان</span>
@@ -114,7 +114,7 @@ export default function AdminDashboard() {
                   className={cn(
                     "w-full min-h-1 rounded-t-lg transition-all duration-500",
                     i === week.length - 2
-                      ? "bg-flame-600 shadow-[0_-6px_24px_-6px_rgba(194,13,0,0.7)]"
+                      ? "bg-flame-600"
                       : "bg-[var(--white-a10)] group-hover:bg-flame-600/50",
                   )}
                   style={{ height: `${Math.max(4, (w.value / maxWeek) * 100)}%` }}
@@ -126,7 +126,7 @@ export default function AdminDashboard() {
         </div>
 
         {/* Orders by status */}
-        <div className="rounded-xl border border-[var(--surface-border)] bg-ink-900 p-3.5">
+        <div className="rounded-xl border border-[var(--surface-border)] bg-ink-900 pad-panel">
           <h2 className="text-[13px] font-extrabold text-mist-100">سفارش‌ها بر اساس وضعیت</h2>
           <div className="mt-3 space-y-2">
             {Object.entries(byStatus).map(([status, count]) => (
@@ -154,7 +154,7 @@ export default function AdminDashboard() {
 
       <div className="grid gap-3 xl:grid-cols-[1.4fr_1fr]">
         {/* Live orders */}
-        <div className="rounded-xl border border-[var(--surface-border)] bg-ink-900 p-3.5">
+        <div className="rounded-xl border border-[var(--surface-border)] bg-ink-900 pad-panel">
           <div className="flex items-center justify-between">
             <h2 className="flex items-center gap-1.5 text-[13px] font-extrabold text-mist-100">
               <span className="size-2 animate-pulse-dot rounded-full bg-flame-500 text-flame-500/45" />
@@ -212,7 +212,7 @@ export default function AdminDashboard() {
         </div>
 
         {/* Top products */}
-        <div className="rounded-xl border border-[var(--surface-border)] bg-ink-900 p-3.5">
+        <div className="rounded-xl border border-[var(--surface-border)] bg-ink-900 pad-panel">
           <h2 className="text-[13px] font-extrabold text-mist-100">پرفروش‌ترین محصولات</h2>
           <div className="mt-2.5 space-y-1.5">
             {topProducts.map((p, i) => (

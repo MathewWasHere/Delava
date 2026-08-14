@@ -14,6 +14,8 @@ export type IconName =
   | "check"
   | "chevron"
   | "plus"
+  | "close"
+  | "alert"
   | "shield"
   | "bike"
   | "gift"
@@ -79,6 +81,18 @@ const PATHS: Record<IconName, React.ReactNode> = {
   check: <path d="m4.5 12.5 5 5 10-11" />,
   chevron: <path d="m14.5 5.5-7 6.5 7 6.5" />,
   plus: <path d="M12 5v14M5 12h14" />,
+  /* Both glyphs are drawn on the same 24x24 grid, balanced on (12,12), so any
+     container using `place-items:center` centres them exactly. Text characters
+     (✕ ✓ ⚠) sit on a font baseline and can never centre reliably — and Snapp
+     Web has no glyph for them at all, so they rendered as tofu boxes. */
+  close: <path d="M6.4 6.4l11.2 11.2M17.6 6.4L6.4 17.6" />,
+  alert: (
+    <>
+      <path d="M12 8.4v4.6" />
+      <circle cx="12" cy="16.4" r="0.95" fill="currentColor" stroke="none" />
+      <path d="M10.3 3.9 2.6 17.4a1.9 1.9 0 0 0 1.7 2.85h15.4a1.9 1.9 0 0 0 1.7-2.85L13.7 3.9a1.95 1.95 0 0 0-3.4 0Z" />
+    </>
+  ),
   shield: (
     <>
       <path d="M12 3 5 6v6c0 4.4 2.9 7.9 7 9 4.1-1.1 7-4.6 7-9V6z" />

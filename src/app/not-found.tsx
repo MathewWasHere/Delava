@@ -5,7 +5,7 @@ export default function NotFound() {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center px-6 text-center">
       <Logo width={120} href={null} />
-      <div className="num mt-8 text-6xl font-extrabold text-flame-500 glow-text">۴۰۴</div>
+      <div className="num mt-8 text-6xl font-extrabold text-flame-500">۴۰۴</div>
       <h1 className="mt-4 text-xl font-extrabold text-mist-100">این صفحه از منو حذف شده!</h1>
       <p className="mt-2 max-w-sm text-[13px] leading-7 text-mist-400">
         آدرسی که دنبالش بودی پیدا نشد. بیا برگردیم سراغ غذاهای دلاوا.

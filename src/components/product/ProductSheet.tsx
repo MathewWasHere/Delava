@@ -6,6 +6,7 @@ import { BottomSheet, FoodImage, Price, QuantitySelector, Textarea } from "@/com
 import { Button } from "@/components/ui/Button";
 import { useStore } from "@/lib/store";
 import { cn } from "@/lib/cn";
+import { Icon } from "@/components/ui/Icon";
 import { faNumber } from "@/lib/format";
 
 /** Quick-customise bottom sheet — used on cards so users never leave the grid. */
@@ -77,7 +78,7 @@ export function ProductSheet({
                           on ? "border-flame-500 bg-flame-500 text-white" : "border-[var(--surface-border-strong)]",
                         )}
                       >
-                        {on && "✓"}
+                        {on && <Icon name="check" className="size-3" />}
                       </span>
                       <span className="text-[14px] font-medium text-mist-100">{m.name}</span>
                     </span>
@@ -100,10 +101,26 @@ export function ProductSheet({
         </div>
       </div>
 
-      <div className="sticky bottom-0 flex items-center gap-3 border-t border-[var(--surface-border)] bg-ink-900/95 p-4 backdrop-blur">
-        <QuantitySelector value={qty} onChange={(v) => setQty(Math.max(1, v))} />
-        <Button block size="lg" onClick={submit} className="flex-1">
-          افزودن — <span className="num">{faNumber(unit * qty)}</span> تومان
+      {/* `block` (width:100%) fought `flex-1` and pushed the CTA past the
+          sheet's edge. The row is a flex container, so the button just needs
+          `flex-1` + `min-w-0`; the label truncates rather than overflowing. */}
+      <div className="sticky bottom-0 flex items-center gap-2.5 border-t border-[var(--surface-border)] bg-ink-900/95 pad-card backdrop-blur">
+        {/* Compact selector on phones: the md size is ~152px wide and starved
+            the CTA, forcing its label to ellipsis. Full size returns from sm. */}
+        <span className="shrink-0">
+          <QuantitySelector value={qty} onChange={(v) => setQty(Math.max(1, v))} size="sm" />
+        </span>
+        {/*
+          Two stacked lines instead of one long string. "افزودن — ۳۹۵,۰۰۰ تومان"
+          cannot fit beside the quantity selector on a 320px phone, and
+          truncating it hid the price — the one number the user is deciding on.
+          Splitting the action from the amount keeps BOTH fully readable.
+        */}
+        <Button size="lg" onClick={submit} className="min-w-0 flex-1 flex-col gap-0 px-3 leading-none sm:px-5">
+          <span className="text-[13.5px] font-extrabold">افزودن به سبد</span>
+          <span className="num mt-1 text-[12.5px] font-bold opacity-90">
+            {faNumber(unit * qty)} تومان
+          </span>
         </Button>
       </div>
     </BottomSheet>

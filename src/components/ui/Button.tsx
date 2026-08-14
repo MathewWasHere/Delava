@@ -9,7 +9,7 @@ type Size = "sm" | "md" | "lg";
 
 const VARIANTS: Record<Variant, string> = {
   primary:
-    "bg-flame-600 text-white font-bold shadow-[0_10px_30px_-12px_rgba(194,13,0,0.75)] hover:brightness-110 active:brightness-95",
+    "bg-flame-600 text-white font-bold hover:brightness-110 active:brightness-95",
   secondary: "bg-ink-600 text-mist-100 hover:bg-ink-500 border border-[var(--surface-border)]",
   ghost: "text-mist-200 hover:text-mist-100 hover:bg-[var(--white-a6)]",
   outline: "border border-flame-600/50 text-flame-600 hover:bg-flame-600/10",
@@ -19,7 +19,7 @@ const VARIANTS: Record<Variant, string> = {
 const SIZES: Record<Size, string> = {
   sm: "h-11 px-3.5 text-[13px] rounded-xl gap-1.5",
   md: "h-12 px-5 text-[14px] rounded-2xl gap-2",
-  lg: "h-14 px-7 text-[15px] rounded-2xl gap-2.5",
+  lg: "h-14 px-5 text-[15px] rounded-2xl gap-2.5 sm:px-7",
 };
 
 interface BaseProps {
@@ -31,8 +31,14 @@ interface BaseProps {
   children?: React.ReactNode;
 }
 
+/*
+ * `min-w-0` lets a button shrink when it is a flex child — without it,
+ * `whitespace-nowrap` made the intrinsic width a hard floor and long Persian
+ * labels pushed the button out of its container (the add-to-cart sheet CTA
+ * overflowed the viewport). The label itself truncates instead.
+ */
 const base =
-  "inline-flex items-center justify-center font-medium transition-all duration-200 active:scale-[0.97] disabled:opacity-45 disabled:pointer-events-none select-none whitespace-nowrap";
+  "inline-flex min-w-0 items-center justify-center font-medium transition-all duration-200 active:scale-[0.97] disabled:opacity-45 disabled:pointer-events-none select-none";
 
 export const Button = forwardRef<
   HTMLButtonElement,

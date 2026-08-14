@@ -13,7 +13,7 @@ import { StepCircle } from "@/components/order/OrderTimeline";
 
 export function CategoryStrip() {
   return (
-    <section className="shell py-6 sm:py-9">
+    <section className="shell py-6 sm:py-9 lg:py-12">
       <SectionHead
         title="دنبال چی می‌گردی؟"
         action={
@@ -139,7 +139,7 @@ const TRACK_STEPS: Array<{ label: string; state: "done" | "active" | "todo" }> =
 
 export function TrackingPreview() {
   return (
-    <section className="shell py-6 sm:py-9">
+    <section className="shell py-6 sm:py-9 lg:py-12">
       <div className="grid items-center gap-6 lg:grid-cols-2 lg:gap-12">
         <div>
           <SectionHead title="سفارشت را زنده دنبال کن" />
@@ -156,7 +156,7 @@ export function TrackingPreview() {
         </div>
 
         {/* Static illustration of the live tracker */}
-        <div className="surface rounded-2xl p-3.5 sm:p-4">
+        <div className="surface rounded-2xl pad-panel">
           <div className="flex items-start justify-between gap-3">
             <div>
               <div className="text-[12.5px] text-mist-500">شماره سفارش</div>
@@ -204,7 +204,7 @@ export function TrackingPreview() {
 
 export function VisitUs() {
   return (
-    <section className="shell py-6 sm:py-9">
+    <section className="shell py-6 sm:py-9 lg:py-12">
       <SectionHead title="حضوری هم بیا دلاوا" />
       <div className="grid gap-5 lg:grid-cols-[1.15fr_1fr]">
         <div className="relative min-h-56 overflow-hidden rounded-2xl border border-[var(--surface-border)]">

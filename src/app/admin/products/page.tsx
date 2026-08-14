@@ -79,48 +79,72 @@ export default function AdminProductsPage() {
           {filtered.map((p) => (
             <div
               key={p.id}
-              className="grid grid-cols-1 items-center gap-2 px-3 py-2 transition-colors hover:bg-[var(--white-a4)] lg:grid-cols-[1fr_110px_92px_74px_74px_104px] lg:gap-2.5"
+              /*
+               * MOBILE (item 17): `grid-cols-1` gave each of the six desktop
+               * cells its own full-width row, so a product was ~390px tall and
+               * five of those rows were mostly empty space. Mobile now uses a
+               * real two-row card — identity on top, metadata + controls in a
+               * single wrapped row beneath — while `lg` keeps the exact table
+               * geometry it already had.
+               */
+              className="px-3 py-2.5 transition-colors hover:bg-[var(--white-a4)] lg:grid lg:grid-cols-[1fr_110px_92px_74px_74px_104px] lg:items-center lg:gap-2.5 lg:py-2"
             >
               <div className="flex min-w-0 items-center gap-2">
                 <Image src={p.image} alt="" aria-hidden="true" width={36} height={36} className="size-9 shrink-0 rounded-lg object-cover" />
-                <div className="min-w-0">
+                <div className="min-w-0 flex-1">
                   <div className="truncate text-[12.5px] font-bold leading-tight text-mist-100">{p.name}</div>
                   <div className="truncate text-[10.5px] leading-tight text-mist-500">{p.shortDescription}</div>
                 </div>
+                {/* Price rides with the title on phones; its own column on lg. */}
+                <span className="num shrink-0 text-[12px] font-bold text-mist-100 lg:hidden">
+                  {faNumber(p.price)}
+                </span>
               </div>
 
-              <span className="truncate text-[11.5px] text-mist-400">
-                {categories.find((c) => c.id === p.categoryId)?.name}
-              </span>
+              {/* Second mobile row: category + both toggles + actions, wrapped
+                  into the width that is actually available. */}
+              <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-2 lg:contents lg:mt-0">
+                <span className="truncate text-[11.5px] text-mist-400 lg:min-w-0">
+                  {categories.find((c) => c.id === p.categoryId)?.name}
+                </span>
 
-              <span className="num text-[12px] font-bold text-mist-100">{faNumber(p.price)}</span>
+                <span className="num hidden text-[12px] font-bold text-mist-100 lg:block">
+                  {faNumber(p.price)}
+                </span>
 
-              <Toggle
-                on={p.available}
-                onClick={() => {
-                  patch(p.id, { available: !p.available });
-                  pushToast({ title: !p.available ? "محصول موجود شد" : "محصول ناموجود شد" });
-                }}
-              />
+                <span className="flex items-center gap-1.5">
+                  <span className="text-[10.5px] text-mist-500 lg:hidden">موجود</span>
+                  <Toggle
+                    on={p.available}
+                    onClick={() => {
+                      patch(p.id, { available: !p.available });
+                      pushToast({ title: !p.available ? "محصول موجود شد" : "محصول ناموجود شد" });
+                    }}
+                  />
+                </span>
 
-              <Toggle on={p.popular} onClick={() => patch(p.id, { popular: !p.popular })} tone="flame" />
+                <span className="flex items-center gap-1.5">
+                  <span className="text-[10.5px] text-mist-500 lg:hidden">ویژه</span>
+                  <Toggle on={p.popular} onClick={() => patch(p.id, { popular: !p.popular })} tone="flame" />
+                </span>
 
-              <div className="flex gap-1.5 lg:justify-end">
-                <button
-                  onClick={() => setEditing(p)}
-                  className="inline-flex min-h-9 items-center rounded-md border border-[var(--surface-border)] px-2 text-[10.5px] font-bold text-mist-300 transition-colors hover:border-flame-600/40 hover:text-flame-600"
-                >
-                  ویرایش
-                </button>
-                <button
-                  onClick={() => {
-                    setItems((prev) => prev.filter((x) => x.id !== p.id));
-                    pushToast({ title: "محصول حذف شد", tone: "error" });
-                  }}
-                  className="inline-flex min-h-9 items-center rounded-md border border-[var(--surface-border)] px-2 text-[10.5px] font-bold text-mist-500 transition-colors hover:border-red-500/40 hover:text-red-500"
-                >
-                  حذف
-                </button>
+                <div className="mr-auto flex gap-1.5 lg:mr-0 lg:justify-end">
+                  <button
+                    onClick={() => setEditing(p)}
+                    className="inline-flex min-h-9 items-center rounded-md border border-[var(--surface-border)] px-2 text-[10.5px] font-bold text-mist-300 transition-colors hover:border-flame-600/40 hover:text-flame-600"
+                  >
+                    ویرایش
+                  </button>
+                  <button
+                    onClick={() => {
+                      setItems((prev) => prev.filter((x) => x.id !== p.id));
+                      pushToast({ title: "محصول حذف شد", tone: "error" });
+                    }}
+                    className="inline-flex min-h-9 items-center rounded-md border border-[var(--surface-border)] px-2 text-[10.5px] font-bold text-mist-500 transition-colors hover:border-red-500/40 hover:text-red-500"
+                  >
+                    حذف
+                  </button>
+                </div>
               </div>
             </div>
           ))}
@@ -300,7 +324,7 @@ function ProductEditor({
         <Button variant="secondary" onClick={onClose}>
           انصراف
         </Button>
-        <Button block className="flex-1" onClick={() => onSave(draft)}>
+        <Button className="min-w-0 flex-1" onClick={() => onSave(draft)}>
           ذخیره تغییرات
         </Button>
       </div>

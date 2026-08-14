@@ -266,16 +266,65 @@ body {
   box-shadow: var(--surface-shadow);
 }
 
+/* ==========================================================================
+   RESPONSIVE DENSITY SCALE (items 21-25)
+
+   Mobile and desktop are two separate design decisions, not one value scaled.
+   Previously ~19 panels hard-coded `p-4` / `p-3.5`, so the compaction added
+   for phones was inherited by 1440px screens and desktop looked squeezed.
+
+   These three utilities encode the intended rhythm ONCE:
+
+                 mobile        tablet (>=640)   desktop (>=1024)
+     .pad-panel   0.875rem      1.125rem         1.5rem
+     .pad-card    0.75rem       1rem             1.25rem
+     .gap-section 1.25rem       1.75rem          2.25rem
+
+   Mobile stays tight and efficient; desktop breathes. Fix the scale here and
+   every surface follows — no per-page patches.
+   ========================================================================== */
+.pad-panel {
+  padding: 0.875rem;
+}
+.pad-card {
+  padding: 0.75rem;
+}
+.gap-section {
+  gap: 1.25rem;
+}
+
+@media (min-width: 640px) {
+  .pad-panel {
+    padding: 1.125rem;
+  }
+  .pad-card {
+    padding: 1rem;
+  }
+  .gap-section {
+    gap: 1.75rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .pad-panel {
+    padding: 1.5rem;
+  }
+  .pad-card {
+    padding: 1.25rem;
+  }
+  .gap-section {
+    gap: 2.25rem;
+  }
+}
+
 .surface-hover {
   transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
 }
+/* Hover lift is neutral: the brand colour stays on the border, the shadow is
+   plain elevation. A coloured shadow reads as a glow. */
 .surface-hover:hover {
   border-color: rgba(224, 22, 61, 0.45);
-  box-shadow: 0 10px 30px -16px rgba(224, 22, 61, 0.35);
-}
-
-.glow-text {
-  text-shadow: 0 0 24px rgba(226, 17, 0, 0.45), 0 0 60px rgba(224, 22, 61, 0.22);
+  box-shadow: 0 10px 28px -16px rgba(0, 0, 0, 0.28);
 }
 
 .glow-ring {
@@ -357,6 +406,34 @@ body {
     opacity: 0.9;
   }
 }
+/* --------------------------------------------------------------------------
+   LIVE STATUS RING (order timeline active step)
+
+   A slow, low-amplitude ring that breathes outward from the circle's edge.
+   Deliberately NOT a glow: it animates a ring's spread+alpha, so it reads as
+   "this step is live" without a neon halo. Sits on ::after so it cannot
+   affect layout or the circle's centring.
+   -------------------------------------------------------------------------- */
+@keyframes live-ring {
+  0% {
+    box-shadow: 0 0 0 0 rgba(224, 22, 61, 0.30);
+  }
+  70% {
+    box-shadow: 0 0 0 9px rgba(224, 22, 61, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(224, 22, 61, 0);
+  }
+}
+.live-ring::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  animation: live-ring 2.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  pointer-events: none;
+}
+
 .animate-pulse-dot {
   animation: pulse-dot 2.4s ease-out infinite;
 }
@@ -398,7 +475,8 @@ body {
   .animate-pulse-dot,
   .animate-ping-slow,
   .animate-marquee,
-  .animate-heartbeat {
+  .animate-heartbeat,
+  .live-ring::after {
     animation: none !important;
   }
 }
@@ -473,13 +551,22 @@ body {
 }
 
 /* Horizontal snap rails feel native on touch */
+/* Horizontal control rails (category chips, sort chips).
+   NO scroll-snap: mandatory snapping fought the user on a short rail and could
+   park a chip half-off screen. Children never shrink, so text can never
+   collide — the rail simply scrolls when it runs out of room. */
 .snap-rail {
-  scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior-x: contain;
+  scroll-behavior: smooth;
 }
 .snap-rail > * {
-  scroll-snap-align: start;
+  flex: 0 0 auto;
+}
+@media (prefers-reduced-motion: reduce) {
+  .snap-rail {
+    scroll-behavior: auto;
+  }
 }
 
 /* Sticky mobile action bars sit above the bottom navigation */

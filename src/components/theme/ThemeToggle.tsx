@@ -96,7 +96,7 @@ export function ThemeSwitch({ className = "" }: { className?: string }) {
             aria-pressed={active}
             className={`flex h-10 flex-1 items-center justify-center gap-2 rounded-full px-3 text-[13px] font-bold transition ${
               active
-                ? "bg-flame-600 text-white shadow-[0_6px_18px_-8px_rgba(194,13,0,0.9)]"
+                ? "bg-flame-600 text-white"
                 : "text-mist-400 hover:text-mist-100"
             }`}
           >

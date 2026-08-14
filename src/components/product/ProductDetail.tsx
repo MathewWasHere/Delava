@@ -171,7 +171,7 @@ export function ProductDetail({ product, related }: { product: Product; related:
                             on ? "border-flame-500 bg-flame-500 text-white" : "border-[var(--surface-border-strong)]",
                           )}
                         >
-                          {on && "✓"}
+                          {on && <Icon name="check" className="size-3" />}
                         </span>
                         <span className="text-[14px] font-medium text-mist-100">{m.name}</span>
                       </span>

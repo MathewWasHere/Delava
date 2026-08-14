@@ -58,7 +58,7 @@ function OrderDetailInner() {
   const progress = Math.min(100, Math.round(((statusIndex(order.status) + 1) / 6) * 100));
 
   return (
-    <div className="shell py-5 sm:py-8 lg:pb-14">
+    <div className="shell py-5 sm:py-8 lg:pt-11 lg:pb-14">
       <Link href="/orders" className="mb-5 -my-2 inline-flex min-h-11 items-center gap-1.5 text-[13px] text-mist-400 hover:text-mist-100">
         <Icon name="chevron" className="size-4 rotate-180" />
         سفارش‌های من
@@ -123,7 +123,7 @@ function OrderDetailInner() {
             </div>
 
             {order.status === "OUT_FOR_DELIVERY" && (
-              <div className="flex items-center gap-3 border-t border-[var(--surface-border)] bg-ink-850 p-4">
+              <div className="flex items-center gap-3 border-t border-[var(--surface-border)] bg-ink-850 pad-panel">
                 <span className="grid size-11 place-items-center rounded-full bg-flame-600/15 text-flame-500">
                   <Icon name="bike" />
                 </span>
@@ -142,7 +142,7 @@ function OrderDetailInner() {
           </div>
 
           {/* Items */}
-          <div className="surface rounded-2xl p-3.5 sm:p-4">
+          <div className="surface rounded-2xl pad-panel">
             <h2 className="text-[15px] font-extrabold text-mist-100">اقلام سفارش</h2>
             <div className="mt-4 space-y-3">
               {order.items.map((i, idx) => (

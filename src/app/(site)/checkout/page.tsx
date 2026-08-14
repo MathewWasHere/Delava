@@ -81,8 +81,8 @@ export default function CheckoutPage() {
           </>
         ) : (
           <>
-            <span className="grid size-20 animate-pop place-items-center rounded-full bg-emerald-500/15 text-4xl text-emerald-500">
-              ✓
+            <span className="grid size-20 animate-pop place-items-center rounded-full bg-emerald-500/15 text-emerald-500">
+              <Icon name="check" className="size-10" />
             </span>
             <h1 className="mt-6 text-2xl font-extrabold text-mist-100">پرداخت موفق</h1>
             <p className="mt-2 text-[13px] text-mist-400">در حال ثبت سفارش در آشپزخانه دلاوا…</p>
@@ -93,7 +93,7 @@ export default function CheckoutPage() {
   }
 
   return (
-    <div className="shell py-5 sm:py-8 lg:pb-14">
+    <div className="shell py-5 sm:py-8 lg:pt-11 lg:pb-14">
       <h1 className="text-xl font-extrabold text-mist-100 sm:text-3xl">ثبت سفارش</h1>
 
       {/* Stepper */}
@@ -121,7 +121,7 @@ export default function CheckoutPage() {
                     active ? "bg-flame-600 text-white" : done ? "bg-emerald-500/25" : "bg-[var(--white-a8)]",
                   )}
                 >
-                  {done ? "✓" : toFa(index)}
+                  {done ? <Icon name="check" className="size-3" /> : toFa(index)}
                 </span>
                 {label}
               </button>
@@ -142,7 +142,7 @@ export default function CheckoutPage() {
 
           {/* STEP 2 — address */}
           {step === 2 && (
-            <div className="surface animate-fade-up rounded-2xl p-3.5 sm:p-4">
+            <div className="surface animate-fade-up rounded-2xl pad-panel">
               <div className="flex items-center justify-between">
                 <h2 className="text-lg font-extrabold text-mist-100">آدرس تحویل</h2>
                 <button
@@ -192,7 +192,7 @@ export default function CheckoutPage() {
                                   active ? "border-flame-500 bg-flame-500 text-white" : "border-[var(--surface-border-strong)]",
                                 )}
                               >
-                                {active && "✓"}
+                                {active && <Icon name="check" className="size-3" />}
                               </span>
                               <span className="text-[14px] font-extrabold text-mist-100">{a.title}</span>
                             </span>
@@ -247,7 +247,7 @@ export default function CheckoutPage() {
 
           {/* STEP 3 — delivery method */}
           {step === 3 && (
-            <div className="surface animate-fade-up rounded-2xl p-3.5 sm:p-4">
+            <div className="surface animate-fade-up rounded-2xl pad-panel">
               <h2 className="text-lg font-extrabold text-mist-100">روش دریافت</h2>
               <div className="mt-5 grid gap-3 sm:grid-cols-2">
                 {(
@@ -305,7 +305,7 @@ export default function CheckoutPage() {
                 <Button variant="secondary" onClick={() => setStep(2)}>
                   بازگشت
                 </Button>
-                <Button block size="lg" className="flex-1" onClick={() => setStep(4)}>
+                <Button size="lg" className="min-w-0 flex-1" onClick={() => setStep(4)}>
                   ادامه به پرداخت
                 </Button>
               </div>
@@ -315,7 +315,7 @@ export default function CheckoutPage() {
           {/* STEP 4 — review + payment */}
           {step === 4 && (
             <div className="animate-fade-up space-y-4">
-              <div className="surface rounded-2xl p-3.5 sm:p-4">
+              <div className="surface rounded-2xl pad-panel">
                 <h2 className="text-lg font-extrabold text-mist-100">خلاصه سفارش</h2>
                 <div className="mt-4 space-y-3">
                   {state.cart.map((i) => (
@@ -339,7 +339,7 @@ export default function CheckoutPage() {
                 </div>
 
                 {state.deliveryMethod === "DELIVERY" && selectedAddress && (
-                  <div className="mt-5 rounded-2xl border border-[var(--surface-border)] bg-ink-850 p-4">
+                  <div className="mt-5 rounded-2xl border border-[var(--surface-border)] bg-ink-850 pad-panel">
                     <div className="flex items-center gap-2 text-[13px] font-bold text-mist-100">
                       <Icon name="pin" className="size-4 text-flame-500" />
                       {selectedAddress.title}
@@ -354,7 +354,7 @@ export default function CheckoutPage() {
                 )}
               </div>
 
-              <div className="surface rounded-2xl p-3.5 sm:p-4">
+              <div className="surface rounded-2xl pad-panel">
                 <h2 className="text-lg font-extrabold text-mist-100">روش پرداخت</h2>
                 <div className="mt-4 space-y-2.5">
                   {(
@@ -380,7 +380,7 @@ export default function CheckoutPage() {
                           payMethod === opt.key ? "border-flame-500 bg-flame-500 text-white" : "border-[var(--surface-border-strong)]",
                         )}
                       >
-                        {payMethod === opt.key && "✓"}
+                        {payMethod === opt.key && <Icon name="check" className="size-3" />}
                       </span>
                       <Icon name={opt.icon} className="size-5 text-flame-500" />
                       <span className="flex-1">
@@ -395,7 +395,7 @@ export default function CheckoutPage() {
                   <Button variant="secondary" onClick={() => setStep(3)}>
                     بازگشت
                   </Button>
-                  <Button block size="lg" className="flex-1" onClick={pay} disabled={needsAddress}>
+                  <Button size="lg" className="min-w-0 flex-1" onClick={pay} disabled={needsAddress}>
                     {payMethod === "ONLINE" ? "پرداخت و ثبت سفارش" : "ثبت سفارش"}
                   </Button>
                 </div>
@@ -442,7 +442,10 @@ export default function CheckoutPage() {
               </Button>
             </div>
             {totals.appliedCoupon && (
-              <p className="mt-2 text-[13px] text-emerald-500">✓ {totals.appliedCoupon.description}</p>
+              <p className="mt-2 flex items-center gap-1.5 text-[13px] text-emerald-500">
+                  <Icon name="check" className="size-3.5 shrink-0" />
+                  {totals.appliedCoupon.description}
+                </p>
             )}
             {state.couponCode && totals.couponError && (
               <p className="mt-2 text-[13px] text-red-500">{totals.couponError}</p>

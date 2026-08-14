@@ -206,7 +206,7 @@ export default function AdminOrdersPage() {
                   : order.payment.method === "CASH"
                     ? "نقدی"
                     : "کارتخوان"}
-                {order.payment.status === "PAID" && " ✓"}
+                
               </span>
             </div>
 

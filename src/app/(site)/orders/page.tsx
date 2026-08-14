@@ -19,7 +19,7 @@ export default function OrdersPage() {
   const past = orders.filter((o) => ["DELIVERED", "CANCELLED", "PAYMENT_FAILED"].includes(o.status));
 
   return (
-    <div className="shell py-5 sm:py-8 lg:pb-14">
+    <div className="shell py-5 sm:py-8 lg:pt-11 lg:pb-14">
       <h1 className="text-xl font-extrabold text-mist-100 sm:text-3xl">سفارش‌های من</h1>
       <p className="mt-1.5 text-[13px] text-mist-400">پیگیری لحظه‌ای و سفارش مجدد با یک لمس.</p>
 
@@ -74,7 +74,7 @@ function OrderCard({
   return (
     <article
       className={cn(
-        "surface surface-hover rounded-2xl p-4",
+        "surface surface-hover rounded-2xl pad-panel",
         highlight && "border-flame-600/30 bg-flame-600/5",
       )}
     >

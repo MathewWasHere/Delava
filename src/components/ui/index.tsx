@@ -191,7 +191,7 @@ export function OTPInput({
           }}
           className={cn(
             "h-15 w-13 rounded-2xl border bg-ink-850 text-center text-2xl font-bold text-mist-100 outline-none transition-all",
-            value[i] ? "border-flame-600 bg-flame-600/5 shadow-[0_0_24px_-8px_rgba(194,13,0,0.8)]" : "border-[var(--surface-border)]",
+            value[i] ? "border-flame-600 bg-flame-600/5" : "border-[var(--surface-border)]",
             "focus:border-flame-500",
           )}
         />
@@ -292,9 +292,9 @@ export function BottomSheet({
           <button
             onClick={onClose}
             aria-label="بستن"
-            className="grid size-11 place-items-center rounded-full bg-[var(--white-a6)] text-mist-200 transition-colors hover:bg-[var(--white-a10)] hover:text-mist-100"
+            className="grid size-11 shrink-0 place-items-center rounded-full bg-[var(--white-a6)] text-mist-200 transition-colors hover:bg-[var(--white-a10)] hover:text-mist-100"
           >
-            ✕
+            <Icon name="close" className="size-[18px]" />
           </button>
         </div>
         {children}

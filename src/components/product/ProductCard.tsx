@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import type { Product } from "@/lib/types";
-import { Badge, FoodImage, Price, Rating } from "@/components/ui";
+import { FoodImage, Price, Rating } from "@/components/ui";
 import { useStore } from "@/lib/store";
 import { cn } from "@/lib/cn";
 import { toFa } from "@/lib/format";
@@ -116,25 +116,48 @@ export function ProductCard({ product, priority }: { product: Product; priority?
             className="h-full w-full transition-transform duration-700 group-hover:scale-105"
             sizes="(max-width:1024px) 33vw, 300px"
           />
-          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-black/45" />
+          {/*
+            No image-wide scrim. A translucent black rectangle over half of
+            every photo dulled the food photography just to buy contrast for
+            two small labels. Each label now carries its own compact SOLID
+            surface, so the image stays clean and the text stays legible on
+            any photo.
 
-          <div className="absolute inset-x-3 top-3 flex items-start justify-between gap-2">
-            <div className="flex flex-wrap gap-1.5">
-              {product.badges?.map((b) => (
-                <Badge key={b} className="backdrop-blur-md">
-                  <Icon name="flame" filled className="size-3" />
-                  {b}
-                </Badge>
-              ))}
-              {!product.available && <Badge tone="danger">ناموجود</Badge>}
-            </div>
+            Three overlay slots, each anchored to the image box so their
+            position is identical on every card:
+              top-right  -> badges        (RTL start)
+              top-left   -> favourite     (rendered outside this link)
+              bottom-right -> rating + prep time
+          */}
+          <div className="pointer-events-none absolute inset-x-3 top-3 flex flex-wrap items-start gap-1.5 pl-12">
+            {product.badges?.map((b) => (
+              <span
+                key={b}
+                className="inline-flex items-center gap-1 rounded-md bg-flame-600 px-2 py-1 text-[12.5px] font-bold leading-none text-white"
+              >
+                <Icon name="flame" filled className="size-2.5 shrink-0" />
+                {b}
+              </span>
+            ))}
+            {!product.available && (
+              <span className="inline-flex items-center rounded-md bg-ink-950 px-2 py-1 text-[12.5px] font-bold leading-none text-white">
+                ناموجود
+              </span>
+            )}
           </div>
 
-          <div className="absolute inset-x-3 bottom-3 flex items-center gap-2">
-            <Rating value={product.rating} />
-            <span className="flex items-center gap-1 text-[13px] text-mist-300">
-              <Icon name="clock" className="size-3.5" />
-              <span className="num">{toFa(product.prepMinutes)} دقیقه</span>
+          <div className="pointer-events-none absolute inset-x-3 bottom-3 flex flex-wrap items-center gap-1.5">
+            <span className="inline-flex items-center gap-1 rounded-md bg-ink-950/85 px-1.5 py-1 leading-none">
+              <Icon name="star" filled className="size-3 shrink-0 text-gold-500" />
+              <span className="num text-[12.5px] font-bold text-white">
+                {toFa(product.rating.toFixed(1))}
+              </span>
+            </span>
+            <span className="inline-flex items-center gap-1 rounded-md bg-ink-950/85 px-1.5 py-1 leading-none">
+              <Icon name="clock" className="size-3 shrink-0 text-white/80" />
+              <span className="num text-[12.5px] font-bold text-white">
+                {toFa(product.prepMinutes)} دقیقه
+              </span>
             </span>
           </div>
         </Link>
@@ -143,16 +166,16 @@ export function ProductCard({ product, priority }: { product: Product; priority?
           onClick={() => toggleFavorite(product.id)}
           aria-label={fav ? "حذف از علاقه‌مندی‌ها" : "افزودن به علاقه‌مندی‌ها"}
           className={cn(
-            "absolute left-3 top-3 grid size-11 place-items-center rounded-full border backdrop-blur-md transition-all",
+            "absolute left-3 top-3 grid size-9 place-items-center rounded-full border transition-colors",
             fav
-              ? "border-flame-600/50 bg-flame-600/25 text-flame-600"
-              : "border-[var(--surface-border)] bg-black/40 text-white/70 hover:text-white",
+              ? "border-flame-600 bg-flame-600 text-white"
+              : "border-white/25 bg-ink-950/80 text-white hover:bg-ink-950",
           )}
         >
-          <Icon name="heart" filled={fav} className="size-5" />
+          <Icon name="heart" filled={fav} className="size-[18px]" />
         </button>
 
-        <div className="flex flex-1 flex-col p-4">
+        <div className="flex flex-1 flex-col pad-card">
           <Link href={`/product/${product.slug}`} className="flex min-h-11 items-center">
             <h3 className="text-[15px] font-extrabold text-mist-100 transition-colors group-hover:text-flame-600">
               {product.name}

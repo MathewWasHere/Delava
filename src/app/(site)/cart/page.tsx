@@ -45,7 +45,7 @@ export default function CartPage() {
   }
 
   return (
-    <div className="pb-nav-action shell py-5 sm:py-8 lg:pb-14">
+    <div className="pb-nav-action shell py-5 sm:py-8 lg:pt-11 lg:pb-14">
       <div className="mb-6 flex items-end justify-between">
         <div>
           <h1 className="text-xl font-extrabold text-mist-100 sm:text-3xl">سبد خرید</h1>

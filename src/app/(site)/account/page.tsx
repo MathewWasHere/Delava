@@ -48,7 +48,7 @@ export default function AccountPage() {
   const progress = Math.min(100, Math.round((points / nextReward) * 100));
 
   return (
-    <div className="shell py-4 sm:py-6 lg:pb-12">
+    <div className="shell py-4 sm:py-6 lg:pt-9 lg:pb-12">
       {/* Header card */}
       <div className="surface relative overflow-hidden rounded-2xl p-4 sm:rounded-2xl sm:p-5">        <div className="relative flex flex-wrap items-center gap-4">
           {/* Avatar placeholder removed — the app has no profile pictures. */}
@@ -133,7 +133,7 @@ export default function AccountPage() {
                 </div>
               )}
               {state.orders.map((o) => (
-                <div key={o.id} className="surface flex flex-wrap items-center gap-4 rounded-2xl p-4">
+                <div key={o.id} className="surface flex flex-wrap items-center gap-4 rounded-2xl pad-panel">
                   <div className="flex-1">
                     <Link href={`/order?id=${o.id}`} className="num text-[14px] font-extrabold text-mist-100 hover:text-flame-600">
                       #{toFa(o.number)}

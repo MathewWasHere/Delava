@@ -55,7 +55,7 @@ export function RolesPanel() {
   }
 
   return (
-    <div className="rounded-xl border border-[var(--surface-border)] bg-ink-900 p-3.5">
+    <div className="rounded-xl border border-[var(--surface-border)] bg-ink-900 pad-panel">
       <h2 className="text-[13px] font-extrabold text-mist-100">نقش‌ها و دسترسی‌ها</h2>
       <p className="mt-0.5 text-[11.5px] leading-5 text-mist-500">
         با شماره موبایل به کارکنان دسترسی بده. کاربر با همان شماره وارد می‌شود و
