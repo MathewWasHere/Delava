@@ -1,90 +1,143 @@
-# 🚀 آپلود دلاوا روی cPanel — Deploy guide
+# راهنمای آپلود دلاوا روی cPanel
 
-Ready-to-upload package: **`delava-cpanel.zip`** (6 MB, 254 files)
+**فایل مورد نیاز:** `delava-cpanel.zip` (۵.۲ مگابایت)
 
-No Node.js, no database, no terminal. It is plain HTML/CSS/JS and runs on the
-cheapest shared hosting.
+این بسته یک وب‌سایت **کاملاً ایستا (static)** است. یعنی:
 
----
-
-## Upload in 5 steps
-
-1. **cPanel → File Manager**
-2. Open **`public_html`**
-   *(for a subfolder demo use `public_html/delava` — all links are relative, it still works)*
-3. **Upload** → choose `delava-cpanel.zip`
-4. Right-click the uploaded zip → **Extract**
-5. Delete the zip
-
-Open your domain. Done.
-
-> **Check `.htaccess` exists after extracting.**
-> File Manager hides dotfiles by default: **Settings → Show Hidden Files**.
+- به Node.js روی سرور **نیاز ندارد**
+- به دیتابیس **نیاز ندارد**
+- روی سرور **build نمی‌شود**
+- روی هر هاست اشتراکی ساده‌ی cPanel/Apache کار می‌کند
 
 ---
 
-## ⚠️ Turn on HTTPS
+> ### ⚠️ قبل از شروع: اول SSL را فعال کنید
+> فایل `.htaccess` این بسته، HTTPS را **اجباری** می‌کند. اگر گواهی SSL فعال نباشد، بعد از آپلود سایت باز نمی‌شود.
+> **cPanel → SSL/TLS Status → Run AutoSSL** — چند دقیقه طول می‌کشد. (جزئیات در مرحله‌ی ۵)
 
-cPanel → **SSL/TLS Status** → **Run AutoSSL**.
+## مرحله ۱ — ورود به File Manager
 
-Without HTTPS Android will not offer "Install app", and the offline mode is
-disabled by the browser. Everything else still works.
+1. وارد **cPanel** شوید (معمولاً `https://yourdomain.com/cpanel` یا `https://yourdomain.com:2083`).
+2. در بخش **Files** روی **File Manager** کلیک کنید.
 
 ---
 
-## What's inside
+## مرحله ۲ — رفتن به پوشه‌ی درست
 
-| | |
+| اگر می‌خواهید سایت روی… | وارد این پوشه شوید |
 | --- | --- |
-| `index.html`, `menu/`, `cart/`, `checkout/`, `admin/` … | every page, pre-rendered |
-| `_next/` | JS + CSS bundles (hashed, cached 1 year) |
-| `food/`, `brand/`, `icons/` | photography and the DELAVA logo |
-| `manifest.webmanifest`, `sw.js` | PWA — installable + offline |
-| `.htaccess` | routing, HTTPS redirect, gzip, caching, security headers |
-| `UPLOAD-GUIDE.md` | this guide, inside the zip |
+| `yourdomain.com` (دامنه‌ی اصلی) | `public_html` |
+| `yourdomain.com/delava` (زیرپوشه) | `public_html/delava` (بسازید) |
+| `menu.yourdomain.com` (ساب‌دامنه) | پوشه‌ی همان ساب‌دامنه |
 
-The `.htaccess` handles clean URLs (`/menu` → `/menu/index.html`), forces HTTPS,
-gzips text assets, caches immutable bundles for a year, and never caches `sw.js`
-so updates ship immediately.
+> هر سه حالت کار می‌کند، چون همه‌ی لینک‌ها **نسبی** هستند.
+
+**مهم:** اگر در `public_html` فایل‌های پیش‌فرض هاست (مثل `default.html` یا صفحه‌ی «Coming Soon») وجود دارد، اول آن‌ها را پاک کنید تا با سایت شما تداخل نکنند.
 
 ---
 
-## Rebuilding after changes
+## مرحله ۳ — آپلود و استخراج
+
+1. روی **Upload** در نوار بالا کلیک کنید.
+2. فایل `delava-cpanel.zip` را انتخاب کنید و منتظر بمانید تا ۱۰۰٪ شود.
+3. به File Manager برگردید و اگر فایل را نمی‌بینید **Reload** بزنید.
+4. روی فایل زیپ **راست‌کلیک** کنید → **Extract** → مسیر را تأیید کنید.
+5. بعد از استخراج، خود فایل زیپ را **پاک کنید**.
+
+---
+
+## مرحله ۴ — بررسی فایل `.htaccess` ⚠️
+
+این مرحله را رد نکنید. مهم‌ترین قسمت کار است.
+
+فایل `.htaccess` با نقطه شروع می‌شود، پس **به‌صورت پیش‌فرض مخفی است**.
+
+1. در File Manager روی **Settings** (گوشه‌ی بالا سمت راست) کلیک کنید.
+2. تیک **Show Hidden Files (dotfiles)** را بزنید → **Save**.
+3. مطمئن شوید فایل `.htaccess` کنار `index.html` وجود دارد.
+
+**اگر `.htaccess` نبود، سایت باز می‌شود ولی با رفرش کردن صفحات داخلی خطای 404 می‌گیرید.** در این حالت دوباره زیپ را استخراج کنید یا فایل را دستی بسازید.
+
+این فایل سه کار انجام می‌دهد: مسیریابی صفحات، فشرده‌سازی (gzip) و کش کردن فایل‌ها.
+
+---
+
+## مرحله ۵ — فعال کردن HTTPS
+
+1. در cPanel به **Security → SSL/TLS Status** بروید.
+2. دامنه را انتخاب کنید و **Run AutoSSL** را بزنید.
+3. چند دقیقه صبر کنید تا گواهی صادر شود.
+
+**چرا لازم است:** بدون HTTPS، گزینه‌ی «نصب برنامه» (Add to Home Screen) در اندروید نمایش داده نمی‌شود و Service Worker هم کار نمی‌کند.
+
+---
+
+## مرحله ۶ — تست نهایی
+
+دامنه را در **گوشی موبایل** باز کنید و این موارد را بررسی کنید:
+
+| مورد | انتظار |
+| --- | --- |
+| صفحه‌ی اصلی | عکس رستوران + منوی شناور پایین |
+| کلیک روی «منو» | لیست ۲۷ محصول با عکس |
+| افزودن به سبد | عدد روی آیکن سبد زیاد شود |
+| **رفرش کردن صفحه‌ی داخلی** | باید کار کند (تست `.htaccess`) |
+| ورود | هر شماره‌ی `09xxxxxxxxx` — کد تأیید: **۱۲۳۴۵** |
+| پنل مدیریت | `yourdomain.com/admin` |
+| نصب به‌عنوان اپ | منوی کروم → *Install app* |
+
+### دسترسی‌های پنل مدیریت
+
+| سمت | شماره |
+| --- | --- |
+| مدیر ارشد | `09309318326` |
+| مدیر فناوری | `09171234567` |
+| کارمند آشپزخانه | `09361112233` |
+| پیک | `09901234567` |
+
+---
+
+## رفع اشکال
+
+**مرورگر مدام به HTTPS ریدایرکت می‌کند و سایت باز نمی‌شود**
+فایل `.htaccess` به‌صورت خودکار HTTPS را اجباری می‌کند. اگر هنوز AutoSSL را فعال نکرده‌اید (مرحله‌ی ۵)، سایت در دسترس نخواهد بود. **اول SSL را فعال کنید.**
+
+**سایت سفید است / چیزی نمایش داده نمی‌شود**
+محتویات زیپ باید **مستقیماً** داخل `public_html` باشند، نه داخل یک پوشه‌ی اضافه. یعنی باید `public_html/index.html` داشته باشید، نه `public_html/out/index.html`.
+
+**صفحه‌ی اصلی باز می‌شود ولی صفحات داخلی 404 می‌دهند**
+فایل `.htaccess` وجود ندارد یا آپلود نشده. مرحله‌ی ۴ را دوباره انجام دهید.
+
+**فونت‌ها یا عکس‌ها لود نمی‌شوند**
+احتمالاً استخراج ناقص بوده. بسته شامل **۴۰۸ فایل** است.
+
+**تغییرات جدید را نمی‌بینم**
+مرورگر نسخه‌ی قدیمی را کش کرده. یک بار `Ctrl+Shift+R` بزنید یا در حالت ناشناس تست کنید.
+
+---
+
+## نکته‌ی مهم درباره‌ی این نسخه
+
+این **نسخه‌ی نمایشی (Stage 1)** است. یعنی:
+
+✅ همه‌ی صفحات، طراحی، منو، سبد خرید، پنل مدیریت و مسیر سفارش کامل کار می‌کند.
+
+⚠️ اما اطلاعات در **مرورگر خود کاربر** ذخیره می‌شود، نه روی سرور. پس:
+
+- سفارش‌ها به آشپزخانه‌ی واقعی **نمی‌رسند**
+- کد تأیید پیامک **واقعی نیست** (همیشه ۱۲۳۴۵)
+- پرداخت آنلاین **وصل نیست**
+- هر گوشی اطلاعات خودش را می‌بیند
+
+برای راه‌اندازی واقعی (Stage 2) این موارد لازم است: دیتابیس PostgreSQL، پنل ارسال پیامک، درگاه پرداخت زرین‌پال و یک هاست با پشتیبانی Node.js.
+
+---
+
+## به‌روزرسانی سایت در آینده
 
 ```bash
+npm install
 npm run build:cpanel
 ```
 
-Produces a fresh `out/` folder and `delava-cpanel.zip`. Your development setup is
-untouched — the script swaps the export config in and out automatically.
-
----
-
-## Showing the client
-
-| What | How |
-| --- | --- |
-| Customer app | Open the domain **on a phone** — this is the real experience |
-| Install as app | Chrome ⋮ → *Install app* → DELAVA icon on the home screen |
-| Login | Any `09xxxxxxxxx`, OTP **۱۲۳۴۵** |
-| Coupons | `DELAVA10` (10% first order) or `FASA20` |
-| Kitchen view | `yourdomain.com/admin` → **سفارش‌های زنده** |
-
----
-
-## Be honest with the client about this stage
-
-This is a **fully working prototype**, not the finished system.
-
-**Works now:** the entire ordering journey, the menu, the cart, OTP screens,
-address book, order tracking, reorder, loyalty, and the full admin panel.
-
-**Not yet real:** orders live in each visitor's own browser (localStorage).
-A customer's order does **not** reach the restaurant's screen, the OTP is not a
-real SMS, and payment is simulated.
-
-That requires Stage 2 — PostgreSQL, real OTP via an Iranian SMS provider,
-Zarinpal payments, and live sync between the customer and the kitchen. Stage 2
-needs Node.js hosting or a small VPS; basic shared hosting cannot run it.
-The database schema and the architecture for all of it are already written
-(`prisma/schema.prisma`, `ARCHITECTURE.md`), so it is a build, not a redesign.
+فایل جدید `delava-cpanel.zip` ساخته می‌شود. محتویات قبلی `public_html` را پاک کنید و نسخه‌ی جدید را آپلود و استخراج کنید.
