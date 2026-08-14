@@ -323,7 +323,7 @@ function ProgressRail({ status }: { status: OrderStatus }) {
             </span>
             <span
               className={cn(
-                "whitespace-nowrap text-[9.5px] font-bold",
+                "whitespace-nowrap text-[10.5px] font-bold",
                 s.done ? "text-mist-200" : "text-mist-500",
               )}
             >

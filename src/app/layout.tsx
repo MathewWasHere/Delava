@@ -75,18 +75,19 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         {/* Applies the persisted theme before first paint — no flash. */}
         <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
-        {/* Fetch the two fonts used above the fold in parallel with the CSS,
-            instead of waiting for the stylesheet to discover them. */}
+        {/* Fetch the two Snapp Web cuts used above the fold in parallel with
+            the CSS, instead of waiting for the stylesheet to discover them.
+            Regular carries body copy; Bold carries every heading/price. */}
         <link
           rel="preload"
-          href="/fonts/Vazirmatn-400.woff2"
+          href="/fonts/SnappWeb2.0-Regular.woff2"
           as="font"
           type="font/woff2"
           crossOrigin="anonymous"
         />
         <link
           rel="preload"
-          href="/fonts/Vazirmatn-800.woff2"
+          href="/fonts/SnappWeb2.0-Bold.woff2"
           as="font"
           type="font/woff2"
           crossOrigin="anonymous"

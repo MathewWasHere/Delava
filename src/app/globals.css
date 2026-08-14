@@ -5,35 +5,66 @@
    Visual hierarchy: BLACK → WHITE → ORANGE ACCENT
    ========================================================================== */
 
+/* ==========================================================================
+   TYPOGRAPHY — Snapp Web 2.0 (items 8 & 9)
+
+   The family ships three weights: Light 200, Regular 400, Bold 700.
+   The UI, however, uses 500 and 800 in ~150 places. Rather than rewrite every
+   class, each real file claims a WEIGHT RANGE, so the browser always resolves
+   to a genuine cut and never synthesises a faux/smeared bold:
+
+       200-300  -> Light
+       400-600  -> Regular   (covers font-medium 500)
+       700-900  -> Bold      (covers font-extrabold 800)
+
+   woff2 is listed first and woff second: modern browsers take the ~33 KB
+   woff2, older ones fall back to the ~43 KB woff. Vazirmatn remains in the
+   stack purely as a fallback for any glyph Snapp lacks.
+   ========================================================================== */
 @font-face {
-  font-family: "Vazirmatn";
-  src: url("/fonts/Vazirmatn-400.woff2") format("woff2");
-  font-weight: 400;
+  font-family: "SnappWeb";
+  src:
+    url("/fonts/SnappWeb2.0-Light.woff2") format("woff2"),
+    url("/fonts/SnappWeb2.0-Light.woff") format("woff");
+  font-weight: 200 300;
+  font-style: normal;
   font-display: swap;
 }
 @font-face {
-  /* `font-medium` is used in a handful of places; alias it to the 400 file so
-     the browser never synthesises a faux weight and we ship one less file. */
+  font-family: "SnappWeb";
+  src:
+    url("/fonts/SnappWeb2.0-Regular.woff2") format("woff2"),
+    url("/fonts/SnappWeb2.0-Regular.woff") format("woff");
+  font-weight: 400 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "SnappWeb";
+  src:
+    url("/fonts/SnappWeb2.0-Bold.woff2") format("woff2"),
+    url("/fonts/SnappWeb2.0-Bold.woff") format("woff");
+  font-weight: 700 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Fallback family — only used for glyphs Snapp Web does not cover. */
+@font-face {
   font-family: "Vazirmatn";
   src: url("/fonts/Vazirmatn-400.woff2") format("woff2");
-  font-weight: 500;
+  font-weight: 400 600;
   font-display: swap;
 }
 @font-face {
   font-family: "Vazirmatn";
   src: url("/fonts/Vazirmatn-700.woff2") format("woff2");
-  font-weight: 700;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Vazirmatn";
-  src: url("/fonts/Vazirmatn-800.woff2") format("woff2");
-  font-weight: 800;
+  font-weight: 700 900;
   font-display: swap;
 }
 
 @theme {
-  --font-sans: "Vazirmatn", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "SnappWeb", "Vazirmatn", ui-sans-serif, system-ui, sans-serif;
 
   --color-ink-950: #000000;
   --color-ink-900: #0a0a0a;

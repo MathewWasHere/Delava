@@ -99,7 +99,7 @@ export default function AdminCustomersPage() {
               </div>
 
               {loyal && (
-                <span className="mt-2 inline-flex w-fit items-center gap-1 rounded-md bg-flame-600/12 px-1.5 py-0.5 text-[9.5px] font-extrabold text-flame-500">
+                <span className="mt-2 inline-flex w-fit items-center gap-1 rounded-md bg-flame-600/12 px-1.5 py-0.5 text-[10.5px] font-extrabold text-flame-500">
                   <Icon name="star" filled className="size-2.5 text-gold-600" />
                   وفادار
                 </span>
@@ -108,13 +108,13 @@ export default function AdminCustomersPage() {
               {/* Stats */}
               <div className="mt-2.5 grid grid-cols-2 gap-1.5 border-t border-[var(--hairline)] pt-2.5">
                 <div>
-                  <div className="text-[9.5px] text-mist-500">سفارش</div>
+                  <div className="text-[10.5px] text-mist-500">سفارش</div>
                   <div className="num text-[13px] font-extrabold text-mist-100">
                     {toFa(c.orders)}
                   </div>
                 </div>
                 <div className="min-w-0">
-                  <div className="text-[9.5px] text-mist-500">مجموع</div>
+                  <div className="text-[10.5px] text-mist-500">مجموع</div>
                   <div className="num truncate text-[12px] font-extrabold text-flame-500">
                     {faNumber(c.spent)}
                   </div>

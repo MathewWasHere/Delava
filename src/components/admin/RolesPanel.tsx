@@ -127,7 +127,7 @@ export function RolesPanel() {
                     {member.name}
                   </span>
                   {isMe && (
-                    <span className="shrink-0 rounded bg-flame-600/12 px-1.5 py-0.5 text-[9.5px] font-extrabold text-flame-600">
+                    <span className="shrink-0 rounded bg-flame-600/12 px-1.5 py-0.5 text-[10.5px] font-extrabold text-flame-600">
                       شما
                     </span>
                   )}

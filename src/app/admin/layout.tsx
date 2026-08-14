@@ -52,7 +52,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       >
         <div className="flex h-13 items-center gap-2.5 border-b border-[var(--surface-border)] px-4 lg:h-14">
           <Logo width={58} withSub={false} href={nav[0]?.href ?? "/admin"} />
-          <span className="rounded bg-flame-600/12 px-1.5 py-0.5 text-[9.5px] font-extrabold text-flame-600">
+          <span className="rounded bg-flame-600/12 px-1.5 py-0.5 text-[10.5px] font-extrabold text-flame-600">
             ADMIN
           </span>
         </div>

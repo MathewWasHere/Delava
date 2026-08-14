@@ -1,5 +1,5 @@
 /* DELAVA service worker — app-shell caching for a fast, installable PWA. */
-const VERSION = "delava-v2";
+const VERSION = "delava-v3";
 /* Keep the install payload tiny: only the offline fallback is precached.
    "/" and "/menu" are cached on first visit by the navigate handler below,
    so installing the SW no longer fires a burst of parallel requests that
