@@ -135,7 +135,7 @@ export default function AdminDashboard() {
         <div className="rounded-xl border border-[var(--surface-border)] bg-ink-900 p-3.5">
           <div className="flex items-center justify-between">
             <h2 className="flex items-center gap-1.5 text-[13px] font-extrabold text-mist-100">
-              <span className="size-2 animate-pulse-dot rounded-full bg-flame-500" />
+              <span className="size-2 animate-pulse-dot rounded-full bg-flame-500 text-flame-500/45" />
               سفارش‌های در جریان
             </h2>
             <Link href="/admin/orders" className="-my-2 inline-flex min-h-9 shrink-0 items-center text-[11.5px] font-bold text-flame-600">

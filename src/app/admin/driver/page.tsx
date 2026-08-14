@@ -2,7 +2,8 @@
 
 import { useMemo, useState } from "react";
 import { useStore } from "@/lib/store";
-import { useCurrentAdmin } from "@/lib/use-roles";
+import Link from "next/link";
+import { useCurrentAdmin, usePermission } from "@/lib/use-roles";
 import { faNumber, faTime, toFa } from "@/lib/format";
 import { Icon, type IconName } from "@/components/ui/Icon";
 import { cn } from "@/lib/cn";
@@ -38,6 +39,8 @@ const LANES: Array<{ key: Lane; label: string; icon: IconName; tone: string }> =
 
 export default function DriverPage() {
   const { state, setOrderStatus, pushToast } = useStore();
+  const allow = usePermission();
+  const canSeeDashboard = allow("dashboard.view");
   const me = useCurrentAdmin();
   const [lane, setLane] = useState<Lane>("queue");
 
@@ -78,10 +81,29 @@ export default function DriverPage() {
             {me.name} — مسیرهای امروز شما
           </p>
         </div>
-        <span className="inline-flex items-center gap-1.5 rounded-lg border border-emerald-500/30 bg-emerald-500/10 px-2.5 py-1.5 text-[11.5px] font-bold text-emerald-600">
-          <span className="size-1.5 animate-pulse-dot rounded-full bg-emerald-500" />
-          آنلاین
-        </span>
+
+        <div className="flex items-center gap-2">
+          {/*
+            EXIT ROUTE (item 17).
+            A DRIVER's sidebar contains exactly one entry, so without this the
+            page is a cul-de-sac for any manager who opens it. Shown only to
+            roles that can actually open the dashboard, so a real courier is
+            never offered a link that would 'permission-deny' on arrival.
+          */}
+          {canSeeDashboard && (
+            <Link
+              href="/admin"
+              className="inline-flex min-h-9 items-center gap-1.5 rounded-lg border border-[var(--surface-border)] bg-[var(--white-a4)] px-2.5 text-[11.5px] font-bold text-mist-300 transition-colors hover:text-mist-100"
+            >
+              <Icon name="chart" className="size-3.5 shrink-0" />
+              بازگشت به پنل
+            </Link>
+          )}
+          <span className="inline-flex items-center gap-1.5 rounded-lg border border-emerald-500/30 bg-emerald-500/10 px-2.5 py-1.5 text-[11.5px] font-bold text-emerald-600">
+            <span className="size-1.5 animate-pulse-dot rounded-full bg-emerald-500 text-emerald-500/45" />
+            آنلاین
+          </span>
+        </div>
       </div>
 
       {/* ---------- Daily summary ---------- */}

@@ -7,6 +7,7 @@ import { Badge, FoodImage, Price, QuantitySelector, Rating, SectionHead, Textare
 import { Button } from "@/components/ui/Button";
 import { ProductCard } from "@/components/product/ProductCard";
 import { useStore } from "@/lib/store";
+import { productsByCategory, smallImage } from "@/lib/data/catalog";
 import { cn } from "@/lib/cn";
 import { faNumber, toFa } from "@/lib/format";
 import { Icon } from "@/components/ui/Icon";
@@ -28,6 +29,18 @@ export function ProductDetail({ product, related }: { product: Product; related:
 
   const unit = product.price + modifiers.reduce((s, m) => s + m.price, 0);
   const total = unit * qty;
+
+  /*
+   * DRINK UPSELL (item 7)
+   * A drink belongs at the point of decision — right beside the add-ons —
+   * not buried in "related products" below the fold. Suppressed on drink
+   * pages themselves, where it would be nonsense.
+   */
+  const isDrink = product.categoryId === "c5";
+  const drinks = useMemo(
+    () => (isDrink ? [] : productsByCategory("c5").filter((d) => d.available).slice(0, 4)),
+    [isDrink],
+  );
 
   return (
     <div className="pb-32 lg:pb-8">
@@ -166,6 +179,41 @@ export function ProductDetail({ product, related }: { product: Product; related:
                     </button>
                   );
                 })}
+              </div>
+            </div>
+          )}
+
+          {drinks.length > 0 && (
+            <div className="mt-6">
+              <h3 className="mb-3 flex items-center justify-between text-[13px] font-extrabold text-mist-100">
+                نوشیدنی اضافه کن
+                <span className="text-[13px] font-medium text-mist-500">اختیاری</span>
+              </h3>
+              <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+                {drinks.map((d) => (
+                  <button
+                    key={d.id}
+                    type="button"
+                    onClick={() => addItem(d, 1)}
+                    aria-label={`افزودن ${d.name} به سبد خرید`}
+                    className="flex min-h-14 items-center gap-2 rounded-2xl border border-[var(--surface-border)] bg-ink-850 p-2 text-right transition-colors hover:border-flame-600/50"
+                  >
+                    <FoodImage
+                      src={smallImage(d.image)}
+                      alt={d.name}
+                      className="size-11 shrink-0 rounded-xl"
+                      sizes="44px"
+                    />
+                    <span className="min-w-0 flex-1">
+                      <span className="block truncate text-[12.5px] font-bold text-mist-100">
+                        {d.name}
+                      </span>
+                      <span className="num block text-[12.5px] font-bold text-flame-600">
+                        +{faNumber(d.price)}
+                      </span>
+                    </span>
+                  </button>
+                ))}
               </div>
             </div>
           )}

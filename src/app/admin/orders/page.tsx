@@ -46,7 +46,7 @@ export default function AdminOrdersPage() {
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
           <h1 className="flex items-center gap-2 text-[17px] font-extrabold text-mist-100">
-            <span className="size-2.5 animate-pulse-dot rounded-full bg-flame-500" />
+            <span className="size-2.5 animate-pulse-dot rounded-full bg-flame-500 text-flame-500/45" />
             سفارش‌های زنده
           </h1>
           <p className="mt-1 text-[12px] text-mist-500">

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -8,11 +9,11 @@ import { Logo } from "@/components/brand/Logo";
 import { useStore } from "@/lib/store";
 import { cn } from "@/lib/cn";
 import { toFa } from "@/lib/format";
-import { RESTAURANT } from "@/lib/data/catalog";
-import { Icon } from "@/components/ui/Icon";
+import { RESTAURANT, categories } from "@/lib/data/catalog";
+import { Icon, type IconName } from "@/components/ui/Icon";
 import { CountBadge } from "@/components/ui";
 import { ThemeToggle, ThemeSwitch } from "@/components/theme/ThemeToggle";
-import { OpenStatus } from "@/components/shell/OpenStatus";
+import { OpenStatus, useIsOpen } from "@/components/shell/OpenStatus";
 
 const LINKS = [
   { href: "/", label: "خانه" },
@@ -21,9 +22,18 @@ const LINKS = [
   { href: "/about", label: "درباره دلاوا" },
 ];
 
+/** Icon per primary destination — a bare text list reads as a dead end. */
+const LINK_ICON: Record<string, IconName> = {
+  "/": "home",
+  "/menu": "menu",
+  "/orders": "receipt",
+  "/about": "flame",
+};
+
 export function Navbar() {
   const pathname = usePathname();
   const { cartCount, cartPulse, state } = useStore();
+  const isOpen = useIsOpen();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -197,23 +207,65 @@ export function Navbar() {
                       href={l.href}
                       onClick={() => setMenuOpen(false)}
                       className={cn(
-                        "flex min-h-12 items-center rounded-xl px-3.5 text-[15px] font-bold transition-colors",
+                        "flex min-h-12 items-center gap-3 rounded-xl px-3.5 text-[15px] font-bold transition-colors",
                         active
                           ? "bg-flame-600/12 text-flame-500"
                           : "text-mist-200 hover:bg-[var(--white-a6)]",
                       )}
                     >
+                      <Icon name={LINK_ICON[l.href] ?? "chevron"} className="size-[18px] shrink-0" />
                       {l.label}
+                      {active && <span className="mr-auto size-1.5 rounded-full bg-flame-500" />}
                     </Link>
                   );
                 })}
                 <Link
+                  href="/cart"
+                  onClick={() => setMenuOpen(false)}
+                  className="flex min-h-12 items-center gap-3 rounded-xl px-3.5 text-[15px] font-bold text-mist-200 transition-colors hover:bg-[var(--white-a6)]"
+                >
+                  <Icon name="cart" className="size-[18px] shrink-0" />
+                  سبد خرید
+                  {cartCount > 0 && (
+                    <span className="mr-auto">
+                      <CountBadge value={cartCount} />
+                    </span>
+                  )}
+                </Link>
+                <Link
                   href={state.user ? "/account" : "/auth"}
                   onClick={() => setMenuOpen(false)}
-                  className="flex min-h-12 items-center rounded-xl px-3.5 text-[15px] font-bold text-mist-200 transition-colors hover:bg-[var(--white-a6)]"
+                  className="flex min-h-12 items-center gap-3 rounded-xl px-3.5 text-[15px] font-bold text-mist-200 transition-colors hover:bg-[var(--white-a6)]"
                 >
+                  <Icon name="user" className="size-[18px] shrink-0" />
                   {state.user ? "حساب کاربری" : "ورود / ثبت‌نام"}
                 </Link>
+              </div>
+
+              {/* Category shortcuts — the drawer should be a real way INTO the
+                  menu, not just a list of pages. Two columns keeps all five
+                  visible without scrolling. */}
+              <div className="mt-5 border-t border-[var(--hairline)] pt-5">
+                <div className="mb-2.5 text-[12px] font-bold text-mist-500">دسته‌بندی‌ها</div>
+                <div className="grid grid-cols-2 gap-1.5">
+                  {categories.map((c) => (
+                    <Link
+                      key={c.id}
+                      href={`/menu?c=${c.slug}`}
+                      onClick={() => setMenuOpen(false)}
+                      className="flex min-h-11 items-center gap-2 rounded-xl border border-[var(--surface-border)] bg-[var(--white-a4)] px-2.5 text-[13px] font-bold text-mist-200 transition-colors hover:border-flame-600/40 hover:text-mist-100"
+                    >
+                      <Image
+                        src={c.image}
+                        alt=""
+                        width={24}
+                        height={24}
+                        className="size-6 shrink-0 rounded-md object-cover"
+                      />
+                      <span className="truncate">{c.name}</span>
+                    </Link>
+                  ))}
+                </div>
               </div>
 
               <div className="mt-5 border-t border-[var(--hairline)] pt-5">
@@ -221,7 +273,31 @@ export function Navbar() {
                 <ThemeSwitch />
               </div>
 
-              <div className="mt-5 border-t border-[var(--hairline)] pt-5">
+              <div className="mt-5 space-y-2 border-t border-[var(--hairline)] pt-5">
+                {/* Live open/closed + today's hours — the two questions a hungry
+                    customer actually has before they tap "call". */}
+                <div className="flex items-center justify-between gap-2 rounded-xl border border-[var(--surface-border)] bg-[var(--white-a4)] px-3 py-2.5">
+                  <span
+                    className={cn(
+                      "inline-flex items-center gap-1.5 text-[13px] font-bold",
+                      isOpen ? "text-emerald-600" : "text-mist-400",
+                    )}
+                  >
+                    <span
+                      className={cn(
+                        "size-1.5 shrink-0 rounded-full",
+                        isOpen
+                          ? "animate-pulse-dot bg-emerald-500 text-emerald-500/45"
+                          : "bg-mist-500",
+                      )}
+                    />
+                    {isOpen ? "باز است" : "بسته است"}
+                  </span>
+                  <span className="num text-[12.5px] text-mist-500">
+                    {RESTAURANT.hours}
+                  </span>
+                </div>
+
                 <a
                   href={`tel:${RESTAURANT.phone}`}
                   onClick={() => setMenuOpen(false)}
@@ -232,6 +308,11 @@ export function Navbar() {
                     {toFa(RESTAURANT.phoneDisplay)}
                   </span>
                 </a>
+
+                <p className="flex items-start gap-2 px-1 text-[12.5px] leading-6 text-mist-500">
+                  <Icon name="pin" className="mt-1 size-3.5 shrink-0 text-flame-600" />
+                  {RESTAURANT.address}
+                </p>
               </div>
             </nav>
 

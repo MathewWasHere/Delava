@@ -37,7 +37,7 @@ export default function OrdersPage() {
       {active.length > 0 && (
         <section className="mt-8">
           <h2 className="mb-4 flex items-center gap-2 text-[15px] font-extrabold text-mist-100">
-            <span className="size-2 animate-pulse-dot rounded-full bg-flame-500" />
+            <span className="size-2 animate-pulse-dot rounded-full bg-flame-500 text-flame-500/45" />
             سفارش‌های در جریان
           </h2>
           <div className="grid gap-3 lg:grid-cols-2">

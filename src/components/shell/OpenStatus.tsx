@@ -43,7 +43,7 @@ export function OpenStatus({ className }: { className?: string }) {
       <span
         className={cn(
           "size-1.5 shrink-0 rounded-full",
-          open ? "animate-pulse-dot bg-emerald-500" : "bg-mist-500",
+          open ? "animate-pulse-dot bg-emerald-500 text-emerald-500/45" : "bg-mist-500",
         )}
       />
       <span>{open ? "باز است" : "بسته است"}</span>

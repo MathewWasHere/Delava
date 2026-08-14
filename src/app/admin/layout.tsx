@@ -120,7 +120,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           </div>
 
           <span className="hidden items-center gap-1.5 rounded-lg border border-emerald-500/25 bg-emerald-500/8 px-2.5 py-1.5 text-[11px] font-bold text-emerald-600 md:flex">
-            <span className="size-1.5 animate-pulse-dot rounded-full bg-emerald-500" />
+            <span className="size-1.5 animate-pulse-dot rounded-full bg-emerald-500 text-emerald-500/45" />
             باز است
           </span>
 
